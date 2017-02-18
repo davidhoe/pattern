@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Lines</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script type="text/javascript" src="../paper-full.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <script type="text/paperscript" canvas="canvas">
+
+
+        var ready = false;
+        var frameIndex = 0;
+
+        // test load
+        var coloursets = [];
+        $.getJSON("colour-sets.json", function(json) {
+            console.log("colour-sets loaded");
+            console.log(json); // this will show the info it in firebug console
+            coloursets = json;
+
+            init();
+        });
+
+
+        function getColourset(ix)
+        {
+            var colset = [];
+            var rgbset = coloursets[ix];
+            for(var  i =0; i< rgbset.length;++i)
+            {
+                var rgb = rgbset[i];
+                colset.push(new Color(rgb[0]/255,rgb[1]/255,rgb[2]/255) );
+            }
+            return colset;
+        }
+
+        function getRandomColourset(ix)
+        {
+            return getColourset( Math.min(coloursets.length-1, Math.floor( coloursets.length * Math.random())) );
+        }
+
+        function getRandomIntBetween(from,to)
+        {
+            var x = from + Math.random()*(to -from + 1);
+            return Math.min(to, Math.floor(x) );
+        }
+
+        function getRandomFloat(from,to)
+        {
+            var x = from + Math.random()*(to -from );
+            return x;
+        }
+
+        function getRandomColourInSet(colset)
+        {
+            var i = getRandomIntBetween(0, colset.length - 1);
+            //console.log(i);
+            return colset[i];
+        }
+
+        function blendColours(c0,c1, ratio)
+        {
+            var r = c0.red + (c1.red - c0.red)*ratio;
+            var g = c0.green + (c1.green - c0.green)*ratio;
+            var b = c0.blue + (c1.blue - c0.blue)*ratio;
+            return new Color(r,g,b);
+        }
+
+        function createLineGradient(p0,p1,c0,c1 )
+        {
+            var fill = {
+                gradient: {
+                    stops: [c0,c1]
+                },
+                origin: p0,
+                destination: p1
+            }
+            return fill;
+        }
+
+         function createCircleGradient(p,r,c0,c1 )
+        {
+            var fill = {
+                gradient: {
+                    stops: [c0,c1]
+                },
+                origin: p + new Point(-r,-r),
+                destination: p + new Point(r,r)
+            }
+            return fill;
+        }
+
+         var w = 3440;
+        var h = 1440;
+        var colset;
+
+        function init()
+        {
+            ready = true;
+            colset = getRandomColourset();
+          //  console.log(colset);
+
+            // random bg
+            var bgcol = getRandomColourInSet(colset);
+            var bgpath = new Path.Rectangle(new Rectangle(0,0,w,h), 0);
+            bgpath.fillColor = bgcol;
+            //bgpath.fillColor = 'black';
+
+        }
+
+
+        function drawUpdate()
+        {
+            
+            var amount = 1000;
+          
+            var x,y;
+            var col;
+            for (var i = 0; i < amount; i++) {
+                
+                var c0 = getRandomColourInSet(colset);
+                var c1 = getRandomColourInSet(colset);
+                var c = blendColours(c0,c1, Math.random());
+                var thickness =  getRandomFloat(0.5,2.5);
+
+                var radius  = getRandomFloat(1,1000);
+                var p = new Point(Math.random()*w,Math.random()*h);
+                var circle = new Path.Circle(p, radius);
+               // circle.strokeColor = c1;
+                c.alpha  = 0.0;
+                circle.strokeColor = createCircleGradient(p, radius, c0, c );
+                
+                //circle.fillColor = createCircleGradient(p, radius, c0,c1);
+                circle.strokeWidth = thickness;
+
+                circle.rotation = Math.random()*360;
+ 
+
+            }
+
+        }
+
+        function onFrame(event) {
+            if(ready)
+            {
+                if(frameIndex < 14)
+                {
+                    drawUpdate();
+                    frameIndex++;
+                }
+            }
+        }
+
+        function onMouseMove(event) {
+            mousePoint = event.point;
+        }
+
+        var children = project.activeLayer.children;
+       
+    </script>
+</head>
+<body>
+    <canvas id="canvas" resize hidpi="off"></canvas>
+</body>
+</html>

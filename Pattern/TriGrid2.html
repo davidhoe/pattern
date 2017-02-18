@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Lines</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script type="text/javascript" src="../../dist/paper-full.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <script type="text/paperscript" canvas="canvas">
+
+
+        var ready = false;
+        var frameIndex = 0;
+
+        // test load
+        var coloursets = [];
+        $.getJSON("colour-sets.json", function(json) {
+            console.log("colour-sets loaded");
+            console.log(json); // this will show the info it in firebug console
+            coloursets = json;
+
+            init();
+        });
+
+
+        function getColourset(ix)
+        {
+            var colset = [];
+            var rgbset = coloursets[ix];
+            for(var  i =0; i< rgbset.length;++i)
+            {
+                var rgb = rgbset[i];
+                colset.push(new Color(rgb[0]/255,rgb[1]/255,rgb[2]/255) );
+            }
+            return colset;
+        }
+
+        function getRandomColourset()
+        {
+            var i = getRandomIntBetween(0,coloursets.length-1);
+            console.log("getRandomColourset " + i);
+            return getColourset(i);
+        }
+
+        function getRandomIntBetween(from,to)
+        {
+            var x = from + Math.random()*(to -from + 1);
+            return Math.min(to, Math.floor(x) );
+        }
+
+        function getRandomFloat(from,to)
+        {
+            var xx = from + Math.random()*(to -from );
+            return xx;
+        }
+
+        function getRandomColourInSet(colset)
+        {
+            var i = getRandomIntBetween(0, colset.length - 1);
+            //console.log(i);
+            return colset[i];
+        }
+
+        function blendColours(c0,c1, ratio)
+        {
+            var r = c0.red + (c1.red - c0.red)*ratio;
+            var g = c0.green + (c1.green - c0.green)*ratio;
+            var b = c0.blue + (c1.blue - c0.blue)*ratio;
+            return new Color(r,g,b);
+        }
+
+        function createLineGradient(p0,p1,c0,c1 )
+        {
+            var fill = {
+                gradient: {
+                    stops: [c0,c1]
+                },
+                origin: p0,
+                destination: p1
+            }
+            return fill;
+        }
+
+         function createCircleGradient(p,r,c0,c1 )
+        {
+            var fill = {
+                gradient: {
+                    stops: [c0,c1]
+                },
+                origin: p + new Point(-r,-r),
+                destination: p + new Point(r,r)
+            }
+            return fill;
+        }
+
+        function rightAngleTriangle(rect, cornerix )
+        {
+            if(cornerix == undefined ) cornerix = 0;
+
+            var corners = [rect.topLeft, rect.topRight, rect.bottomRight, rect.bottomLeft];
+
+            var myPath = new Path();
+            
+            myPath.add( corners[(0 + cornerix) % 4 ]);
+            myPath.add( corners[(1 + cornerix) % 4 ]);
+            myPath.add( corners[(3 + cornerix) % 4 ]);
+
+            myPath.closed = true;
+            return myPath;
+        }
+
+         var w = 600;
+        var h = 600;
+        var colset;
+        
+        function init()
+        {
+            ready = true;
+            colset = getRandomColourset();
+          //  console.log(colset);
+
+            // random bg
+            var bgcol = getRandomColourInSet(colset);
+            var bgpath = new Path.Rectangle(new Rectangle(0,0,w,h), 0);
+            bgpath.fillColor = bgcol;
+            bgpath.fillColor = 'white';
+
+
+           
+        }
+
+
+        function drawUpdate()
+        {
+
+            
+            
+          
+            var x,y;
+            var col;
+            var xgap = 150;
+            var ygap = 150;
+            var ni  = w/xgap;
+            var nj  = h/ygap;
+           
+           
+            var globalgroup  = new Group();
+            
+            for (var i = 0; i < ni; i++) {
+                x  = (i)*xgap ;
+                 
+
+                for (var j = 0; j < nj; j++) {
+                    y  = j*ygap;
+                    //if(i % 2) y += 0.5*ygap;
+                
+                    
+                    var c0 = getRandomColourInSet(colset);
+                    var c1 = getRandomColourInSet(colset);
+                    var c = blendColours(c0,c1, Math.random());
+                    var thickness =  getRandomFloat(0.5,2.5);
+
+                    var radius  = getRandomFloat(10,40);
+
+                    var p = new Point(x,y);
+                    
+                    var rect = new Rectangle(0,0,xgap,ygap);
+
+                    var rectbg = new Shape.Rectangle(rect);
+                     rectbg.fillColor = c0;
+                    rectbg.strokeColor = c0;
+                        rectbg.strokeWidth = 0.5;
+                    var group = new Group(rectbg);
+
+                    var cornerix  = getRandomIntBetween(0,1)*2;
+                    if(Math.random()< 0.4)
+                    {
+                        var tri = rightAngleTriangle(rect, cornerix);
+                        tri.fillColor = c1;
+                        tri.strokeColor = c1;
+                        tri.strokeWidth = 0.5;
+                        group.addChild(tri);
+                        tri.pivot = new Point(0,0); // set pivot first before point, if not pivot is set then its the center of items bounds rect
+                        tri.position = new Point(0,0);
+                         group.pivot = new Point(0,0);
+                        group.position = p;
+
+                    }
+                    else{
+                        // test tri masked image
+                        var tri = rightAngleTriangle(rect, cornerix);
+                        tri.fillColor = c1;
+                        tri.strokeColor = c1;
+                        tri.strokeWidth = 1;
+                        var raster = new Raster('texture/wood1.jpg');
+                        var texscale=  1;
+                        
+                        raster.width = texscale* rect.width + 1;
+                        raster.height = texscale* rect.height + 0.5;
+                        raster.pivot = new Point(-raster.width/2,-raster.height/2); 
+                        raster.position = new Point(0,0);
+                            
+                        var trigroup = new Group(tri,raster);
+                        trigroup.clipMask = true;
+                        //trigroup.pivot = new Point(0,0); 
+                        //trigroup.position = new Point(0,0);
+                       
+                        group.addChild(trigroup);
+ 
+
+                        group.pivot = new Point(0,0);
+                        group.position = p;
+
+
+                    }
+
+                   
+                    globalgroup.addChild(group);
+
+              
+                }
+
+            }
+            globalgroup.matrix.rotate(45);
+            globalgroup.matrix.scale(1,1.3);
+            globalgroup.position = new Point(600,600);
+            
+        }
+
+        function onFrame(event) {
+            if(ready)
+            {
+                if(frameIndex < 1)
+                {
+                    drawUpdate();
+                    frameIndex++;
+                }
+            }
+        }
+
+        function onMouseMove(event) {
+            mousePoint = event.point;
+        }
+
+      //  var children = project.activeLayer.children;
+       
+    </script>
+</head>
+<body>
+    <canvas id="canvas" resize hidpi="off"></canvas>
+</body>
+</html>

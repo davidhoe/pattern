@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Lines</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script type="text/javascript" src="../../dist/paper-full.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <script type="text/paperscript" canvas="canvas">
+
+
+
+
+        // test load
+        var coloursets = [];
+        $.getJSON("colour-sets.json", function(json) {
+            console.log("colour-sets loaded");
+            console.log(json); // this will show the info it in firebug console
+            coloursets = json;
+
+            init();
+        });
+
+
+        function getColourset(ix)
+        {
+            var colset = [];
+            var rgbset = coloursets[ix];
+            for(var  i =0; i< rgbset.length;++i)
+            {
+                var rgb = rgbset[i];
+                colset.push(new Color(rgb[0]/255,rgb[1]/255,rgb[2]/255) );
+            }
+            return colset;
+        }
+
+        function getRandomColourset(ix)
+        {
+            return getColourset( Math.min(coloursets.length-1, Math.floor( coloursets.length * Math.random())) );
+        }
+
+        function getRandomIntBetween(from,to)
+        {
+            var x = from + Math.random()*(to -from + 1);
+            return Math.min(to, Math.floor(x) );
+        }
+
+        function getRandomColourInSet(colset)
+        {
+            var i = getRandomIntBetween(0, colset.length - 1);
+            //console.log(i);
+            return colset[i];
+        }
+
+        function blendColours(c0,c1, ratio)
+        {
+            var r = c0.red + (c1.red - c0.red)*ratio;
+            var g = c0.green + (c1.green - c0.green)*ratio;
+            var b = c0.blue + (c1.blue - c0.blue)*ratio;
+            return new Color(r,g,b);
+        }
+
+        function createLineGradient(p0,p1,c0,c1 )
+        {
+            var fill = {
+                gradient: {
+                    stops: [c0,c1]
+                },
+                origin: p0,
+                destination: p1
+            }
+            return fill;
+        }
+
+        function init()
+        {
+            var colset = getRandomColourset();
+            console.log(colset);
+
+            //var mousePoint = view.center;
+            var amount = 7000;
+           // var colors = ['red', 'white', 'blue', 'white'];
+
+            var w = 3440;
+            var h = 1440;
+
+            // random bg
+            var bgcol = getRandomColourInSet(colset);
+            var bgpath = new Path.Rectangle(new Rectangle(0,0,w,h), 0);
+            //bgpath.fillColor = bgcol;
+            bgpath.fillColor = 'black';
+
+            var x,y;
+            var col;
+            for (var i = 0; i < amount; i++) {
+                
+                var c0 = getRandomColourInSet(colset);
+                var c1 = getRandomColourInSet(colset);
+                var c = blendColours(c0,c1, Math.random());
+
+                x = w*Math.random();
+                var from = new Point(x, 0);
+                x += (0.43*w)* (2 *Math.random() - 1);
+                var to = new Point(x, h);
+                
+
+                var thickness = 1 + Math.random()*8;
+                
+
+                // shadow
+                var shadowalpha = 0.0 +  Math.random()*0.5;
+                var spath = new Path.Line(from + new Point(5 + Math.random()*10,0), to + new Point(0 + Math.random()*0,0));
+               /*
+                var sfirstSegment = new Segment(from+ Math.random()*10, null, handleOut);
+                var ssecondSegment = new Segment(to+ Math.random()*5, handleIn, null);
+                var spath = new Path(sfirstSegment, ssecondSegment);
+*/
+                spath.strokeColor = new Color(0,0,0,shadowalpha);
+                spath.strokeWidth = thickness;
+
+
+
+
+                // straight line
+                var path = new Path.Line(from, to);
+
+                /*
+                // curved line
+                var handleIn = new Point(0, -h*0.33);
+                var handleOut = new Point( (to.x - from.x )*0.1 , h*0.33);
+                var firstSegment = new Segment(from, null, handleOut);
+                var secondSegment = new Segment(to, handleIn, null);
+                var path = new Path(firstSegment, secondSegment);
+                */
+
+
+               // path.strokeColor = c;
+                path.strokeColor = createLineGradient(from,to,Math.random() < 0.3 ?  new Color(0) : c1, Math.random() < 0.95 ? new Color(0) : c1   ) ;
+               
+                path.strokeWidth = thickness;
+        
+
+                
+
+            }
+
+        }
+
+        function onMouseMove(event) {
+            mousePoint = event.point;
+        }
+
+        var children = project.activeLayer.children;
+       
+    </script>
+</head>
+<body>
+    <canvas id="canvas" resize hidpi="off"></canvas>
+</body>
+</html>

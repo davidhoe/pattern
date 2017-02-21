@@ -1,7 +1,7 @@
-import {ColourUtils} from './ColourUtils.js'
-import {MathUtils} from './MathUtils.js'
-import {FillUtils} from './FillUtils.js'
-import {PathUtils} from './PathUtils.js'
+import {ColourUtils} from '../util/ColourUtils.js'
+import {MathUtils} from '../util/MathUtils.js'
+import {FillUtils} from '../util/FillUtils.js'
+import {PathUtils} from '../util/PathUtils.js'
 
 import paper from 'paper'
 

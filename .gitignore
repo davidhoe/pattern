@@ -1,6 +1,18 @@
+# Debug.
+npm-debug.log
+
+# External libraries.
 node_modules/
-jspm_packages/
-jspm
-build.js
-build.js.map
-.idea/
+src/lib/
+
+# Compiled css.
+src/css/
+
+# Generated docs.
+docs
+
+# Generated build.
+dist
+build
+
+.idea

@@ -1,0 +1,16 @@
+notes
+
+phase 1:
+
+
+wallpaper generator
+
+colour select
+pattern select
+save to file
+
+fullscreen background
+pattern select on the left
+
+phase 2:
+

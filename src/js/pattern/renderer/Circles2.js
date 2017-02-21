@@ -1,5 +1,5 @@
-import {ColourUtils} from './ColourUtils.js'
-import {MathUtils} from './MathUtils.js'
+import {ColourUtils} from '../util/ColourUtils.js'
+import {MathUtils} from '../util/MathUtils.js'
 import paper from 'paper'
 
 export class Circles2

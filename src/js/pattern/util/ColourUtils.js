@@ -16,7 +16,7 @@ export class ColourUtils {
 
     loadColoursets(callback)
     {
-        $.getJSON("Pattern/colour-sets.json", function(json) {
+        $.getJSON("js/pattern/asset/colour-sets.json", function(json) {
 
             console.log("colour-sets loaded");
             // console.log(json); // this will show the info it in firebug console

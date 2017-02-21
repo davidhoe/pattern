@@ -1,12 +1,12 @@
 import paper from 'paper'
-import {MathUtils} from './patternlib/MathUtils';
-import {ColourUtils} from './patternlib/ColourUtils';
+import {MathUtils} from './pattern/util/MathUtils';
+import {ColourUtils} from './pattern/util/ColourUtils';
 
-//import {Circles2} from './patternlib/Circles2';
-//import {Lines} from './patternlib/Lines';
-//import {TriGrid2} from './patternlib/TriGrid2';
-//import {TriGrid1} from './patternlib/TriGrid1';
-import * as renderers from './patternlib/PatternRenderers'
+//import {Circles2} from './pattern/Circles2';
+//import {Lines} from './pattern/Lines';
+//import {TriGrid2} from './pattern/TriGrid2';
+//import {TriGrid1} from './pattern/TriGrid1';
+import * as renderers from './pattern/renderer/PatternRenderers'
 
 //import $ from 'jquery'
 
@@ -22,7 +22,7 @@ ColourUtils.Instance().loadColoursets(init);
 
 function init()
 {
-    MathUtils.SetSeed(9);
+    MathUtils.SetSeed(12);
     console.log("ran0 " + MathUtils.GetSeededRandomFloat(0,1));
     console.log("ran1 " + MathUtils.GetSeededRandomFloat(0,1));
 

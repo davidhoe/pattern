@@ -1,5 +1,11 @@
 {
   "jspm": {
+    "directories": {
+      "baseURL": "src",
+      "doc": "docs",
+      "packages": "src/lib",
+      "test": "test"
+    },
     "dependencies": {
       "jquery": "npm:jquery@^3.1.1",
       "paper": "github:paperjs/paper.js@^0.10.2"
@@ -9,6 +15,12 @@
       "babel-runtime": "npm:babel-runtime@^5.8.24",
       "core-js": "npm:core-js@^1.1.4"
     }
+  },
+  "directories": {
+    "doc": "docs",
+    "test": "test",
+    "baseURL": "src",
+    "packages": "src/lib"
   },
   "devDependencies": {
     "ftpsync": "^0.1.10",

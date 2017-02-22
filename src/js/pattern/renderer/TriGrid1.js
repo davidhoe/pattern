@@ -2,6 +2,7 @@ import {ColourUtils} from '../util/ColourUtils.js'
 import {MathUtils} from '../util/MathUtils.js'
 import {FillUtils} from '../util/FillUtils.js'
 import {PathUtils} from '../util/PathUtils.js'
+import {ItemUtils} from '../util/ItemUtils.js'
 
 import paper from 'paper'
 
@@ -9,29 +10,45 @@ export class TriGrid1
 {
 
     constructor() {
+        this.globalgroup = null;
         this.ready = false;
         this.frameIndex = 0;
 
-        this.w = 600;
+        this.w = 1200;
         this.h = 600;
         this.colset;
     }
 
 
-    init()
+    init(colourset)
     {
-        this.colset = ColourUtils.GetSeededRandomColourset();
+        this.destroy();
+
+        if(!colourset)
+            this.colset = ColourUtils.GetSeededRandomColourset();
+        else
+            this.colset = colourset;
         //  console.log(colset);
+
 
         // random bg
         var bgcol = ColourUtils.GetSeededRandomColourInSet(this.colset);
-        var bgpath = new paper.Path.Rectangle(new paper.Rectangle(0,0,this.w,this.h), 0);
+        var bgpath = new paper.Path.Rectangle(new paper.Rectangle(0,0,50,50), 0);
         bgpath.fillColor = bgcol;
-        bgpath.fillColor = 'white';
-
+        bgpath.fillColor = 'black';
+        bgpath.pivot = new paper.Point(0,0);
+        bgpath.position = new paper.Point(50,50);
         this.drawUpdate();
     }
 
+    destroy()
+    {
+        if(this.globalgroup) {
+            // todo remove all items
+            ItemUtils.RemoveChildrenRecursive(this.globalgroup);
+            this.globalgroup = null;
+        }
+    }
     drawUpdate()
     {
 
@@ -43,8 +60,8 @@ export class TriGrid1
         var nj  = this. h/ygap;
 
 
-        var globalgroup  = new paper.Group();
-
+        this.globalgroup  = new paper.Group();
+        this.globalgroup.pivot = new paper.Point(0,0);
 
         for (var i = 0; i < ni; i++) {
             x  = (i)*xgap ;
@@ -104,19 +121,18 @@ export class TriGrid1
                     group.addChild(trigroup);
 
 
-                    group.pivot = new paper.Point(0,0);
+                    group.pivot = new paper.Point(0,0) // do pivot before position
                     group.position = p;
 
 
                 }
 
-
-                globalgroup.addChild(group);
-
+                this.globalgroup.addChild(group);
 
             }
 
-
+            this.globalgroup.pivot = new paper.Point(0,0);
+            this.globalgroup.position = new paper.Point(0,0);
         }
         //globalgroup.rotation = 45;
 

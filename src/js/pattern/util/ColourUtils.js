@@ -71,6 +71,13 @@ export class ColourUtils {
         return ColourUtils.Instance().getRandomColourset();
     }
 
+    static GetRandomCombinedColourset()
+    {
+        var cset0 = ColourUtils.Instance().getRandomColourset();
+        var cset1 = ColourUtils.Instance().getRandomColourset();
+        return cset0.concat(cset1);
+    }
+
     static GetSeededRandomColourset()
     {
         return ColourUtils.Instance().getSeededRandomColourset();

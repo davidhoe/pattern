@@ -8,8 +8,8 @@ import {ColourUtils} from './pattern/util/ColourUtils';
 //import {TriGrid1} from './pattern/TriGrid1';
 import * as renderers from './pattern/renderer/PatternRenderers'
 
+import {ColourButton} from './pattern/colourui/ColourButton'
 //import $ from 'jquery'
-
 
 ///paper.paper.install(window);
 
@@ -30,8 +30,26 @@ function init()
     //colours loaded
     //new Circles2().init();
   //  new Lines().init()
-    new renderers.TriGrid1().init() ;
+
+    for(var i =0; i< 15;++i) {
+        var colourset = ColourUtils.GetRandomCombinedColourset();
+        var a = new ColourButton(colourset);
+        a.group.position = new paper.Point(100, 200 + i*100);
+        a.onClick = function(target)
+        {
+            MathUtils.SetSeed(MathUtils.GetRandomIntBetween(0,100000));
+            console.log("click handler " + target.colourset);
+           new renderers.TriGrid1().init( target.colourset) ;
+        }
+    }
+
+    var colourset = ColourUtils.GetRandomCombinedColourset();
+    var pp = new renderers.TriGrid1() ;
+    pp.init(colourset);
+    pp.globalgroup.position.x  = 100;
+
 }
+
 
 
 paper.view.onFrame = function(event) {

@@ -29,7 +29,11 @@ export class ColourUtils {
         });
     }
 
-
+    /**
+     * get colour set
+     * @param ix
+     * @returns {Array}
+     */
     getColourset(ix)
     {
         console.log("getColourset "   + ix);
@@ -58,7 +62,7 @@ export class ColourUtils {
 
 
     static GetColourset(ix)
-    {
+    {ColourUtils.Instance().getColourset()
         return ColourUtils.Instance().getColourset(ix);
     }
 

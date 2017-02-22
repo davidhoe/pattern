@@ -2,6 +2,8 @@ System.config({
   defaultJSExtensions: true,
   transpiler: "babel",
   babelOptions: {
+  //  plugins: ["transform-es2015-modules-systemjs"],
+  //  presets: [ 'es2015'],
     "optional": [
       "runtime",
       "optimisation.modules.system"

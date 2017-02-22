@@ -1,1 +1,1 @@
-jspm bundle main.js
+jspm bundle app.js

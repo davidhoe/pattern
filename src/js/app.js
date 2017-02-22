@@ -22,7 +22,7 @@ ColourUtils.Instance().loadColoursets(init);
 
 function init()
 {
-    MathUtils.SetSeed(12);
+    MathUtils.SetSeed(13);
     console.log("ran0 " + MathUtils.GetSeededRandomFloat(0,1));
     console.log("ran1 " + MathUtils.GetSeededRandomFloat(0,1));
 

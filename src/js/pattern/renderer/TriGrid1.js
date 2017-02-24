@@ -19,10 +19,62 @@ export class TriGrid1
         this.colset;
     }
 
+    /// test grid helper method get all the rectangles
+    getRectGrid(nh, cellRatio, bound)
+    {
+        var cellw, cellh;
+        // calculate the  cellw,cellh
+        cellh = bound.height / nh;
+        cellw = cellRatio*cellh;
+
+        // calculate the number of cells wide
+        var nw  =  Math.ceil( bound.width / cellw );
+
+        // calculate the offset to center it
+        var offsetx = ( nw*cellw - bound.width ) / 2;
+
+        // calculate rectangles
+        var x,y;
+        var rects = [];
+        for(var j = 0; j < nh; ++j)
+        {
+            y = bound.y + j*cellh;
+            for(var i = 0; i < nw; ++i) {
+                x = -offsetx + bound.x + i*cellw;
+                rects.push(new paper.Rectangle(x,y,cellw,cellh));
+            }
+        }
+        return rects;
+    }
+
+
+    test()
+    {
+        // test create something
+       // var bgcol = ColourUtils.GetSeededRandomColourInSet(this.colset);
+        this.testITem = new paper.Group();
+
+        var group = new paper.Group();
+
+        var path = paper.Path.Rectangle(new paper.Rectangle(0,0,100,100), 0);
+        //bgpath.fillColor = bgcol;
+        path.fillColor = 'black';
+
+        group.addChild(path);
+        this.testITem.addChild(group);
+
+        this.testITem.remove();
+
+    }
+
+    testDestroy()
+    {
+
+    }
 
     init(colourset)
     {
-        this.destroy();
+        //this.destroy();
 
         if(!colourset)
             this.colset = ColourUtils.GetSeededRandomColourset();
@@ -32,21 +84,19 @@ export class TriGrid1
 
 
         // random bg
-        var bgcol = ColourUtils.GetSeededRandomColourInSet(this.colset);
-        var bgpath = new paper.Path.Rectangle(new paper.Rectangle(0,0,50,50), 0);
-        bgpath.fillColor = bgcol;
-        bgpath.fillColor = 'black';
-        bgpath.pivot = new paper.Point(0,0);
-        bgpath.position = new paper.Point(50,50);
+
         this.drawUpdate();
+
+        //bgpath.remove();
     }
 
     destroy()
     {
         if(this.globalgroup) {
             // todo remove all items
-            ItemUtils.RemoveChildrenRecursive(this.globalgroup);
-            this.globalgroup = null;
+            this.globalgroup.remove();
+            //ItemUtils.RemoveChildrenRecursive(this.globalgroup);
+           // this.globalgroup = null;
         }
     }
     drawUpdate()
@@ -59,18 +109,32 @@ export class TriGrid1
         var ni  = this.w/xgap;
         var nj  = this. h/ygap;
 
+        var screenw = screen.width;
+        var screenh =  screen.height;
+        console.log("Screen Width: " + screenw);
+        console.log("Screen Height: " + screenh);
+
+        var screenRect = new paper.Rectangle(0,0,screenw,screenh);
+
+        // make a bg
+        var bgcol = ColourUtils.GetSeededRandomColourInSet(this.colset);
+        var bgpath = new paper.Path.Rectangle(screenRect);
+        bgpath.fillColor = bgcol;
+        bgpath.pivot = new paper.Point(0,0);
+        bgpath.position = new paper.Point(0,0);
+
 
         this.globalgroup  = new paper.Group();
         this.globalgroup.pivot = new paper.Point(0,0);
 
-        for (var i = 0; i < ni; i++) {
-            x  = (i)*xgap ;
+
+        var rects = this.getRectGrid(10, 1,screenRect );
 
 
-            for (var j = 0; j < nj; j++) {
-                y  = j*ygap;
-                //if(i % 2) y += 0.5*ygap;
 
+
+        for (var i = 0; i < rects.length; i++) {
+          //  x  = (i)*xgap ;
 
                 var c0 = ColourUtils.GetSeededRandomColourInSet(this.colset);
                 var c1 = ColourUtils.GetSeededRandomColourInSet(this.colset);
@@ -79,30 +143,30 @@ export class TriGrid1
 
                 var radius  = MathUtils.GetSeededRandomFloat(10,40);
 
-                var p = new paper.Point(x,y);
+                //var p = new paper.Point(x,y);
 
-                var rect = new paper.Rectangle(0,0,xgap,ygap);
+                var rect = rects[i]; // new paper.Rectangle(0,0,xgap,ygap);
+                var baserect = new paper.Rectangle(0,0,rect.width, rect.height);
 
-                var rectbg = new paper.Shape.Rectangle(rect);
+                var rectbg = new paper.Path.Rectangle( baserect);
                 rectbg.fillColor = c0;
 
                 var group = new paper.Group(rectbg);
 
                 var cornerix  = MathUtils.GetSeededRandomIntBetween(0,3);
-                if(MathUtils.GetSeededRandomFloat()< 0.9)
+                if(MathUtils.GetSeededRandomFloat()< 1.0)
                 {
-                    var tri = PathUtils.rightAngleTriangle(rect, cornerix);
+                    // create a  triangle facing a random corner
+                    var tri = PathUtils.rightAngleTriangle(baserect, cornerix);
                     tri.fillColor = c1;
                     group.addChild(tri);
                     tri.pivot = new paper.Point(0,0); // set pivot first before point, if not pivot is set then its the center of items bounds rect
                     tri.position = new paper.Point(0,0);
-                    group.pivot = new paper.Point(0,0);
-                    group.position = p;
 
                 }
                 else{
                     // test tri masked image
-                    var tri = PathUtils.rightAngleTriangle(rect, cornerix);
+                    var tri = PathUtils.rightAngleTriangle(baserect, cornerix);
                     tri.fillColor = c1;
 
                     var raster = new paper.Raster('Patter/texture/wood1.jpg');
@@ -119,25 +183,27 @@ export class TriGrid1
                     //trigroup.position = new Point(0,0);
 
                     group.addChild(trigroup);
-
-
-                    group.pivot = new paper.Point(0,0) // do pivot before position
-                    group.position = p;
-
-
                 }
 
-                this.globalgroup.addChild(group);
+            group.pivot = new paper.Point(0,0);
+            group.position = new paper.Point(rect.x, rect.y);
 
-            }
 
-            this.globalgroup.pivot = new paper.Point(0,0);
-            this.globalgroup.position = new paper.Point(0,0);
+
+            this.globalgroup.addChild(group);
+
+
         }
         //globalgroup.rotation = 45;
 
+        this.globalgroup.pivot = new paper.Point(0,0);
+        this.globalgroup.position = new paper.Point(0,0);
 
 
+        this.globalgroup.matrix.rotate(45);
+
+
+        // this.globalgroup.remove();
 
     }
 

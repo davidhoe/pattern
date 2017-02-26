@@ -35,5 +35,5 @@ global.paths = {
 // Require all tasks in the 'gulp' folder.
 requireDir('./gulp', { recurse: false });
 
-// Default task; start local server & watch for changes.
-gulp.task('default', ['connect', 'watch']);
+// Default task; start local server & watch for changes.  open default browser
+gulp.task('default', ['connect', 'watch', 'browser']);

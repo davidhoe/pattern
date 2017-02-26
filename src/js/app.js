@@ -57,7 +57,7 @@ function init()
             selectedColourset = target.colourset;
             //init( target.colourset) ;
             drawRender();
-            exportRenderToFile();
+            //exportRenderToFile();
         }
     }
 

@@ -3,6 +3,7 @@ import {MathUtils} from '../util/MathUtils.js'
 import {FillUtils} from '../util/FillUtils.js'
 import {PathUtils} from '../util/PathUtils.js'
 import {ItemUtils} from '../util/ItemUtils.js'
+import {GridUtils} from '../util/GridUtils.js'
 
 import paper from 'paper'
 
@@ -114,7 +115,8 @@ export class TriGrid1
         console.log("Screen Width: " + screenw);
         console.log("Screen Height: " + screenh);
 
-        var screenRect = new paper.Rectangle(0,0,screenw,screenh);
+        //var screenRect = new paper.Rectangle(0,0,screenw,screenh);
+        var screenRect = new paper.Rectangle(200,200,1000,1000);
 
         // make a bg
         var bgcol = ColourUtils.GetSeededRandomColourInSet(this.colset);
@@ -128,12 +130,12 @@ export class TriGrid1
         this.globalgroup.pivot = new paper.Point(0,0);
 
 
-        var rects = this.getRectGrid(10, 1,screenRect );
+       // var shapes = this.getRectGrid(10, 1,screenRect );
+        var angle = 45;
+        var shapeSize = new paper.Size(20,20);
+        var shapes = GridUtils.CreateRectGrid(screenRect, angle, shapeSize);
 
-
-
-
-        for (var i = 0; i < rects.length; i++) {
+        for (var i = 0; i < shapes.length; i++) {
           //  x  = (i)*xgap ;
 
                 var c0 = ColourUtils.GetSeededRandomColourInSet(this.colset);
@@ -145,14 +147,21 @@ export class TriGrid1
 
                 //var p = new paper.Point(x,y);
 
-                var rect = rects[i]; // new paper.Rectangle(0,0,xgap,ygap);
-                var baserect = new paper.Rectangle(0,0,rect.width, rect.height);
+                var rectPoints = shapes[i]; // new paper.Rectangle(0,0,xgap,ygap);
 
-                var rectbg = new paper.Path.Rectangle( baserect);
+                var rectbg = new paper.Path({
+                    strokeColor: 'black',
+                    closed: true
+                });
+                rectbg.addSegments(rectPoints);
+
+                //var baserect = new paper.Rectangle(0,0,rect.width, rect.height);
+
+//                var rectbg = new paper.Path.Rectangle( baserect);
                 rectbg.fillColor = c0;
 
-                var group = new paper.Group(rectbg);
-
+               // var group = new paper.Group(rectbg);
+                /*
                 var cornerix  = MathUtils.GetSeededRandomIntBetween(0,3);
                 if(MathUtils.GetSeededRandomFloat()< 1.0)
                 {
@@ -184,13 +193,12 @@ export class TriGrid1
 
                     group.addChild(trigroup);
                 }
+                */
+           // group.pivot = new paper.Point(0,0);
+           // group.position = new paper.Point(rect.x, rect.y);
 
-            group.pivot = new paper.Point(0,0);
-            group.position = new paper.Point(rect.x, rect.y);
 
 
-
-            this.globalgroup.addChild(group);
 
 
         }
@@ -200,7 +208,7 @@ export class TriGrid1
         this.globalgroup.position = new paper.Point(0,0);
 
 
-        this.globalgroup.matrix.rotate(45);
+   //     this.globalgroup.matrix.rotate(45);
 
 
         // this.globalgroup.remove();

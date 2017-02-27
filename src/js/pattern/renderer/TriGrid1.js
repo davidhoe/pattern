@@ -3,7 +3,10 @@ import {MathUtils} from '../util/MathUtils.js'
 import {FillUtils} from '../util/FillUtils.js'
 import {PathUtils} from '../util/PathUtils.js'
 import {ItemUtils} from '../util/ItemUtils.js'
-import {GridUtils} from '../util/GridUtils.js'
+import {RectGridUtils} from '../util/RectGridUtils.js'
+import {TriGridUtils} from '../util/TriGridUtils.js'
+import {DiamondGridUtils} from '../util/DiamondGridUtils.js'
+import {HexGridUtils} from '../util/HexGridUtils.js'
 
 import paper from 'paper'
 
@@ -89,6 +92,7 @@ export class TriGrid1
         this.drawUpdate();
 
         //bgpath.remove();
+
     }
 
     destroy()
@@ -116,7 +120,7 @@ export class TriGrid1
         console.log("Screen Height: " + screenh);
 
         //var screenRect = new paper.Rectangle(0,0,screenw,screenh);
-        var screenRect = new paper.Rectangle(200,200,1000,1000);
+        var screenRect = new paper.Rectangle(200,200,700,500);
 
         // make a bg
         var bgcol = ColourUtils.GetSeededRandomColourInSet(this.colset);
@@ -129,11 +133,14 @@ export class TriGrid1
         this.globalgroup  = new paper.Group();
         this.globalgroup.pivot = new paper.Point(0,0);
 
-
        // var shapes = this.getRectGrid(10, 1,screenRect );
-        var angle = 45;
-        var shapeSize = new paper.Size(20,20);
-        var shapes = GridUtils.CreateRectGrid(screenRect, angle, shapeSize);
+        var angle = 10;
+        var shapeSize = new paper.Size(100,100);
+        //var shapes = RectGridUtils.CreateGrid(screenRect, angle, shapeSize);
+        //var shapes = TriGridUtils.CreateGrid(screenRect, angle, shapeSize);
+        //var shapes = DiamondGridUtils.CreateGrid(screenRect, angle, shapeSize);
+        var shapes = HexGridUtils.CreateGrid(screenRect, angle, shapeSize);
+
 
         for (var i = 0; i < shapes.length; i++) {
           //  x  = (i)*xgap ;
@@ -206,6 +213,11 @@ export class TriGrid1
 
         this.globalgroup.pivot = new paper.Point(0,0);
         this.globalgroup.position = new paper.Point(0,0);
+
+
+        // debug draw outline
+        var debugoutline = new paper.Path.Rectangle(screenRect);
+        debugoutline.strokeColor = 'black';
 
 
    //     this.globalgroup.matrix.rotate(45);

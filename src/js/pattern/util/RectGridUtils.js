@@ -2,8 +2,9 @@
  * Created by David on 26/02/2017.
  */
 import paper from 'paper'
+import {PathUtils} from './PathUtils'
 
-export class RectGridUtils
+export default class RectGridUtils
 {
     /**
      * create a grid of quads that covers the bounding box area, this will usually be the canvas dimension.
@@ -88,7 +89,7 @@ export class RectGridUtils
             // construct shape
             var shape = RectGridUtils.CreateShapePoints(ix,iy, shapeSize, mat);
            // console.log("shape " + shape);
-            if(RectGridUtils.IsInBound(shape, bound))
+            if(PathUtils.IsInBound(shape, bound))
             {
                 return ix;
             }
@@ -108,7 +109,7 @@ export class RectGridUtils
             // construct shape
             var shape = RectGridUtils.CreateShapePoints(ix,iy, shapeSize, mat);
            // console.log("shape " + shape);
-            if(RectGridUtils.IsInBound(shape, bound))
+            if(PathUtils.IsInBound(shape, bound))
             {
                 shapes.push(shape);
                 ix += stepix;
@@ -128,29 +129,7 @@ export class RectGridUtils
         var p1 = new paper.Point((ix + 1) * size.width, (iy + 0) * size.height);
         var p2 = new paper.Point((ix + 1) * size.width, (iy + 1) * size.height);
         var p3 = new paper.Point((ix + 0) * size.width, (iy + 1) * size.height);
-       return RectGridUtils.TransformPoints([p0,p1,p2,p3], mat);
-    }
-
-    static TransformPoints(points, mat)
-    {
-        for(var i = points.length-1 ; i >=0; --i)
-        {
-            points[i] = mat.transform(points[i]);
-        }
-        return points;
-    }
-    /**
-     * helper method return true any of the points is within the bound of the rect
-     * @param points
-     * @param rect
-     */
-    static IsInBound(points, rect)
-    {
-        for(var i = points.length-1 ; i >=0; --i)
-        {
-            if(rect.contains(points[i])) return true;
-        }
-        return false;
+       return PathUtils.TransformPoints([p0,p1,p2,p3], mat);
     }
 
 

@@ -7,6 +7,12 @@ import {RectGridUtils} from '../util/RectGridUtils.js'
 import {TriGridUtils} from '../util/TriGridUtils.js'
 import {DiamondGridUtils} from '../util/DiamondGridUtils.js'
 import {HexGridUtils} from '../util/HexGridUtils.js'
+import {RandomColourFromSetNode} from '../model/RandomColourFromSetNode.js'
+import {RectGridNode} from '../model/RectGridNode.js'
+import {FillNode} from '../model/FillNode.js'
+import {PatternState} from '../model/PatternState.js'
+
+import * as utils from '../util/utils'
 
 import paper from 'paper'
 
@@ -26,6 +32,7 @@ export class TriGrid1
     /// test grid helper method get all the rectangles
     getRectGrid(nh, cellRatio, bound)
     {
+
         var cellw, cellh;
         // calculate the  cellw,cellh
         cellh = bound.height / nh;
@@ -87,11 +94,28 @@ export class TriGrid1
         //  console.log(colset);
 
 
-        // random bg
+       // this.drawUpdate();
+        this.drawUpdate2();
+    }
 
-        this.drawUpdate();
+    drawUpdate2()
+    {
+        var screenRect = new paper.Rectangle(200,200,700,500);
 
-        //bgpath.remove();
+        PatternState.Instance().bound = screenRect;
+
+        var angle = 45;
+        var shapeSize = new paper.Size(100,100);
+        var gridnode = new RectGridNode(angle,shapeSize);
+        var colournode = new RandomColourFromSetNode(this.colset);
+        var fillnode = new FillNode();
+        gridnode.addChild(colournode);
+        colournode.addChild(fillnode);
+        gridnode.process();
+
+        //debug outline
+        var debugoutline = new paper.Path.Rectangle(screenRect);
+        debugoutline.strokeColor = 'black';
 
     }
 
@@ -136,11 +160,10 @@ export class TriGrid1
        // var shapes = this.getRectGrid(10, 1,screenRect );
         var angle = 10;
         var shapeSize = new paper.Size(100,100);
-        //var shapes = RectGridUtils.CreateGrid(screenRect, angle, shapeSize);
+        var shapes = RectGridUtils.CreateGrid(screenRect, angle, shapeSize);
         //var shapes = TriGridUtils.CreateGrid(screenRect, angle, shapeSize);
         //var shapes = DiamondGridUtils.CreateGrid(screenRect, angle, shapeSize);
-        var shapes = HexGridUtils.CreateGrid(screenRect, angle, shapeSize);
-
+        //var shapes = HexGridUtils.CreateGrid(screenRect, angle, shapeSize);
 
         for (var i = 0; i < shapes.length; i++) {
           //  x  = (i)*xgap ;

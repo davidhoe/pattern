@@ -2,8 +2,9 @@
  * Created by David on 26/02/2017.
  */
 import paper from 'paper'
+import {PathUtils} from './PathUtils'
 
-export class TriGridUtils
+export default class TriGridUtils
 {
 
     /**
@@ -89,7 +90,7 @@ export class TriGridUtils
             // construct shape
             var shape = TriGridUtils.CreateShapePoints(ix,iy, shapeSize, mat);
             // console.log("shape " + shape);
-            if(TriGridUtils.IsInBound(shape, bound))
+            if(PathUtils.IsInBound(shape, bound))
             {
                 return ix;
             }
@@ -109,7 +110,7 @@ export class TriGridUtils
             // construct shape
             var shape = TriGridUtils.CreateShapePoints(ix,iy, shapeSize, mat);
             // console.log("shape " + shape);
-            if(TriGridUtils.IsInBound(shape, bound))
+            if(PathUtils.IsInBound(shape, bound))
             {
                 shapes.push(shape);
                 ix += stepix;
@@ -162,30 +163,9 @@ export class TriGridUtils
             }
 
         }
-        return TriGridUtils.TransformPoints([p0,p1,p2], mat);
+        return PathUtils.TransformPoints([p0,p1,p2], mat);
     }
 
-    static TransformPoints(points, mat)
-    {
-        for(var i = points.length-1 ; i >=0; --i)
-        {
-            points[i] = mat.transform(points[i]);
-        }
-        return points;
-    }
-    /**
-     * helper method return true any of the points is within the bound of the rect
-     * @param points
-     * @param rect
-     */
-    static IsInBound(points, rect)
-    {
-        for(var i = points.length-1 ; i >=0; --i)
-        {
-            if(rect.contains(points[i])) return true;
-        }
-        return false;
-    }
 
 
 }

@@ -2,8 +2,9 @@
  * Created by David on 26/02/2017.
  */
 import paper from 'paper'
+import {PathUtils} from './PathUtils'
 
-export class HexGridUtils
+export default class HexGridUtils
 {
 
     /**
@@ -89,7 +90,7 @@ export class HexGridUtils
             // construct shape
             var shape = HexGridUtils.CreateShapePoints(ix,iy, shapeSize, mat);
             // console.log("shape " + shape);
-            if(HexGridUtils.IsInBound(shape, bound))
+            if(PathUtils.IsInBound(shape, bound))
             {
                 return ix;
             }
@@ -109,7 +110,7 @@ export class HexGridUtils
             // construct shape
             var shape = HexGridUtils.CreateShapePoints(ix,iy, shapeSize, mat);
             // console.log("shape " + shape);
-            if(HexGridUtils.IsInBound(shape, bound))
+            if(PathUtils.IsInBound(shape, bound))
             {
                 shapes.push(shape);
                 ix += stepix;
@@ -148,30 +149,9 @@ export class HexGridUtils
         p4 = new paper.Point( tlx + (0.5 - offsetxRatio) * size.width, tly + (1) * size.height);
         p5 = new paper.Point( tlx + (0) * size.width, tly + (0.5) * size.height);
 
-        return HexGridUtils.TransformPoints([p0,p1,p2,p3,p4,p5], mat);
+        return PathUtils.TransformPoints([p0,p1,p2,p3,p4,p5], mat);
     }
 
-    static TransformPoints(points, mat)
-    {
-        for(var i = points.length-1 ; i >=0; --i)
-        {
-            points[i] = mat.transform(points[i]);
-        }
-        return points;
-    }
-    /**
-     * helper method return true any of the points is within the bound of the rect
-     * @param points
-     * @param rect
-     */
-    static IsInBound(points, rect)
-    {
-        for(var i = points.length-1 ; i >=0; --i)
-        {
-            if(rect.contains(points[i])) return true;
-        }
-        return false;
-    }
 
 
 }

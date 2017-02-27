@@ -2,8 +2,9 @@
  * Created by David on 26/02/2017.
  */
 import paper from 'paper'
+import {PathUtils} from './PathUtils'
 
-export class DiamondGridUtils
+export default class DiamondGridUtils
 {
 
     /**
@@ -89,7 +90,7 @@ export class DiamondGridUtils
             // construct shape
             var shape = DiamondGridUtils.CreateShapePoints(ix,iy, shapeSize, mat);
             // console.log("shape " + shape);
-            if(DiamondGridUtils.IsInBound(shape, bound))
+            if(PathUtils.IsInBound(shape, bound))
             {
                 return ix;
             }
@@ -109,7 +110,7 @@ export class DiamondGridUtils
             // construct shape
             var shape = DiamondGridUtils.CreateShapePoints(ix,iy, shapeSize, mat);
             // console.log("shape " + shape);
-            if(DiamondGridUtils.IsInBound(shape, bound))
+            if(PathUtils.IsInBound(shape, bound))
             {
                 shapes.push(shape);
                 ix += stepix;
@@ -134,30 +135,7 @@ export class DiamondGridUtils
         p2 = new paper.Point((offset + ix + 0.5) * size.width, (iy*s + 1.0) * size.height);
         p3 = new paper.Point((offset + ix + 0) * size.width, (iy*s + 0.5) * size.height);
 
-        return DiamondGridUtils.TransformPoints([p0,p1,p2,p3], mat);
+        return PathUtils.TransformPoints([p0,p1,p2,p3], mat);
     }
-
-    static TransformPoints(points, mat)
-    {
-        for(var i = points.length-1 ; i >=0; --i)
-        {
-            points[i] = mat.transform(points[i]);
-        }
-        return points;
-    }
-    /**
-     * helper method return true any of the points is within the bound of the rect
-     * @param points
-     * @param rect
-     */
-    static IsInBound(points, rect)
-    {
-        for(var i = points.length-1 ; i >=0; --i)
-        {
-            if(rect.contains(points[i])) return true;
-        }
-        return false;
-    }
-
 
 }

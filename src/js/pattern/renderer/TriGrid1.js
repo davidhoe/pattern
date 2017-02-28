@@ -11,6 +11,8 @@ import {RandomColourFromSetNode} from '../model/RandomColourFromSetNode.js'
 import {RectGridNode} from '../model/RectGridNode.js'
 import {FillNode} from '../model/FillNode.js'
 import {PatternState} from '../model/PatternState.js'
+import {TriSubdivisionNode} from '../model/TriSubdivisionNode'
+import {TriSliceNode} from '../model/TriSliceNode'
 
 import * as utils from '../util/utils'
 
@@ -104,13 +106,18 @@ export class TriGrid1
 
         PatternState.Instance().bound = screenRect;
 
-        var angle = 45;
+        var angle = -45;
         var shapeSize = new paper.Size(100,100);
         var gridnode = new RectGridNode(angle,shapeSize);
+        var subdivide = new TriSubdivisionNode(3);
         var colournode = new RandomColourFromSetNode(this.colset);
         var fillnode = new FillNode();
+        var trislice = new TriSliceNode(0.1,0.5,5);
+
         gridnode.addChild(colournode);
-        colournode.addChild(fillnode);
+        colournode.addChild(trislice);
+        trislice.addChild(fillnode);
+
         gridnode.process();
 
         //debug outline

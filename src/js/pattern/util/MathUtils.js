@@ -1,6 +1,11 @@
 
 export class MathUtils {
 
+    static Lerp(x0,x1,r)
+    {
+        return x0 + (x1-x0)*r;
+    }
+
     static GetRandomIndexForArray(array)
     {
         return MathUtils.GetRandomIntBetween(0, array.length - 1);

@@ -42,7 +42,7 @@ export class PathUtils
         // shape may still overlap along the edges so calc bounding box for safety check
         var shapebound = PathUtils.GetBoundingbox(points);
         if(shapebound.intersects(rect)) return true;
-        console.log(shapebound);
+     //   console.log(shapebound);
         return false;
     }
 

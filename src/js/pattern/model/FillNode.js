@@ -21,6 +21,7 @@ export class FillNode extends Node
         var shape = new paper.Path(PatternState.Instance().path);
         shape.closed = true;
         shape.fillColor = PatternState.Instance().colour;
+        shape.strokeColor = 'white';
     //    PatternState.Instance().colour = this.colour;
         super.processChildNodes();
     }

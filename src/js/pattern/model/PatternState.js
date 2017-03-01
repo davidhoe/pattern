@@ -11,7 +11,7 @@ export class PatternState
         this.colour = new paper.Color(1);
         this.bound = new paper.Rectangle(0,0,100,100);
         this.path = [new paper.Point(0, 0),new paper.Point(100, 0),new paper.Point(100, 100),new paper.Point(0, 100)];
-
+        this.headNode = null;
     }
 
     // singleton

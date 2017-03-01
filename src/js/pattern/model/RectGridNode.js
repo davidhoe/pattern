@@ -2,9 +2,9 @@ import {Node} from './Node'
 import {PatternState} from './PatternState'
 import paper from 'paper'
 
-//import GridUtils from '../util/RectGridUtils'
+import GridUtils from '../util/RectGridUtils'
 //import GridUtils from '../util/DiamondGridUtils'
-import GridUtils from '../util/TriGridUtils'
+//import GridUtils from '../util/TriGridUtils'
 //import GridUtils from '../util/HexGridUtils'
 
 /**

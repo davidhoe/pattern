@@ -22,11 +22,11 @@ export class TriSubdivisionNode extends Node
 
     process()
     {
-        var path = PatternState.Instance().path;
+        var path = super._getStatePath();
         // todo save state, PatternState.PushPath();
-
         if(path.length >= 3)
         {
+            super._saveStatePath();
             var shapes = TriSubdivisionNode.SubdivideIntoNRows(this.nrows, path);
            // console.log(shapes);
             for (var i = 0; i < shapes.length; i++) {
@@ -34,6 +34,7 @@ export class TriSubdivisionNode extends Node
                 PatternState.Instance().path = shapes[i];
                 super.processChildNodes();
             }
+            super._restoreStatePath();
         }
 
         // todo pop state, PatternState.PopPath();

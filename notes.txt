@@ -14,11 +14,22 @@ pattern select on the left
 
 phase 2:
 
-
-nodes:
+To test - nodes:
 DecisionNode - choose one of x children to execute, public index.
 RepeatNode  - repeat execution of children n times, public n
-SaveParamNode - public getValue(), setParam(int i)
+PathNode - set a path. public path (for custom paths )
+
+Todo- nodes:
+
+PointPathParam - getValue() return path. for custom paths like drawing out a branch
+               - has a set of PointParam children
+
+PointParam - getVlaue() returns a paper.point. public point
+TranslationPointParam - get the value of the translation from the current matrix state
+
+
+ShapePathNode extends PathNode - set a regular shape like circle,line, star..
+   - centered, anchorpoint?
 
 MAtrixNOde
 .mat.translate();
@@ -27,12 +38,6 @@ QuadToCurveNode
 QuadToQuarterCircleNode
 QuadToLeafNode
 
-PathNode - set a path. public path (for custom paths )
-ShapePathNode extends PathNode - set a regular shape like circle,line, star..
-PointPathParam - getValue() return path. for custom paths like drawing out a branch
-               - has a set of PointParam children
-
-PointParam - getVlaue() returns a paper.point. public point
-TranslationPointParam - get the value of the translation from the current matrix state
+(dont need?) SaveParamNode - public getValue(), setParam(int i)
 
 

@@ -15,6 +15,8 @@ export {PathNode as PathNode} from './PathNode.js';
 export {PatternState as PatternState} from './PatternState.js';
 export {QuadScaleNode as QuadScaleNode} from './QuadScaleNode.js';
 export {QuadSubdivisionNode as QuadSubdivisionNode} from './QuadSubdivisionNode.js';
+export {QuadToDiagonalLeafNode as QuadToDiagonalLeafNode} from './QuadToDiagonalLeafNode.js';
+export {QuadToQuarterCircleNode as QuadToQuarterCircleNode} from './QuadToQuarterCircleNode.js';
 export {QuadToSubQuadNode as QuadToSubQuadNode} from './QuadToSubQuadNode.js';
 export {QuadToTriNode as QuadToTriNode} from './QuadToTriNode.js';
 export {RandomColourFromSetNode as RandomColourFromSetNode} from './RandomColourFromSetNode.js';

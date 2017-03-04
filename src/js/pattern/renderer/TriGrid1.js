@@ -1,7 +1,7 @@
 
 
 import {IntParam} from '../model/param/IntParam'
-import {IntArrayParam} from '../model/param/IntSelectFromArrayParam'
+import {IntSelectFromArrayParam} from '../model/param/IntSelectFromArrayParam'
 import {ColourParam} from '../model/param/ColourParam'
 import {ColourSelectFromSetParam} from '../model/param/ColourSelectFromSetParam'
 import {ColourSelectRandomFromSetParam} from '../model/param/ColourSelectRandomFromSetParam'
@@ -34,8 +34,30 @@ export class TriGrid1
             this.colset = colourset;
         //  console.log(colset);
 
-     //   this.drawTrianglesTest();
-	    this.drawQuadTest();
+	    this.drawQuadShapeTest();
+	    //this.drawTrianglesTest();
+	 //   this.drawQuadTest();
+    }
+
+
+    drawQuadShapeTest()
+    {
+	    var screenRect = new paper.Rectangle(200,200,700,500);
+	    model.PatternState.Instance().bound = screenRect;
+
+	    model.PatternState.Instance().path = utils.PointUtils.CreateRectPoints(new paper.Rectangle(200,200,300,300));
+
+	    var startnode =  new model.ColourNode(new paper.Color(1)).push();
+	    var temp = new model.FillNode().push();
+	    //new model.QuadToQuarterCircleNode().push();
+	    var n = 5;
+	    for(var i =0; i < n;++i ) {
+		    model.PatternState.Instance().headNode = temp;
+		    new model.QuadToDiagonalLeafNode(0.552* (1 - i/n)).push();
+		    new model.RandomColourFromSetNode(this.colset).push();
+		    new model.FillNode().push();
+	    }
+	    startnode.process();
     }
 
 	drawQuadTest()
@@ -112,7 +134,7 @@ export class TriGrid1
         var quadToTri = new model.QuadToTriNode();
 	    var quadToTri2 = new model.QuadToTriNode();
 	    var rotate = new model.RotatePathIndexNode(2);
-	    rotate.setParam("shift", new IntArrayParam([0,1,2,3],1));
+	    rotate.setParam("shift", new IntSelectFromArrayParam([0,1,2,3],1));
 
 	    var colournode2 = new model.RandomColourFromSetNode(this.colset);
 	    var fillnode2 = new model.FillNode();

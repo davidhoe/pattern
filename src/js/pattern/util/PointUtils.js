@@ -13,10 +13,10 @@ export class PointUtils
 
     static CreateRectPoints(rect)
     {
-        var p0 = rect.topLeft;
-        var p1 = rect.topRight;
-        var p2 = rect.bottomRight;
-        var p3 = rect.bottomLeft;
+        var p0 = rect.bottomLeft;
+        var p1 = rect.bottomRight;
+        var p2 = rect.topRight;
+        var p3 = rect.topLeft;
         return [p0,p1,p2,p3];
     }
 
@@ -34,7 +34,7 @@ export class PointUtils
             console.log("not enough points, quadPoints.length", quadPoints.length);
             return new paper.Point();
         }
-        return PointUtils.GetInterpolatedPointBetween2Lines(quadPoints[0],quadPoints[3], quadPoints[1],quadPoints[2], p.x,p.y);
+        return PointUtils.GetInterpolatedPointBetween2Lines(quadPoints[0],quadPoints[1], quadPoints[3],quadPoints[2], p.x,p.y);
     }
 
     /**

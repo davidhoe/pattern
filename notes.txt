@@ -18,26 +18,49 @@ To test - nodes:
 DecisionNode - choose one of x children to execute, public index.
 RepeatNode  - repeat execution of children n times, public n
 PathNode - set a path. public path (for custom paths )
+PointParam - getVlaue() returns a paper.point. public point
+QuadtoTri - should take in an interpolated point set, defaulting at 0,0 1,1 0,1
+ SaveParamNode - public getValue(), setParam(int i)
+QuadToQuarterCircleNode
+QuadToDiagonalLeafNode
+
 
 Todo- nodes:
+
+PointUtil.createNormalisedOval();
+PointUtil.createNormalisedSCurveShape();
+PointUtil.createNormalisedQuarterCircle();
+PointUtil.createNormalisedTri();
+
+QuadToShapeNode(normalisedSegments)
+{
+
+}
+
+
+Tri to sub tri node
+Tri to sub Quad node
+QuadShear - offset line1 in one direction, line2 in another direction
+
+
+TransformNode
+
+Masking
+
+
+QuadToOvalNOde
+QuadToSCurveNode
+
+Texture
 
 PointPathParam - getValue() return path. for custom paths like drawing out a branch
                - has a set of PointParam children
 
-PointParam - getVlaue() returns a paper.point. public point
 TranslationPointParam - get the value of the translation from the current matrix state
-
 
 ShapePathNode extends PathNode - set a regular shape like circle,line, star..
    - centered, anchorpoint?
 
-MAtrixNOde
-.mat.translate();
 
-QuadToCurveNode
-QuadToQuarterCircleNode
-QuadToLeafNode
-
-(dont need?) SaveParamNode - public getValue(), setParam(int i)
 
 

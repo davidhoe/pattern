@@ -11,10 +11,10 @@ import paper from 'paper'
  */
 export class ColourNode extends Node
 {
-    constructor()
+    constructor(colour = null)
     {
         super();
-        this.colour = new paper.Color(1);
+        this.colour = (colour  == null) ? new paper.Color(0) : colour ;
     }
 
     process()

@@ -19,6 +19,7 @@ export class ColourNode extends Node
 
     process()
     {
+        super._processParams();
         PatternState.Instance().colour = this.colour;
         super.processChildNodes();
     }

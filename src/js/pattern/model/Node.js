@@ -34,6 +34,13 @@ export class Node{
       return PatternState.Instance().path;
     }
 
+    _getStatePathLength()
+    {
+	    var path = PatternState.Instance().path;
+	    if(path) return path.length;
+	    return 0;
+    }
+
     setParent(node)
     {
         node.addChild(this);
@@ -46,6 +53,7 @@ export class Node{
             PatternState.Instance().headNode.addChild(this);
         }
         PatternState.Instance().headNode = this;
+	    return this;
     }
 
     addChild(node)
@@ -70,14 +78,14 @@ export class Node{
 		}
 	}
 
-	addParam(paramName, paramObject)
+	setParam(paramName, paramObject)
 	{
 		if(Node.HasOwnProperty(this, paramName) ){
-			console.log("addParam", paramName, "has prop");
+			console.log("setParam", paramName, "has prop");
 			this._params.push({"key": paramName,"object" : paramObject});
 		}
 		else{
-			console.error("errr: no param with the name exists for this node. Param ", paramName)
+			console.error("error: no param with the name exists for this node. Param ", paramName)
 		}
 	}
 

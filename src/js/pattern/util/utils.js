@@ -1,5 +1,6 @@
 export {MathUtils as MathUtils} from './MathUtils.js';
 export {PathUtils as PathUtils} from './PathUtils.js';
+export {PointUtils as PointUtils} from './PointUtils.js';
 export {ColourUtils as ColourUtils} from './ColourUtils.js';
 
 // namespae example

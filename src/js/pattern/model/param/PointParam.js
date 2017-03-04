@@ -3,13 +3,14 @@
  */
 
 import paper from 'paper'
-
+import {Param} from './Param'
 /*
  * operation for a paper.Point object
  */
-export class PointParam{
+export class PointParam extends Param{
     constructor(defaultValue)
     {
+        super();
         this.point = new paper.Point();
     }
 
@@ -17,6 +18,7 @@ export class PointParam{
 
     getValue()
     {
+        super._processParams();
         return this.point;
     }
 }

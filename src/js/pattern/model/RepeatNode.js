@@ -22,9 +22,9 @@ export class RepeatNode extends Node
 
     process()
     {
-        super._processParams();
         for(var i =0;i < this.n;++i)
         {
+            super._processParams();
             super.processChildNodes();
         }
     }

@@ -1,9 +1,9 @@
 /**
  * Created by David on 03/03/2017.
  */
+import {Param} from './Param'
 
-
-export class FloatParam{
+export class FloatParam extends Param{
     constructor(defaultValue)
     {
         this.defaultValue = defaultValue;
@@ -11,6 +11,7 @@ export class FloatParam{
 
     getValue()
     {
+        super._processParams();
         return this.defaultValue;
     }
 }

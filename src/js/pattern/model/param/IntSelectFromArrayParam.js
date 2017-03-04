@@ -6,7 +6,7 @@ import * as utils from '../../util/utils'
 /**
  * select an int from an array
  */
-export class IntArrayParam extends IntParam
+export class IntSelectFromArrayParam extends IntParam
 {
 	constructor(array, mode)
 	{
@@ -17,6 +17,7 @@ export class IntArrayParam extends IntParam
 
 	getValue()
 	{
+		super._processParams();
 		var random = true;
 		if(random)
 		{

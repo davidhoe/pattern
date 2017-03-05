@@ -34,11 +34,69 @@ export class TriGrid1
             this.colset = colourset;
         //  console.log(colset);
 
-	    this.drawQuadShearTest();
+	    //this.compoundPathTest();
+	    this.groupClipTest();
+	 //  this.drawQuadShearTest();
 	 // this.drawQuadShapeTest();
 	  // this.drawTrianglesTest();
 	   //this.drawQuadTest();
     }
+
+    compoundPathTest()
+    {
+	    model.PatternState.Instance().matrix.reset();
+	    var startnode =new model.Node().push();
+	    // make a douhnut shape from 2 circles
+	    model.PatternState.Instance().headNode = startnode;
+	    new model.RandomColourFromSetNode(this.colset).push();
+	    new model.CompoundPathNode().setOpacity(0.5).push();
+	    new model.QuadNode(100,100,500,500).push();
+	    new model.QuadToCircleNode().push();
+	    new model.FillNode().push();
+
+	    new model.QuadNode(200,200,300,300).push();
+	    new model.QuadToCircleNode().push();
+	    new model.FillNode().push();
+
+	    // make anoter circle to test grouping
+	    model.PatternState.Instance().headNode = startnode;
+	    new model.RandomColourFromSetNode(this.colset).push();
+	    new model.QuadNode(150,350,300,300).push();
+	    new model.FillNode().setBlendMode(model.BLEND_MODE.overlay).push();
+
+	    startnode.process();
+
+    }
+
+	groupClipTest()
+	{
+		model.PatternState.Instance().matrix.reset();
+		var startnode = new model.GroupNode().push();
+
+		// make a douhnut shape from 2 circles - use this as the mask
+		model.PatternState.Instance().headNode = startnode;
+		new model.RandomColourFromSetNode(this.colset).push();
+		new model.CompoundPathNode().setClipMask(true).setOpacity(1.0).push();
+		new model.QuadNode(100,100,500,500).push();
+		new model.QuadToCircleNode().push();
+		new model.FillNode().push();
+		new model.RandomColourFromSetNode(this.colset).push();
+		new model.QuadNode(200,200,200,200).push();
+		new model.QuadToCircleNode().push();
+		new model.FillNode().push();
+
+		// make an object to mask
+		model.PatternState.Instance().headNode = startnode;
+		new model.RandomColourFromSetNode(this.colset).push();
+		new model.QuadNode(150,350,300,300).push();
+		new model.FillNode().push();
+		// make an object to mask
+		new model.RandomColourFromSetNode(this.colset).push();
+		new model.QuadNode(150,150,200,100).push();
+		new model.FillNode().push();
+
+		startnode.process();
+	}
 
 	drawQuadShearTest()
 	{

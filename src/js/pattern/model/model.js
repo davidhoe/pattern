@@ -5,10 +5,22 @@
  * import * as model from '../model/model'
  * var node = new model.FillNode();...
  */
+// enums
+export var BLEND_MODE  = {
+	'normal'      : 'normal',
+	'multiply'    : 'multiply',
+	'screen'    : 'screen',
+	'overlay'    : 'overlay',
+	'soft-light'    : 'soft-light',
+	'add'    : 'add',
+	'subtract'    : 'subtract'
+};
 
 export {ColourNode as ColourNode} from './ColourNode.js';
+export {CompoundPathNode as CompoundPathNode} from './CompoundPathNode.js';
 export {DecisionNode as DecisionNode} from './DecisionNode.js';
 export {FillNode as FillNode} from './FillNode.js';
+export {GroupNode as GroupNode} from './GroupNode.js';
 export {Node as Node} from './Node.js';
 export {ParamSaveNode as ParamSaveNode} from './ParamSaveNode.js';
 export {PathNode as PathNode} from './PathNode.js';

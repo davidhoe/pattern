@@ -8,7 +8,7 @@ import GridUtils from '../util/RectGridUtils'
 //import GridUtils from '../util/HexGridUtils'
 
 /**
- *
+ * fills a quad area with tiled rects
  */
 export class RectGridNode extends Node
 {

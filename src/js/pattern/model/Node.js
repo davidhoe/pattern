@@ -10,6 +10,7 @@ export class Node{
         this._savedPath = null;
 	    this._savedMatrix = null;
 	    this._savedColour = null;
+	    this._savedGroup = null;
 	    this._params = [];
     }
 
@@ -23,6 +24,17 @@ export class Node{
 		if(this._savedMatrix != null) {
 			PatternState.Instance().colour = this._savedColour;
 		}
+	}
+
+	_saveStateGroup()
+	{
+		this._savedGroup = PatternState.Instance().group;
+	}
+
+	_restoreStateGroup()
+	{
+		// group can be null
+		PatternState.Instance().group = this._savedGroup;
 	}
 
 	_saveStateMatrix()
@@ -89,6 +101,8 @@ export class Node{
 
     process()
     {
+	   // console.log("-------------------------node here");
+
 	    // iterate through params
 		this._processParams();
         // process children

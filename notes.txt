@@ -38,24 +38,31 @@ QuadMirrorNode
 add matrix to the state, apply this to the fillnode
 TransformNode
 center transform from current shape?
-
+quadnode
+TranslateGrid
+pointutil.CreatePointQuadGrid - ergualr spaced
+add group to pattern state, inital null
+GroupNode  - public clipping Masking
+node  methods - save/restore state group
+Blendmode, opacity
+CompoundPath - http://paperjs.org/reference/compoundpath/#compoundpath-object
 
 Todo- nodes:
 
-quadnode
-TranslateGrid
 
-pointutil.CreatePointQuadGrid - ergualr spaced
+TextureNode(filename)
+TextureUtils - texture loading
+
 pointutil.createPointTriGrid
+
+change rectgridutils, tri gridutils to use the quad path instead of the bound
+remove the bound from the pattern state
 
 Tri to sub tri node
 Tri to sub Quad node
 
-add group to pattern state, inital null
-GroupNode  - public clipping Masking
-node  methods - save/restore state group
+stroke style  http://paperjs.org/reference/shape/
 
-Texture
 
 PointPathParam - getValue() return path. for custom paths like drawing out a branch
                - has a set of PointParam children

@@ -12,6 +12,7 @@ export class PatternState
         this.bound = new paper.Rectangle(0,0,100,100);
         this.path = utils.PointUtils.CreateRectPoints(new paper.Rectangle(0,0,100,100));
         this.matrix = new paper.Matrix();
+        this.group = null;
         this.headNode = null;// temp node reference to make it easier to create node trees
 
     }

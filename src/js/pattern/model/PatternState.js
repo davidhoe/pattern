@@ -1,5 +1,5 @@
 import paper from 'paper'
-
+import * as utils from '../util/utils'
 /**
  * holds the state for the draw operations, namely Colour,Shape, Rect bound
  */
@@ -10,8 +10,10 @@ export class PatternState
         // state variables, initialise with defaults
         this.colour = new paper.Color(1);
         this.bound = new paper.Rectangle(0,0,100,100);
-        this.path = [new paper.Point(0, 0),new paper.Point(100, 0),new paper.Point(100, 100),new paper.Point(0, 100)];
-        this.headNode = null;
+        this.path = utils.PointUtils.CreateRectPoints(new paper.Rectangle(0,0,100,100));
+        this.matrix = new paper.Matrix();
+        this.headNode = null;// temp node reference to make it easier to create node trees
+
     }
 
     // singleton

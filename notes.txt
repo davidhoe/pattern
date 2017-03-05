@@ -40,7 +40,9 @@ Todo- nodes:
 
 add matrix to the state, apply this to the fillnode
 TransformNode
-center transform
+center transform from current shape?
+TranslateGrid -
+
 //AnchorNode?
 
 

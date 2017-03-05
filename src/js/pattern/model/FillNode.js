@@ -23,6 +23,9 @@ export class FillNode extends Node
         shape.closed = true;
         shape.fillColor = PatternState.Instance().colour;
         shape.strokeColor = 'white';
+        shape.applyMatrix = true;
+        shape.pivot = new paper.Point(0,0);
+        shape.matrix = PatternState.Instance().matrix.clone();
         if(this.shapeAtts != null)
         {
             for (var key in this.shapeAtts) {

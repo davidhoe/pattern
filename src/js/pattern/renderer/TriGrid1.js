@@ -29,7 +29,7 @@ export class TriGrid1
         //this.destroy();
 
         if(!colourset)
-            this.colset =utils.ColourUtils.GetSeededRandomColourset();
+            this.colset = utils.ColourUtils.GetSeededRandomColourset();
         else
             this.colset = colourset;
         //  console.log(colset);
@@ -42,20 +42,42 @@ export class TriGrid1
 
 	drawQuadShearTest()
 	{
+		model.PatternState.Instance().matrix.reset();
+
 		var screenRect = new paper.Rectangle(200,200,700,500);
 		model.PatternState.Instance().bound = screenRect;
 
-		model.PatternState.Instance().path = utils.PointUtils.CreateRectPoints(new paper.Rectangle(200,200,300,300));
+		model.PatternState.Instance().path = utils.PointUtils.CreateRectPoints(new paper.Rectangle(0,0,300,300));
+
+		/*
+		var centerm = new paper.Matrix();
+		var shaperect = utils.PointUtils.GetBoundForSegments(model.PatternState.Instance().path);
+		centerm.translate(-shaperect.width*0.5,-shaperect.height*0.5);
+		var rotatem = new paper.Matrix();
+		rotatem.rotate(45);
+		var tm = new paper.Matrix();
+		tm.translate(300,300);
+		model.PatternState.Instance().matrix.prepend(centerm);
+		//model.PatternState.Instance().matrix.prepend(rotatem);
+		model.PatternState.Instance().matrix.prepend(tm);
+*/
+
+		//model.PatternState.Instance().matrix.translate(300,300);
+		//model.PatternState.Instance().matrix.rotate(45);
+
+		//model.PatternState.Instance().matrix.translate(-150,-150);
 
 
-		var startnode =  new model.QuadSubdivisionNode(1,2).push();
+		var startnode = new model.TransformCenterPathNode().push();
+		new model.TransformNode().setRotation(45).push();
+		new model.TransformNode().setTranslation(300,300).push();
+		var subgrid = new model.QuadSubdivisionNode(1,2).push();
 		var left = new model.Node();
-		startnode.addChildToIndex(left, 0);
+		subgrid.addChildToIndex(left, 0);
 		var right = new model.QuadMirrorNode();
-		startnode.addChildToIndex(right, 1);
+		subgrid.addChildToIndex(right, 1);
 
-
-		var temp = new model.QuadShearNode(0.5);
+		var temp = new model.QuadShearNode(0.0);
 		model.PatternState.Instance().headNode = temp;
 		new model.QuadSubdivisionNode(4,1).push();
 		new model.RandomColourFromSetNode(this.colset).push();

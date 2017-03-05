@@ -7,26 +7,52 @@ export class Node{
     constructor()
     {
         this.childNodes = [];
-        this._pushedPath = null;
+        this._savedPath = null;
+	    this._savedMatrix = null;
+	    this._savedColour = null;
 	    this._params = [];
     }
+
+	_saveStateColour()
+	{
+		this._savedColour = PatternState.Instance().colour;
+	}
+
+	_restoreStateColour()
+	{
+		if(this._savedMatrix != null) {
+			PatternState.Instance().colour = this._savedColour;
+		}
+	}
+
+	_saveStateMatrix()
+	{
+		this._savedMatrix = PatternState.Instance().matrix;
+	}
+
+	_restoreStateMatrix()
+	{
+		if(this._savedMatrix != null) {
+			PatternState.Instance().matrix = this._savedMatrix;
+		}
+	}
 
 
     _saveStatePath()
     {
-      this._pushedPath = PatternState.Instance().path;
+      this._savedPath = PatternState.Instance().path;
     }
 
     _restoreStatePath()
     {
-      if(this._pushedPath != null) {
-        PatternState.Instance().path = this._pushedPath;
+      if(this._savedPath != null) {
+        PatternState.Instance().path = this._savedPath;
       }
     }
 
     _getPushedPath()
     {
-      return this._pushedPath;
+      return this._savedPath;
     }
 
     _getStatePath()

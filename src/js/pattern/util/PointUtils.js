@@ -196,4 +196,38 @@ export class PointUtils
 		var s1 = new paper.Segment(new paper.Point(0,1), new paper.Point(r,0), null);
 		return [p0,s0,s1];
 	}
+
+	static GetBoundForSegments(segments)
+	{
+		var temp = [];
+		for(var i = 0; i< segments.length; ++i)
+		{
+			var s = segments[i];
+			if(s.constructor.name == paper.Point.name)
+			{
+				temp.push(s);
+			}
+			else if(s.constructor.name = paper.Segment.name){
+				temp.push(s.point);
+			}
+		}
+		return PointUtils.GetBoundForPoints(temp);
+	}
+
+	static GetBoundForPoints(points)
+	{
+		var minx = points[0].x;
+		var miny = points[0].y;
+		var maxx = points[0].x;
+		var maxy = points[0].y;
+
+		for(var i = points.length-1 ; i >=1; --i)
+		{
+			minx = Math.min(minx, points[i].x);
+			maxx = Math.max(maxx, points[i].x);
+			miny = Math.min(miny, points[i].y);
+			maxy = Math.max(maxy, points[i].y);
+		}
+		return new paper.Rectangle(minx, miny, maxx- minx, maxy- miny);
+	}
 }

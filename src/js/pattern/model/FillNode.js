@@ -11,9 +11,10 @@ import paper from 'paper'
  */
 export class FillNode extends Node
 {
-    constructor()
+    constructor(shapeAtts = null)
     {
         super();
+        this.shapeAtts = shapeAtts;
     }
 
     process()
@@ -22,6 +23,16 @@ export class FillNode extends Node
         shape.closed = true;
         shape.fillColor = PatternState.Instance().colour;
         shape.strokeColor = 'white';
+        if(this.shapeAtts != null)
+        {
+            for (var key in this.shapeAtts) {
+                if (this.shapeAtts.hasOwnProperty(key)) {
+                    console.log("shape att", key , "val", this.shapeAtts[key]);
+                    shape[key] = this.shapeAtts[key];
+                }
+            }
+
+        }
     //    PatternState.Instance().colour = this.colour;
         super.processChildNodes();
     }

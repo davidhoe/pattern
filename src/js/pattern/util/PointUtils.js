@@ -27,11 +27,11 @@ export class PointUtils
      * @returns paper.Point
      * @constructor
      */
-    static GetInterpolatedPointInQuad(quadPoints, p)
+    static TransformPointToQuadSpace(quadPoints, p)
     {
         if(quadPoints.length < 4)
         {
-            console.log("not enough points, quadPoints.length", quadPoints.length);
+            console.error("not enough points, quadPoints.length", quadPoints.length);
             return new paper.Point();
         }
         return PointUtils.GetInterpolatedPointBetween2Lines(quadPoints[0],quadPoints[1], quadPoints[3],quadPoints[2], p.x,p.y);
@@ -55,11 +55,12 @@ export class PointUtils
 	    return PointUtils.LerpPoint(a,b,r2);
     }
 
+    // todo swap to normalised
     static GetScaledQuad(points, scale, anchorp)
     {
         if(points.length < 4)
         {
-            console.log("not enough points, points.length", points.length);
+            console.error("not enough points, points.length", points.length);
             return [];
         }
         var normalisedPoints = [];
@@ -72,10 +73,108 @@ export class PointUtils
             var p = normalisedPoints[i];
             p.x = anchorp.x  + (p.x - anchorp.x)*scale;
             p.y = anchorp.x  + (p.y - anchorp.y)*scale;
-	        normalisedPoints[i] = PointUtils.GetInterpolatedPointInQuad(points, p);
+	        normalisedPoints[i] = PointUtils.TransformPointToQuadSpace(points, p);
         }
 
         return normalisedPoints;
     }
 
+    static TransformToQuadSpace(normalisedSegments, quadPoints)
+    {
+        var transformed = [];
+
+        for(var i =0; i< normalisedSegments.length;++i)
+        {
+            var s = normalisedSegments[i];
+            // s is either a point of a segment
+
+            if(s.constructor.name == paper.Point.name)
+            {
+                transformed[i] = PointUtils.TransformPointToQuadSpace(quadPoints, s);
+            }
+            else if(s.constructor.name == paper.Segment.name)
+            {
+                transformed[i] = PointUtils.TransformSegmentToQuadSpace(quadPoints, s);
+            }
+        }
+        return transformed;
+    }
+
+    static TransformSegmentToQuadSpace(quadPoints, s)
+    {
+        var ts = new paper.Segment();
+        if(s.point != null) ts.point = PointUtils.TransformPointToQuadSpace(quadPoints, s.point);
+        if(s.handleIn != null) ts.handleIn = PointUtils.TransformPointToQuadSpace(quadPoints, s.handleIn.add(s.point)).subtract(ts.point);
+        if(s.handleOut != null) ts.handleOut = PointUtils.TransformPointToQuadSpace(quadPoints, s.handleOut.add(s.point)).subtract(ts.point);
+        return ts;
+    }
+
+    static CreateNormalisedDiagonalLeaf(r = 0.55228)
+    {
+        var p0 = new paper.Point(0,0);
+        var p1 = new paper.Point(1,1);
+
+        var a0 =  new paper.Point(( r),0);
+        var a1 =  new paper.Point(0, - r);
+
+        var a2 =  new paper.Point(0, r);
+        var a3 = new paper.Point(- r,0);
+
+        // quarter circle
+        var s0 = new paper.Segment(p0, null, a0);
+        var s1 = new paper.Segment(p1, a1, null);
+        // another quarter circle
+        var s2 = new paper.Segment(p1, null, a3);
+        var s3 = new paper.Segment(p0, a2, null);
+
+        return [s0,s1,s2,s3];
+    }
+
+    static CreateNormalisedRightAngleTri()
+    {
+        var p0 = new paper.Point(0,0);
+        var p1 = new paper.Point(1,0);
+        var p3 = new paper.Point(0,1);
+        return [p0,p1,p3];
+    }
+
+    static CreateNormalisedQuarterCircle(r = 0.55228)
+    {
+        var p0 = new paper.Point(0,0);
+        var p1 = new paper.Point(1,1);
+        var p3 = new paper.Point(0,1);
+
+      //  console.log("r", r);
+        var a0 =  new paper.Point(( r),0);
+        var a1 =  new paper.Point(0, - r);
+        var s1 = new paper.Segment(p0, null, a0);
+        var s2 = new paper.Segment(p1, a1, null);
+        return [s1,s2, p3];
+    }
+
+    static CreateNormalisedCircle(r = 0.55228)
+    {
+        var p0 = new paper.Point(0.5,0);
+        var p1 = new paper.Point(1,0.5);
+        var p2 = new paper.Point(0.5,1);
+        var p3 = new paper.Point(0,0.5);
+
+        //  console.log("r", r);
+        var s0 = new paper.Segment(p0, new paper.Point(-r,0), new paper.Point(r,0));
+        var s1 = new paper.Segment(p1, new paper.Point(0,-r), new paper.Point(0,r));
+        var s2 = new paper.Segment(p2, new paper.Point(r,0), new paper.Point(-r,0));
+        var s3 = new paper.Segment(p3, new paper.Point(0,r), new paper.Point(0,-r));
+
+        return [s0,s1,s2,s3];
+    }
+
+    //
+	static CreateSCurveShape(r = 0.55228)
+	{
+		//  console.log("r", r);
+		var p0 = new paper.Point(0,0);
+		var s0 = new paper.Segment(new paper.Point(1,0), null, new paper.Point(-r,0));
+		var s1 = new paper.Segment(new paper.Point(0,1), new paper.Point(r,0), null);
+		return [p0,s0,s1];
+	}
 }

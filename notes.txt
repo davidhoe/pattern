@@ -24,26 +24,25 @@ QuadtoTri - should take in an interpolated point set, defaulting at 0,0 1,1 0,1
 QuadToQuarterCircleNode
 QuadToDiagonalLeafNode
 
+PointUtil.createNormalisedQuarterCircle();
+PointUtil.createNormalisedTri();
+PointUtil.CreateNormalisedDiagonalLeaf();
+PointUtil.transformToQuadSpace(normalisedSegments, quad);
+QuadToShapeNode(normalisedSegments)
+PointUtil.createNormalisedOval();
+PointUtil.createNormalisedSCurveShape();
+
 
 Todo- nodes:
 
-PointUtil.createNormalisedOval();
-PointUtil.createNormalisedSCurveShape();
-PointUtil.createNormalisedQuarterCircle();
-PointUtil.createNormalisedTri();
 
-QuadToShapeNode(normalisedSegments)
-{
-
-}
-
+AnchorNode?
+TransformNode
 
 Tri to sub tri node
 Tri to sub Quad node
 QuadShear - offset line1 in one direction, line2 in another direction
 
-
-TransformNode
 
 Masking
 

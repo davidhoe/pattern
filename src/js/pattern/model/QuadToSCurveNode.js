@@ -1,5 +1,5 @@
 /**
- * Created by David on 04/03/2017.
+ * Created by David on 05/03/2017.
  */
 
 import {QuadToShapeNode} from './QuadToShapeNode'
@@ -9,19 +9,19 @@ import {MathUtils} from '../util/MathUtils'
 import paper from 'paper'
 
 /**
- * quad to a diagonal leaf
+ * quad to a quarter circle
  */
-export class QuadToDiagonalLeafNode extends QuadToShapeNode
+export class QuadToSCurveNode extends QuadToShapeNode
 {
 	constructor(r = null)
 	{
 		super();
-		this.r = ( r == null) ? 0.55228 : r;
+		this.r = ( r == null) ? 0.55228 /1.0 : r;
 	}
 
 	process()
 	{
-		this.normalisedSegments = ( PointUtils.CreateNormalisedDiagonalLeaf(this.r));
+		this.normalisedSegments =  PointUtils.CreateSCurveShape(this.r);
 		super.process();
 	}
 }

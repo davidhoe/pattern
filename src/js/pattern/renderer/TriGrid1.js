@@ -34,9 +34,9 @@ export class TriGrid1
             this.colset = colourset;
         //  console.log(colset);
 
-	    this.drawQuadShapeTest();
-	    //this.drawTrianglesTest();
-	 //   this.drawQuadTest();
+	  this.drawQuadShapeTest();
+	  // this.drawTrianglesTest();
+	   //this.drawQuadTest();
     }
 
 
@@ -50,13 +50,17 @@ export class TriGrid1
 	    var startnode =  new model.ColourNode(new paper.Color(1)).push();
 	    var temp = new model.FillNode().push();
 	    //new model.QuadToQuarterCircleNode().push();
-	    var n = 5;
-	    for(var i =0; i < n;++i ) {
-		    model.PatternState.Instance().headNode = temp;
-		    new model.QuadToDiagonalLeafNode(0.552* (1 - i/n)).push();
-		    new model.RandomColourFromSetNode(this.colset).push();
-		    new model.FillNode().push();
-	    }
+	    //var n = 1;
+	    //for(var i =0; i < n;++i ) {
+		   // model.PatternState.Instance().headNode = temp;
+		  //  new model.QuadToQuarterCircleNode().push();
+	      // new model.QuadToDiagonalLeafNode(/*0.552* (1 - i/n)*/).push();
+	     //   new model.QuadToCircleNode().push();
+	    new model.QuadToSCurveNode().push();
+
+	    new model.RandomColourFromSetNode(this.colset).push();
+		    new model.FillNode({"selected": true}).push();
+	    //}
 	    startnode.process();
     }
 

@@ -37,7 +37,7 @@ export class QuadToSubQuadNode extends Node
 		var newpath = [];
 		for(var i =0;i < 4;++i)
 		{
-			newpath[i] = PointUtils.GetInterpolatedPointInQuad(path, this.normalisedQuadPoints[i]);
+			newpath[i] = PointUtils.TransformPointToQuadSpace(path, this.normalisedQuadPoints[i]);
 		}
 		PatternState.Instance().path = newpath;
 		console.log("this.normalisedQuadPoints ", this.normalisedQuadPoints );

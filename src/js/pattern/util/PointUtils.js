@@ -230,4 +230,32 @@ export class PointUtils
 		}
 		return new paper.Rectangle(minx, miny, maxx- minx, maxy- miny);
 	}
+
+	// get divide up a quad into a grid of points
+	static GetPointGridInQuadSpace(nrows, ncols, quadPoints)
+	{
+		var ri,rj,tempp;
+		tempp = new paper.Point();
+		var points = [];
+		for (var j = 0; j < nrows; ++j)
+		{
+			rj = (nrows == 1) ? 0.5 : j / (nrows - 1);
+			tempp.y = rj;
+			for (var i = 0; i < ncols; ++i)
+			{
+				ri = (ncols == 1) ? 0.5 : i / (ncols - 1);
+				tempp.x = ri;
+				var p = PointUtils.TransformPointToQuadSpace(quadPoints, tempp);
+			//	console.log("here" , p);
+				points.push(p);
+			}
+		}
+		return points;
+	}
+
+	// get divide up a quad into a tri grid of points
+	static GetPointTriGridInQuadSpace()
+	{
+
+	}
 }

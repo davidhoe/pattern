@@ -29,8 +29,9 @@ export class TransformCenterPathNode  extends Node
 		super._saveStateMatrix();
 		var mat = new paper.Matrix();
 		var bound = PointUtils.GetBoundForSegments(PatternState.Instance().path);
-		mat.translate(-bound.width*0.5, -bound.height*0.5);
-		PatternState.Instance().matrix =  PatternState.Instance().matrix.prepended(mat);
+		mat.translate(-bound.center.x,-bound.center.y);
+		console.log("center",-bound.center.x, -bound.center.y);
+		PatternState.Instance().matrix =  PatternState.Instance().matrix.appended(mat);
 		super.processChildNodes();
 		super._restoreStateMatrix();
 	}

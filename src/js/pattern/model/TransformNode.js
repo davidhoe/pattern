@@ -55,7 +55,7 @@ export class TransformNode  extends Node
 		if(this.translation != null) mat.translate(this.translation);
 		if(this.rotation != null) mat.rotate(this.rotation);
 		if(this.scale != null) mat.scale(this.scale);
-		PatternState.Instance().matrix =  PatternState.Instance().matrix.prepended(mat);
+		PatternState.Instance().matrix =  PatternState.Instance().matrix.appended(mat);
 		super.processChildNodes();
 		super._restoreStateMatrix();
 	}

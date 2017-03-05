@@ -35,21 +35,25 @@ QuadToOvalNOde
 QuadToSCurveNode
 QuadShear - extend line1 in one direction, line2 in another direction
 QuadMirrorNode
-
-Todo- nodes:
-
 add matrix to the state, apply this to the fillnode
 TransformNode
 center transform from current shape?
-TranslateGrid -
 
-//AnchorNode?
 
+Todo- nodes:
+
+quadnode
+TranslateGrid
+
+pointutil.CreatePointQuadGrid - ergualr spaced
+pointutil.createPointTriGrid
 
 Tri to sub tri node
 Tri to sub Quad node
 
-Masking
+add group to pattern state, inital null
+GroupNode  - public clipping Masking
+node  methods - save/restore state group
 
 Texture
 

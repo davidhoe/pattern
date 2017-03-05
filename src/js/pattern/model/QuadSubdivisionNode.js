@@ -59,6 +59,7 @@ export class QuadSubdivisionNode extends Node
 			for (var i = 0; i < shapes.length; i++) {
 				//
 				PatternState.Instance().path = shapes[i];
+			//	console.log("here", PatternState.Instance().path);
 				super.processChildNodes();
 			}
 			// process nodes attached to a specific child index

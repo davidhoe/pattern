@@ -21,7 +21,7 @@ export class RotatePathIndexNode extends Node
 
 	process()
 	{
-		super.process();
+		super._processParams();
 		super._saveStatePath();
 		PatternState.Instance().path = RotatePathIndexNode.ShiftPointsInArray(super._getStatePath(), this.shift);
 		super.processChildNodes();

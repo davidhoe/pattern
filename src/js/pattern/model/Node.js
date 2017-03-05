@@ -66,6 +66,7 @@ export class Node{
 	    // iterate through params
 		this._processParams();
         // process children
+	    this.processChildNodes();
     }
 
 	_processParams()

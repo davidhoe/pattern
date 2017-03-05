@@ -138,6 +138,25 @@ export class PointUtils
         return [p0,p1,p3];
     }
 
+    // shear is such is includes the bounds of the oringal quad, this make is easier for masking
+	static CreateNormalisedShearedQuad(shearRatio)
+	{
+		var p0,p1,p2,p3;
+		if(shearRatio > 0) {
+			p0 = new paper.Point(0, 0);
+			p1 = new paper.Point(1, -shearRatio);
+			p2 = new paper.Point(1, 1);
+			p3 = new paper.Point(0, 1 + shearRatio);
+		}
+		else{
+			p0 = new paper.Point(0, shearRatio);
+			p1 = new paper.Point(1, 0);
+			p2 = new paper.Point(1, 1- shearRatio);
+			p3 = new paper.Point(0, 1 );
+		}
+		return [p0, p1, p2, p3];
+	}
+
     static CreateNormalisedQuarterCircle(r = 0.55228)
     {
         var p0 = new paper.Point(0,0);

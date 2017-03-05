@@ -13,6 +13,8 @@ export {Node as Node} from './Node.js';
 export {ParamSaveNode as ParamSaveNode} from './ParamSaveNode.js';
 export {PathNode as PathNode} from './PathNode.js';
 export {PatternState as PatternState} from './PatternState.js';
+export {QuadShearNode as QuadShearNode} from './QuadShearNode.js';
+export {QuadMirrorNode as QuadMirrorNode} from './QuadMirrorNode.js';
 export {QuadScaleNode as QuadScaleNode} from './QuadScaleNode.js';
 export {QuadSubdivisionNode as QuadSubdivisionNode} from './QuadSubdivisionNode.js';
 export {QuadToDiagonalLeafNode as QuadToDiagonalLeafNode} from './QuadToDiagonalLeafNode.js';

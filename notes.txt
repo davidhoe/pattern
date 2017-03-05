@@ -31,24 +31,23 @@ PointUtil.transformToQuadSpace(normalisedSegments, quad);
 QuadToShapeNode(normalisedSegments)
 PointUtil.createNormalisedOval();
 PointUtil.createNormalisedSCurveShape();
-
+QuadToOvalNOde
+QuadToSCurveNode
+QuadShear - extend line1 in one direction, line2 in another direction
+QuadMirrorNode
 
 Todo- nodes:
 
-
-AnchorNode?
+add matrix to the state, apply this to the fillnode
 TransformNode
+center transform
+//AnchorNode?
+
 
 Tri to sub tri node
 Tri to sub Quad node
-QuadShear - offset line1 in one direction, line2 in another direction
-
 
 Masking
-
-
-QuadToOvalNOde
-QuadToSCurveNode
 
 Texture
 

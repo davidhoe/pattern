@@ -34,11 +34,38 @@ export class TriGrid1
             this.colset = colourset;
         //  console.log(colset);
 
-	  this.drawQuadShapeTest();
+	    this.drawQuadShearTest();
+	 // this.drawQuadShapeTest();
 	  // this.drawTrianglesTest();
 	   //this.drawQuadTest();
     }
 
+	drawQuadShearTest()
+	{
+		var screenRect = new paper.Rectangle(200,200,700,500);
+		model.PatternState.Instance().bound = screenRect;
+
+		model.PatternState.Instance().path = utils.PointUtils.CreateRectPoints(new paper.Rectangle(200,200,300,300));
+
+
+		var startnode =  new model.QuadSubdivisionNode(1,2).push();
+		var left = new model.Node();
+		startnode.addChildToIndex(left, 0);
+		var right = new model.QuadMirrorNode();
+		startnode.addChildToIndex(right, 1);
+
+
+		var temp = new model.QuadShearNode(0.5);
+		model.PatternState.Instance().headNode = temp;
+		new model.QuadSubdivisionNode(4,1).push();
+		new model.RandomColourFromSetNode(this.colset).push();
+		new model.FillNode({"selected": true}).push();
+
+		left.addChild(temp);
+		right.addChild(temp);
+
+		startnode.process();
+	}
 
     drawQuadShapeTest()
     {

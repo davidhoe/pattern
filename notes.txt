@@ -49,6 +49,10 @@ CompoundPath - http://paperjs.org/reference/compoundpath/#compoundpath-object
 
 Todo- nodes:
 
+node.setHead()
+node = new Node() -> auto adds to the head
+node.removeFromParent();
+
 
 TextureNode(filename)
 TextureUtils - texture loading

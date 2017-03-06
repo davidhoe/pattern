@@ -46,13 +46,11 @@ GroupNode  - public clipping Masking
 node  methods - save/restore state group
 Blendmode, opacity
 CompoundPath - http://paperjs.org/reference/compoundpath/#compoundpath-object
-
-Todo- nodes:
-
 node.setHead()
 node = new Node() -> auto adds to the head
 node.removeFromParent();
 
+Todo- nodes:
 
 TextureNode(filename)
 TextureUtils - texture loading

@@ -7,6 +7,7 @@
  */
 
 
+// todo add in the rest
 // 'normal', 'multiply', 'screen', 'overlay', 'soft-light', 'hard- light',
 // 'color-dodge', 'color-burn', 'darken', 'lighten', 'difference', 'exclusion',
 // 'hue', 'saturation', 'luminosity', 'color', 'add', 'subtract', 'average',

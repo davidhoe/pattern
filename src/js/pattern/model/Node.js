@@ -4,6 +4,7 @@
 
 import {PatternState} from './PatternState'
 export class Node{
+
     constructor()
     {
         this.childNodes = [];
@@ -12,6 +13,10 @@ export class Node{
 	    this._savedColour = null;
 	    this._savedGroup = null;
 	    this._params = [];
+
+		this._parentRefs = []; // array of parent references
+		// automatically push and set as a child node
+		this.push();
     }
 
 	_saveStateColour()
@@ -82,22 +87,87 @@ export class Node{
     setParent(node)
     {
         node.addChild(this);
+		return this;
     }
 
-    // helper method to add child to previous node
+    removeChild(node)
+	{
+		var temp = [];
+		for(var i =0; i< this.childNodes.length;++i)
+		{
+			if(this.childNodes[i] != node )
+			{
+				temp.push(this.childNodes[i]);
+			}
+		}
+		this.childNodes =  temp;
+
+		//
+		node._removeParentReference(this);
+	}
+
+    removeAllParents()
+	{
+		var temp = this._parentRefs; // clone it?
+		for(var i = 0; i< temp.length;++i)
+		{
+			//console.log("removeall parents", i, temp[i])
+			temp[i].removeChild(this);
+		}
+
+		this._parentRefs = [];
+		return this;
+	}
+
+    // helper method to add to the current head and set as the head
     push()
     {
-	    if(PatternState.Instance().headNode) {
-            PatternState.Instance().headNode.addChild(this);
+		var curHead = PatternState.Instance().headNode;
+		// dont add to itself as this will be an infinite loop
+	    if(curHead != null && curHead != this) {
+			curHead.addChild(this);
         }
-        PatternState.Instance().headNode = this;
-	    return this;
+        this.setHead();
+        return this;
     }
+
+    // helper method to set just set a the head only
+	setHead()
+	{
+		PatternState.Instance().headNode = this;
+		return this;
+	}
 
     addChild(node)
     {
+		// test check dont add to itself
+		if(node == this)
+		{
+			console.error("should not add node as a child node of itself");
+			return;
+		}
         this.childNodes.push(node);
+		node._parentRefs.push(this);
+		return this;
     }
+
+    _addParentReference(parent)
+	{
+		this._parentRefs.push(parent);
+	}
+
+	_removeParentReference(parent)
+	{
+		var temp = [];
+		for(var i =0; i< this._parentRefs.length;++i)
+		{
+			if(this._parentRefs[i] != parent )
+			{
+				temp.push(this._parentRefs[i]);
+			}
+		}
+		this._parentRefs =  temp;
+	}
 
     process()
     {

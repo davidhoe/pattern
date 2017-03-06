@@ -34,100 +34,108 @@ export class TriGrid1
             this.colset = colourset;
         //  console.log(colset);
 
-	    //this.compoundPathTest();
-	    this.groupClipTest();
+		model.PatternState.Instance().reset();
+
+		//  this.compoundPathTest();
+	//    this.groupClipTest();
 	 //  this.drawQuadShearTest();
 	 // this.drawQuadShapeTest();
-	  // this.drawTrianglesTest();
+	   this.drawTrianglesTest();
 	   //this.drawQuadTest();
     }
 
+    // done
     compoundPathTest()
     {
-	    model.PatternState.Instance().matrix.reset();
-	    var startnode =new model.Node().push();
-	    // make a douhnut shape from 2 circles
-	    model.PatternState.Instance().headNode = startnode;
-	    new model.RandomColourFromSetNode(this.colset).push();
-	    new model.CompoundPathNode().setOpacity(0.5).push();
-	    new model.QuadNode(100,100,500,500).push();
-	    new model.QuadToCircleNode().push();
-	    new model.FillNode().push();
 
-	    new model.QuadNode(200,200,300,300).push();
-	    new model.QuadToCircleNode().push();
-	    new model.FillNode().push();
+	    var startnode =new model.Node();
+	    // make a douhnut shape from 2 circles
+	    /*model.PatternState.Instance().headNode = startnode;*/
+		startnode.setHead();
+	    new model.RandomColourFromSetNode(this.colset);
+	    new model.CompoundPathNode().setOpacity(0.5);
+	    new model.QuadNode(100,100,500,500);
+	    new model.QuadToCircleNode();
+	    new model.FillNode();
+
+	    new model.QuadNode(200,200,300,300);
+	    new model.QuadToCircleNode();
+	    new model.FillNode();
 
 	    // make anoter circle to test grouping
-	    model.PatternState.Instance().headNode = startnode;
-	    new model.RandomColourFromSetNode(this.colset).push();
-	    new model.QuadNode(150,350,300,300).push();
-	    new model.FillNode().setBlendMode(model.BLEND_MODE.overlay).push();
+	    //model.PatternState.Instance().headNode = startnode;
+	    startnode.setHead();
+		new model.RandomColourFromSetNode(this.colset);
+	    new model.QuadNode(150,350,300,300);
+	    new model.FillNode().setBlendMode(model.BLEND_MODE.overlay);
 
 	    startnode.process();
 
     }
 
+	// done
 	groupClipTest()
 	{
-		model.PatternState.Instance().matrix.reset();
-		var startnode = new model.GroupNode().push();
+		var startnode = new model.GroupNode();
 
 		// make a douhnut shape from 2 circles - use this as the mask
-		model.PatternState.Instance().headNode = startnode;
-		new model.RandomColourFromSetNode(this.colset).push();
-		new model.CompoundPathNode().setClipMask(true).setOpacity(1.0).push();
-		new model.QuadNode(100,100,500,500).push();
-		new model.QuadToCircleNode().push();
-		new model.FillNode().push();
-		new model.RandomColourFromSetNode(this.colset).push();
-		new model.QuadNode(200,200,200,200).push();
-		new model.QuadToCircleNode().push();
-		new model.FillNode().push();
+		//model.PatternState.Instance().headNode = startnode;
+		startnode.setHead();
+		new model.RandomColourFromSetNode(this.colset);
+		new model.CompoundPathNode().setClipMask(true).setOpacity(1.0);
+		new model.QuadNode(100,100,500,500);
+		new model.QuadToCircleNode();
+		new model.FillNode();
+		new model.RandomColourFromSetNode(this.colset);
+		new model.QuadNode(200,200,200,200);
+		new model.QuadToCircleNode();
+		new model.FillNode();
 
 		// make an object to mask
-		model.PatternState.Instance().headNode = startnode;
-		new model.RandomColourFromSetNode(this.colset).push();
-		new model.QuadNode(150,350,300,300).push();
-		new model.FillNode().push();
+		//model.PatternState.Instance().headNode = startnode;
+		startnode.setHead();
+		new model.RandomColourFromSetNode(this.colset);
+		new model.QuadNode(150,350,300,300);
+		new model.FillNode();
 		// make an object to mask
-		new model.RandomColourFromSetNode(this.colset).push();
-		new model.QuadNode(150,150,200,100).push();
-		new model.FillNode().push();
+		new model.RandomColourFromSetNode(this.colset);
+		new model.QuadNode(150,150,200,100);
+		new model.FillNode();
 
 		startnode.process();
 	}
 
+	// done
 	drawQuadShearTest()
 	{
-		model.PatternState.Instance().matrix.reset();
 
-		var screenRect = new paper.Rectangle(300,200,700,500);
-		model.PatternState.Instance().bound = screenRect;
+		//var screenRect = new paper.Rectangle(300,200,700,500);
+		//model.PatternState.Instance().bound = screenRect;
 
-		var startnode = new model.QuadNode(200,100,500,500).push();
-		new model.QuadTranslateGridNode(3,3).push();
-		new model.QuadNode(0,0,100,100).push();
-		new model.TransformNode().setRotation(45).push();
-		new model.TransformCenterPathNode().push();
+		var startnode = new model.QuadNode(200,100,500,500);
+		new model.QuadTranslateGridNode(3,3);
+		new model.QuadNode(0,0,100,100);
+		new model.TransformNode().setRotation(45);
+		new model.TransformCenterPathNode();
 
 
-		//new model.TransformNode().setScale(0.5).push();
-		//new model.TransformNode().setTranslation(300,300).push();
-		var subgrid = new model.QuadSubdivisionNode(1,2).push();
-		var left = new model.Node();
+		//new model.TransformNode().setScale(0.5);
+		//new model.TransformNode().setTranslation(300,300);
+		var subgrid = new model.QuadSubdivisionNode(1,2);
+		var left = new model.Node().removeAllParents();
 		subgrid.addChildToIndex(left, 0);
-		var right = new model.QuadMirrorNode();
+		var right = new model.QuadMirrorNode().removeAllParents();
 		subgrid.addChildToIndex(right, 1);
 
+
 		var temp = new model.QuadShearNode(0.3);
-		model.PatternState.Instance().headNode = temp;
-		new model.QuadSubdivisionNode(10,1).push();
-		new model.RandomColourFromSetNode(this.colset).push();
-		new model.FillNode().push();
+		//model.PatternState.Instance().headNode = temp;
+		new model.QuadSubdivisionNode(10,1);
+		new model.RandomColourFromSetNode(this.colset);
+		new model.FillNode();
 
 		left.addChild(temp);
-		right.addChild(temp);
+		//right.addChild(temp);
 
 		startnode.process();
 
@@ -136,30 +144,30 @@ export class TriGrid1
 		debugoutline.strokeColor = 'black';
 	}
 
+	// done
     drawQuadShapeTest()
     {
-	    var screenRect = new paper.Rectangle(200,200,700,500);
-	    model.PatternState.Instance().bound = screenRect;
 
-	    model.PatternState.Instance().path = utils.PointUtils.CreateRectPoints(new paper.Rectangle(200,200,300,300));
-
-	    var startnode =  new model.ColourNode(new paper.Color(1)).push();
-	    var temp = new model.FillNode().push();
-	    //new model.QuadToQuarterCircleNode().push();
+	    var startnode = new model.QuadNode(200,200,300,300);
+			new model.ColourNode(new paper.Color(1));
+	    var temp = new model.FillNode();
+	    //new model.QuadToQuarterCircleNode();
 	    //var n = 1;
 	    //for(var i =0; i < n;++i ) {
 		   // model.PatternState.Instance().headNode = temp;
-		  //  new model.QuadToQuarterCircleNode().push();
-	      // new model.QuadToDiagonalLeafNode(/*0.552* (1 - i/n)*/).push();
-	     //   new model.QuadToCircleNode().push();
-	    new model.QuadToSCurveNode().push();
+		  //  new model.QuadToQuarterCircleNode();
+	      // new model.QuadToDiagonalLeafNode(/*0.552* (1 - i/n)*/);
+	     //   new model.QuadToCircleNode();
+	    new model.QuadToSCurveNode();
 
-	    new model.RandomColourFromSetNode(this.colset).push();
-		    new model.FillNode({"selected": true}).push();
+	    new model.RandomColourFromSetNode(this.colset);
+		    new model.FillNode({"selected": true});
 	    //}
 	    startnode.process();
     }
 
+
+	// todo change over to new style
 	drawQuadTest()
 	{
 		var screenRect = new paper.Rectangle(200,200,700,500);
@@ -218,40 +226,29 @@ export class TriGrid1
 		startnode.process();
 	}
 
+	// done
     drawTrianglesTest()
     {
         var screenRect = new paper.Rectangle(200,200,700,500);
-
         model.PatternState.Instance().bound = screenRect;
 
         var angle = -45;
         var shapeSize = new paper.Size(100,100);
-        var gridnode = new model.RectGridNode(angle,shapeSize);
-        var subdivide = new model.TriSubdivisionNode(3);
-        var colournode = new model.RandomColourFromSetNode(this.colset);
-        var fillnode = new model.FillNode();
-        var trislice = new model.TriSliceNode(0.1,0.5,5);
-        var quadToTri = new model.QuadToTriNode();
-	    var quadToTri2 = new model.QuadToTriNode();
-	    var rotate = new model.RotatePathIndexNode(2);
+
+		var startnode = new model.RectGridNode(angle,shapeSize);
+		new model.RandomColourFromSetNode(this.colset);
+		new model.FillNode();
+
+		startnode.setHead();
+		new model.RandomColourFromSetNode(this.colset);
+		var rotate = new model.RotatePathIndexNode(2);
+		new model.QuadToTriNode();
+		new model.FillNode();
+
+        // set a random parm on the rotation
 	    rotate.setParam("shift", new IntSelectFromArrayParam([0,1,2,3],1));
 
-	    var colournode2 = new model.RandomColourFromSetNode(this.colset);
-	    var fillnode2 = new model.FillNode();
-
-	    gridnode.push();
-
-	    model.PatternState.Instance().headNode = gridnode;
-	    colournode2.push();
-	    fillnode2.push();
-
-	    model.PatternState.Instance().headNode = gridnode;
-	    colournode.push();
-	    rotate.push();
-	    quadToTri.push();
-	    fillnode.push();
-
-        gridnode.process();
+		startnode.process();
 
         //debug outline
         var debugoutline = new paper.Path.Rectangle(screenRect);

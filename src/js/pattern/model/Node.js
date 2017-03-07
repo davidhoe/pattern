@@ -116,6 +116,12 @@ export class Node{
 		}
 
 		this._parentRefs = [];
+		// remove from the head
+		/*
+		if(PatternState.Instance().headNode == this)
+		{
+			PatternState.Instance().headNode = null;
+		}*/
 		return this;
 	}
 

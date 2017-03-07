@@ -40,8 +40,8 @@ export class TriGrid1
 	//    this.groupClipTest();
 	 //  this.drawQuadShearTest();
 	 // this.drawQuadShapeTest();
-	   this.drawTrianglesTest();
-	   //this.drawQuadTest();
+	 //  this.drawTrianglesTest();
+	   this.drawQuadTest();
     }
 
     // done
@@ -167,7 +167,7 @@ export class TriGrid1
     }
 
 
-	// todo change over to new style
+	// done
 	drawQuadTest()
 	{
 		var screenRect = new paper.Rectangle(200,200,700,500);
@@ -177,51 +177,45 @@ export class TriGrid1
 
 		var angle = -20;
 		var shapeSize = new paper.Size(200,200);
-		var gridnode = new model.RectGridNode(angle,shapeSize);
 
 		var colparam1 = new ColourSelectRandomFromSetParam(this.colset );
 		var colparam2 = new ColourSelectRandomFromSetParam(this.colset );
 
 		var col1save = new model.ParamSaveNode(colparam1);
+		var startnode = col1save;
 		var col2save = new model.ParamSaveNode(colparam2);
+		var gridnode = new model.RectGridNode(angle,shapeSize);
+		var subgrid = new model.QuadSubdivisionNode(2, 2);
 
-		var col1 = new model.ColourNode();
-	//	col1.setParam("colour", colparam1);
+		var col1 = new model.ColourNode().removeAllParents();
 		col1.setParam("colour", col1save.getSavedParam());
-		var col2 = new model.ColourNode();
-	//	col2.setParam("colour", colparam2);
+
+		var col2 = new model.ColourNode().removeAllParents();
 		col2.setParam("colour", col2save.getSavedParam());
 
-		var subgrid = new model.QuadSubdivisionNode(2, 2);
-		var subgrid2 = new model.QuadSubdivisionNode(1, 2);
-		var colournode = new model.RandomColourFromSetNode(this.colset);
-		var fillnode = new model.FillNode();
-		var rotate = new model.RotatePathIndexNode(1);
-		var scaleQuad = new model.QuadScaleNode(0.8);
-		var leftrect = new paper.Rectangle(0,0,0.4,1);
-		var leftSubQuad = new model.QuadToSubQuadNode(utils.PointUtils.CreateRectPoints(leftrect));
-		var rightrect = new paper.Rectangle(0.6,0,0.4,1);
-		var rightSubQuad = new model.QuadToSubQuadNode(utils.PointUtils.CreateRectPoints(rightrect));
-
-		var startnode  =col1save.push();
-		col2save.push();
-		gridnode.push();
-		subgrid.push();
 		subgrid.addChildToIndex(col1,0);
 		subgrid.addChildToIndex(col1,3);
 		subgrid.addChildToIndex(col2,1);
 		subgrid.addChildToIndex(col2,2);
 
-		model.PatternState.Instance().headNode = col1;
-		var copynode = scaleQuad.push();
-		leftSubQuad.push();
-		fillnode.push();
-		scaleQuad.addChild(rightSubQuad);
-		rightSubQuad.addChild(fillnode);
+		// create the tile
+		var scaleQuad  = new model.QuadScaleNode(0.8).removeAllParents();
+		var leftrect = new paper.Rectangle(0,0,0.4,1);
+		var leftSubQuad = new model.QuadToSubQuadNode(utils.PointUtils.CreateRectPoints(leftrect));
+		new model.FillNode();
+		scaleQuad.setHead();
+		var rightrect = new paper.Rectangle(0.6,0,0.4,1);
+		var rightSubQuad = new model.QuadToSubQuadNode(utils.PointUtils.CreateRectPoints(rightrect));
+		new model.FillNode();
 
-		model.PatternState.Instance().headNode = col2;
-		rotate.push();
-		copynode.push();
+		// set the tile
+		col1.setHead();
+		scaleQuad.push();
+
+		// set the tile but rotate it first
+		col2.setHead();
+		new model.RotatePathIndexNode(1);
+		scaleQuad.push();
 
 		startnode.process();
 	}

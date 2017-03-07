@@ -45,7 +45,7 @@ export class FillNode extends Node
 
     process()
     {
-	    console.log(PatternState.Instance().path);
+	    //console.log(PatternState.Instance().path);
         var shape = new paper.Path(PatternState.Instance().path);
         var parentGroup = PatternState.Instance().group;
         if(parentGroup != null)
@@ -67,7 +67,7 @@ export class FillNode extends Node
         {
             for (var key in this.shapeAtts) {
                 if (this.shapeAtts.hasOwnProperty(key)) {
-                    console.log("shape att", key , "val", this.shapeAtts[key]);
+                    //console.log("shape att", key , "val", this.shapeAtts[key]);
                     shape[key] = this.shapeAtts[key];
                 }
             }

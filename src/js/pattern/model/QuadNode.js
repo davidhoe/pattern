@@ -30,6 +30,7 @@ export class QuadNode extends Node
 		//this.quadPoints = (quadPoints == null ) ? PointUtils.CreateRectPoints(new paper.Rectangle(0,0,1,1)) : quadPoints;
 	}
 
+	/*
 	getEditorDefinition()
 	{
 		var def = new editor.NodeEditorDefinition("Quad");
@@ -38,7 +39,7 @@ export class QuadNode extends Node
 		def.addInputFloat('w');
 		def.addInputFloat('h');
 		return def;
-	}
+	}*/
 
 	/*
 	setQuadPoints(quadPoints)

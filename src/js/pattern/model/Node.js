@@ -1,13 +1,14 @@
 /**
  * Created by David on 27/02/2017.
  */
+import * as utils from '../util/utils'
 import * as editor from './editor/editor'
 import {PatternState} from './PatternState'
 export class Node{
 
     constructor()
     {
-        this.childNodes = [];
+        this._childNodes = [];
         this._savedPath = null;
 	    this._savedMatrix = null;
 	    this._savedColour = null;
@@ -19,9 +20,38 @@ export class Node{
 		if(PatternState.Instance().autoPushNodeOnCreation) this.push();
     }
 
+
+
 	getEditorDefinition()
 	{
-		return new editor.NodeEditorDefinition(this.constructor.name);
+		var classname = this.constructor.name;
+		var label = (classname.toLowerCase() == "node") ? classname : utils.StringUtils.ConvertToLabel(classname, ["Node"]);
+		var def = new editor.NodeEditorDefinition(label);
+
+		//console.log("----def:" + this.constructor.name);
+		// try to automatically add the definitions
+		var keys = Object.keys(this);
+		for (var i = 0; i < keys.length; i++) {
+			var key = keys[i];
+			// use val
+			if(key.charAt(0) != '_')
+			{
+			//	console.log("key:", key);
+				if(key.toLowerCase().includes('index')) {
+					//treat as a int
+					def.addInputInt(key);
+				}
+				else if(key.toLowerCase().includes('colour'))
+				{
+					def.addInputColour(key);
+				}
+				else{
+					// treat as a float
+					def.addInputFloat(key);
+				}
+			}
+		}
+		return def;
 	}
 
 	_saveStateColour()
@@ -98,14 +128,14 @@ export class Node{
     removeChild(node)
 	{
 		var temp = [];
-		for(var i =0; i< this.childNodes.length;++i)
+		for(var i =0; i< this._childNodes.length;++i)
 		{
-			if(this.childNodes[i] != node )
+			if(this._childNodes[i] != node )
 			{
-				temp.push(this.childNodes[i]);
+				temp.push(this._childNodes[i]);
 			}
 		}
-		this.childNodes =  temp;
+		this._childNodes =  temp;
 
 		//
 		node._removeParentReference(this);
@@ -157,7 +187,7 @@ export class Node{
 			console.error("should not add node as a child node of itself");
 			return;
 		}
-        this.childNodes.push(node);
+        this._childNodes.push(node);
 		node._parentRefs.push(this);
 		return this;
     }
@@ -220,9 +250,9 @@ export class Node{
 
     processChildNodes()
     {
-        for(var i = 0 ; i < this.childNodes.length; ++i)
+        for(var i = 0 ; i < this._childNodes.length; ++i)
         {
-            this.childNodes[i].process();
+            this._childNodes[i].process();
         }
     }
 

@@ -7,19 +7,215 @@
     <title></title>
     <link rel="stylesheet" href="css/app.css">
 
+    <!---- test split pane start view-source:http://dreamchain.com/static/split-pane/percent-vertical.html -->
+    <!--
+    <link rel="stylesheet" href="http://dreamchain.com/static/split-pane.css" />
+    <link rel="stylesheet" href="http://dreamchain.com/static/pretty-split-pane.css" />
+    <script src="http://dreamchain.com/static/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="http://dreamchain.com/static/split-pane.js"></script>
+
+    <style type="text/css">
+
+        html, body {
+            height: 100%;
+            min-height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #left-component {
+            right: 50%;
+            margin-right: 5px;
+        }
+
+        #my-divider {
+            right: 50%;
+            width: 5px;
+        }
+
+        #right-component {
+            width: 50%;
+        }
+
+    </style>
+    -->
+    <!---- test split pane end -->
+
+    <style>
+        td {
+            padding: 8px 10px;
+        }
+
+        td:first-child {
+            font-family: monospace;
+        }
+
+        h3 {
+            margin-top: 100px;
+        }
+
+        h5 {
+            margin-bottom: 0;
+        }
+
+        hr {
+            margin-top: 2px;
+        }
+
+        .example-1 {
+            height: 600px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .example-2, .example-3, .example-4, .example-5, .example-6 {
+            height: 100%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .example-flex {
+            height: 200px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .example-flex-reverse {
+            flex-direction: row-reverse;
+        }
+
+        #one, #two {
+            padding: 20px;
+        }
+
+        #one p {
+            padding: 0;
+        }
+
+        .example-4, .example-5 {
+            height: 400px;
+        }
+
+        .split p, .split-flex p {
+            padding: 20px;
+        }
+
+        .split, .split-flex {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .gutter {
+            background-color: #bbb;
+
+            background-repeat: no-repeat;
+            background-position: 50%;
+        }
+
+        .gutter.gutter-horizontal {
+            background-image: url('grips/vertical.png');
+            cursor: ew-resize;
+        }
+
+        .gutter.gutter-vertical {
+            background-image: url('grips/horizontal.png');
+            cursor: ns-resize;
+        }
+
+        .split.split-horizontal, .gutter.gutter-horizontal {
+            height: 100%;
+            float: left;
+        }
+    </style>
 </head>
 <body>
+
 <script src="lib/system.js"></script>
 <script src="config.js"></script>
 <script src="vendor/canvas-to-blob.min.js"></script>
 <script src="vendor/FileSaver.min.js"></script>
-<div id='d2' style="position:absolute; top:0px; left:500px; z-index:2">
-    <canvas id="canvas" width=1000 height=1200 style='width:1000px;height:1200px' ></canvas>
-</div>
+<script src="vendor/split.js"></script>
+<!--
+
 <div id='div2' style="position:absolute; top:0px; left:0px; z-index:1">
     <canvas id="canvasUI" width=500 height=1200 style='width:500px;height:1200px' ></canvas>
 </div>
+<div id='d2' style="position:absolute; top:0px; left:500px; z-index:2">
+    <canvas id="canvas" width=1000 height=1200 style='width:1000px;height:1200px' ></canvas>
+</div>
+-->
+<div class="example-2">
+    <div id="div2" class="split split-horizontal">
+
+        <canvas id="canvasUI" width=2000 height=1200  ></canvas>
+
+    </div>
+    <div id="four" class="split split-horizontal">
+        <div id='d2' >
+        <canvas id="canvas" width=1000 height=1200 style='width:1000px;height:1200px' ></canvas>
+        </div>
+    </div>
+</div>
+
+
+<!--
+<div class="pretty-split-pane-frame">
+    <div class="split-pane vertical-percent">
+        <div class="split-pane-component" id="left-component">
+            <div class="pretty-split-pane-component-inner">
+
+
+                <div id='div2' >
+                    <canvas id="canvasUI" width=2000 height=1200 ></canvas>
+                </div>
+
+            </div>
+        </div>
+        <div class="split-pane-divider" id="my-divider"></div>
+        <div class="split-pane-component" id="right-component">
+            <div class="pretty-split-pane-component-inner">
+
+                <div id='d2' >
+                    <canvas id="canvas" width=2000 height=1200 style='width:2000px;height:1200px' ></canvas>
+                </div>
+
+           </div>
+       </div>
+   </div>
+</div>
+
+
+<script>
+    $(function() {
+        $(".panel-left").resizable({
+            handleSelector: ".splitter",
+            resizeHeight: false
+        });
+
+        $(".panel-top").resizable({
+            handleSelector: ".splitter-horizontal",
+            resizeWidth: false
+        });
+    });
+</script>
+-->
 <!--<canvas id="canvas" resize></canvas>-->
+
+<script>
+
+    Split(['#div2', '#four'], {
+        sizes: [50, 50],
+        minSize: 200
+    });
+
+
+</script>
 
 <script>System.import('./js/app')</script>
 

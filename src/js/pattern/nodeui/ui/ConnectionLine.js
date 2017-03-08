@@ -17,7 +17,7 @@ export default class ConnectionLine extends paper.Path
 		this.startConnectionPoint = null;
 		this.endConnectionPoint = null;
 		this.segments = [this.p0,this.p1];
-		this.strokeColor = 'green';
+		this.strokeColor = new paper.Color(0.3);
 //		this.line = new paper.Path.Line(this.p0,this.p1);
 	}
 
@@ -109,13 +109,13 @@ export default class ConnectionLine extends paper.Path
 	{
 		if(this.startConnectionPoint)
 		{
-			this.p0 = this.startConnectionPoint.rect.localToGlobal();
+			this.p0 = this.startConnectionPoint.bg.localToGlobal();
 
 			//console.log("here", this.startConnectionPoint);
 		}
 		if(this.endConnectionPoint)
 		{
-			this.p1 = this.endConnectionPoint.rect.localToGlobal();
+			this.p1 = this.endConnectionPoint.bg.localToGlobal();
 		}
 		this.segments = [this.p0,this.p1];
 

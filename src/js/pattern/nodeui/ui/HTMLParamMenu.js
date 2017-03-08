@@ -43,8 +43,13 @@ export default class HTMLParamMenu
 		// background
 		var menu = document.createElement("div");
 		//menu.setAttribute("background-color", "lightblue");
-		$(menu).css("background-color" , 'lightblue');
+		//$(menu).css("background-color" , 'lightblue');
 		$(menu).width(200);
+		$(menu).addClass("triangle-isosceles left");
+		/*
+		<p class="triangle-isosceles left">But it could be any element you want.</p>
+*/
+
 	//	$(menu).height(200);
 
 

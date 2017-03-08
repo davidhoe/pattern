@@ -127,11 +127,12 @@ export class QuadSubdivisionNode extends Node
 		return quads;
 	}
 
+	/*
 	getEditorDefinition()
 	{
 		var def = new editor.NodeEditorDefinition("Quad subdivide");
 		def.addInputFloat('nrows');
 		def.addInputFloat('ncols');
 		return def;
-	}
+	}*/
 }

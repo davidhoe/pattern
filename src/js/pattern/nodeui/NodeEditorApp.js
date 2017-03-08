@@ -73,23 +73,23 @@ export default class NodeEditorApp
 		node.position.x = 139;
 		node.position.y = 650;
 
-		 node = new PatternNodeView(new model.QuadMirrorNode().removeAllParents(), 'blue');
+		 node = new PatternNodeView(new model.QuadMirrorNode().removeAllParents());
 		this.canvas.addPatternNode(node);
 		node.position.x = 139;
 		node.position.y = 750;
 
 
-		node = new PatternNodeView(new model.QuadToDiagonalLeafNode().removeAllParents(), 'blue');
+		node = new PatternNodeView(new model.QuadToDiagonalLeafNode().removeAllParents());
 		this.canvas.addPatternNode(node);
 		node.position.x = 239;
 		node.position.y = 750;
 
-		node = new PatternNodeView(new model.RandomColourFromSetNode(util.ColourUtils.GetRandomColourset()).removeAllParents(), 'blue');
+		node = new PatternNodeView(new model.RandomColourFromSetNode(util.ColourUtils.GetRandomColourset()).removeAllParents());
 		this.canvas.addPatternNode(node);
 		node.position.x = 239;
 		node.position.y = 950;
 
-		node = new PatternNodeView(new model.QuadSubdivisionNode(2,2).removeAllParents(), 'blue');
+		node = new PatternNodeView(new model.QuadSubdivisionNode(2,2).removeAllParents());
 		this.canvas.addPatternNode(node);
 		node.position.x = 339;
 		node.position.y = 950;

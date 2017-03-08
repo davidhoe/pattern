@@ -26,10 +26,5 @@ export class QuadToDiagonalLeafNode extends QuadToShapeNode
 		super.process();
 	}
 
-	getEditorDefinition()
-	{
-		var def = new editor.NodeEditorDefinition("QuadToDiagonalLeaf");
-		def.addInputFloat('r');
-		return def;
-	}
+
 }

@@ -11,7 +11,7 @@ import * as renderers from './pattern/renderer/PatternRenderers'
 import * as model from './pattern/model/model'
 
 import {ColourButton} from './pattern/colourui/ColourButton'
-//import $ from 'jquery'
+
 
 ///paper.paper.install(window);
 

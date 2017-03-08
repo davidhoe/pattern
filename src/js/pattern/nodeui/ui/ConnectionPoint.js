@@ -12,11 +12,11 @@ export default class ConnectionPoint extends paper.Group
 		this.dragging = false;
 		//this.applyMatrix = false;
 		//test rect background
-		this.rect = new paper.Shape.Rectangle(new paper.Rectangle(-10,-10,20,20));
-		this.rect.fillColor = testcolour;
+		this.bg = new paper.Shape.Circle(new paper.Point(0,0),10);// new paper.Shape.Rectangle(new paper.Rectangle(-10,-10,20,20));
+		this.bg.fillColor = testcolour;
 		//this.rect.applyMatrix = false;
 
-		this.addChild(this.rect);
+		this.addChild(this.bg);
 		var _this = this;
 		this.onMouseDown = function(evt)
 		{
@@ -36,10 +36,10 @@ export default class ConnectionPoint extends paper.Group
 	{
 		if(highlighted)
 		{
-			this.rect.fillColor = 'green';
+			this.bg.fillColor = 'green';
 		}
 		else{
-			this.rect.fillColor = 'black';
+			this.bg.fillColor = 'black';
 		}
 	}
 

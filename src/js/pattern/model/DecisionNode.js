@@ -23,11 +23,11 @@ export class DecisionNode extends Node
     process()
     {
         super._processParams();
-        if(this.choiceIndex >= this.childNodes.length) {
+        if(this.choiceIndex >= this._childNodes.length) {
             console.error("choice index is out of bounds,choiceIndex: " ,this.choiceIndex );
             return;
         }
-        var childnode = this.childNodes[this.choiceIndex];
+        var childnode = this._childNodes[this.choiceIndex];
         childnode.process();
     }
 }

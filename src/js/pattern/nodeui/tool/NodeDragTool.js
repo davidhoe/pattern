@@ -27,7 +27,7 @@ export default class NodeDragTool
 			this.draggingNode.onPositionUpdate();
 		}
 
-		console.log(event.delta);
+	//	console.log(event.delta);
 	}
 
 	onMouseUp (event)

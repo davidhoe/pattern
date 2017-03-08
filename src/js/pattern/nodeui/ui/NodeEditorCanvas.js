@@ -1,11 +1,13 @@
 import paper from 'paper'
 import * as utils from '../../util/utils'
+import * as model from '../../model/model'
 import BaseNodeView from './BaseNodeView'
 import ParamNodeView from './ParamNodeView'
 import PatternNodeView from './PatternNodeView'
 import NodeDragTool from '../tool/NodeDragTool'
 import ConnectorDragTool from '../tool/ConnectorDragTool'
 import ConnectionLine from './ConnectionLine'
+import HTMLParamMenu from './HTMLParamMenu'
 
 /**
  * Canvas is the main surface to add Nodes to.
@@ -16,6 +18,7 @@ export default class NodeEditorCanvas
 {
 	constructor(project)
 	{
+		this.onModelUpdatedCallback = null;
 		this.project = project;
 		this.project.activate();
 		this.connectionLayer = new paper.Layer();
@@ -24,6 +27,8 @@ export default class NodeEditorCanvas
 		this.patternNodes = [];
 		this.paramNodes = [];
 		this.connectionLines = [];
+		//node param menu
+		this._nodemenu = new HTMLParamMenu();
 
 		// tools
 		var _this = this;
@@ -50,6 +55,16 @@ export default class NodeEditorCanvas
 		this.draggingNode = null;
 	}
 
+
+	onModelUpdated()
+	{
+		if(this.onModelUpdatedCallback)
+		{
+			this.onModelUpdatedCallback();
+		}
+	}
+
+
 	// called when a tool finishes like dragging
 	onToolComplete(tool)
 	{
@@ -70,6 +85,7 @@ export default class NodeEditorCanvas
 
 
 	}
+
 
 	removeConnectionLine(connectionLine)
 	{
@@ -92,6 +108,17 @@ export default class NodeEditorCanvas
 		this.patternNodes.push(node);
 		this._addNode(node);
 		node.canvas = this;
+
+		var _this = this;
+		node.on('click', function(){_this.nodeClicked(this)})
+	}
+
+	nodeClicked(node)
+	{
+		console.log("node clicked" , node);
+		this._nodemenu.init(node.nodemodel);
+		//console.log();
+		this._nodemenu.show(node.position.x + 50, node.position.y - 50);
 	}
 
 	// common

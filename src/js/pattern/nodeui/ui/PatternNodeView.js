@@ -11,15 +11,26 @@ export var PatternConnectorType = {patternNodeParent:"patternNodeParent", patter
  */
 export default class PatternNodeView extends BaseNodeView
 {
-	constructor(model, testcolour = 'red')
+	constructor(nodemodel, testcolour = 'red')
 	{
 		super(PatternNodeView.NodeType, model,testcolour);
 		this.canvas = null;
+
+		this.nodemodel = nodemodel;
+		this.nodedef = (nodemodel ) ? nodemodel.getEditorDefinition() : new model.NodeEditorDefinition("Node");
+
 		//test rect background
 		this.rect = new paper.Shape.Rectangle(new paper.Rectangle(0,0,100,100));
 		super.addChild( this.rect);
 		this.rect.fillColor = testcolour;
 
+		// add a text label
+		this.text = new paper.PointText(new paper.Point(50, 50));
+		super.addChild( this.text);
+
+		this.text.justification = 'center';
+		this.text.fillColor = 'black';
+		this.text.content = this.nodedef.label;
 		//
 		this.patternParentConnector = new ConnectionPoint(this, null, 'black');
 		this.patternParentConnector.connectorType = PatternConnectorType.patternNodeParent;

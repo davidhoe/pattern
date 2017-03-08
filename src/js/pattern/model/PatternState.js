@@ -13,6 +13,7 @@ export class PatternState
 
     reset()
     {
+        this.autoPushNodeOnCreation = false;
         this.colour = new paper.Color(1);
         this.bound = new paper.Rectangle(0,0,100,100);
         this.path = utils.PointUtils.CreateRectPoints(new paper.Rectangle(0,0,100,100));

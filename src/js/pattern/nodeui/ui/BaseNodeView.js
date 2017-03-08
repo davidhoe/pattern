@@ -18,7 +18,6 @@ export default class BaseNodeView extends paper.Group
 		//this.applyMatrix = false;
 		//
 
-	//	this.connectorStartDragTarget.allowedConnectors.push();
 		// add the name of the
 	}
 

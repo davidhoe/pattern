@@ -23,4 +23,10 @@ export class ColourNode extends Node
         PatternState.Instance().colour = this.colour;
         super.processChildNodes();
     }
+
+    getEditorDefinition()
+    {
+        // return a definition to help the view control
+        return {'label': 'Node'};
+    }
 }

@@ -1,4 +1,8 @@
 import paper from 'paper'
+import {ParamConnectorType} from './ParamNodeView'
+import {PatternConnectorType} from './PatternNodeView'
+import PatternNodeView from './PatternNodeView'
+import ParamNodeView from './ParamNodeView'
 
 /*
  *  visually represents a relationship between 2 view nodes
@@ -40,7 +44,67 @@ export default class ConnectionLine extends paper.Path
 	{
 		this.endConnectionPoint = conpoint;
 		conpoint.node.addConnectionLine(this);
+
+		// logic here?
+		this.updateModel();
+
 	}
+
+	///there are 3 types of connection
+	// pattern(parent)->pattern(child)
+	// param(output)->pattern(input)
+	// param (output) -> param(input )
+	updateModel()
+	{
+		//
+		var c0 = this.startConnectionPoint;
+		var c1 = this.endConnectionPoint;
+		console.log("c0.node.nodemodel", c0.node.nodemodel);
+		console.log("c1.node.nodemodel", c1.node.nodemodel);
+
+		console.log("c0.node.type", c0.node.type);
+		console.log("c1.node.type", c1.node.type);
+		console.log("c0.connectorType", c0.connectorType);
+		console.log("c1.connectorType", c1.connectorType);
+
+		var isPatternToPattern  = (c0.node.type == PatternNodeView.NodeType && (c1.node.type == PatternNodeView.NodeType)) ;
+		var isParamToParam  = (c0.node.type == ParamNodeView.NodeType && (c1.node.type == ParamNodeView.NodeType)) ;
+		var isPatternToParam  = (c0.node.type == PatternNodeView.NodeType && (c1.node.type == ParamNodeView.NodeType)) ;
+		var isParamToPattern  = (c0.node.type == ParamNodeView.NodeType && (c1.node.type == PatternNodeView.NodeType)) ;
+
+		var parent,child;
+		if(isPatternToPattern)
+		{
+			// pattern(parent)->pattern(child)
+			//find the parent and child
+			var isParentToChild = (c0.connectorType == PatternConnectorType.patternNodeParent ) && (c1.connectorType == PatternConnectorType.patternNodeChild) ;
+			var isChildToParent = (c1.connectorType == PatternConnectorType.patternNodeParent ) && (c0.connectorType == PatternConnectorType.patternNodeChild) ;
+			if(isParentToChild)
+			{
+				console.log("start pattern(parent)-> end pattern(child)");
+				c0.node.nodemodel.addChild(c1.node.nodemodel);
+			}
+			else if(isChildToParent)
+			{
+				console.log("start pattern(child) <- end pattern(child)");
+				c1.node.nodemodel.addChild(c0.node.nodemodel);
+
+			}
+		}
+		else if(isParamToParam)
+		{
+
+		}
+		else if(isPatternToParam || isParamToPattern){
+
+		}
+
+		// find the input or the parent
+		//var this.endConnectionPoint.connectorType;
+
+
+	}
+
 	updateConnectionLine()
 	{
 		if(this.startConnectionPoint)

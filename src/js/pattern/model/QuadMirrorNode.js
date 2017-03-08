@@ -6,6 +6,7 @@ import {PatternState} from './PatternState'
 import {PointUtils} from '../util/PointUtils'
 import {MathUtils} from '../util/MathUtils'
 import paper from 'paper'
+import * as editor from './editor/editor'
 
 export class QuadMirrorNode extends Node
 {

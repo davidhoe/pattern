@@ -24,6 +24,11 @@ export var BLEND_MODE  = {
 	'add'    : 'add',
 	'subtract'    : 'subtract'
 };
+export {NodeEditorDefinition as NodeEditorDefinition} from './editor/NodeEditorDefinition';
+export {ParamDef as ParamDef} from './editor/ParamDef';
+export {FloatParamDef as FloatParamDef} from './editor/ParamDef';
+export {IntParamDef as IntParamDef} from './editor/ParamDef';
+export {ColourParamDef as ColourParamDef} from './editor/ParamDef';
 
 export {ColourNode as ColourNode} from './ColourNode.js';
 export {CompoundPathNode as CompoundPathNode} from './CompoundPathNode.js';

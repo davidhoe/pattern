@@ -7,6 +7,7 @@ import {PatternState} from './PatternState'
 import {PointUtils} from '../util/PointUtils'
 import {MathUtils} from '../util/MathUtils'
 import paper from 'paper'
+import * as editor from './editor/editor'
 
 /**
  * quad to a circle
@@ -24,5 +25,12 @@ export class QuadToCircleNode  extends QuadToShapeNode
 		var points =  PointUtils.CreateNormalisedCircle(this.r);
 		this.normalisedSegments = points;
 		super.process();
+	}
+
+	getEditorDefinition()
+	{
+		var def = new editor.NodeEditorDefinition("Quad To Circle");
+		def.addInputFloat('r');
+		return def;
 	}
 }

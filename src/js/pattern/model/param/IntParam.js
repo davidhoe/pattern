@@ -9,6 +9,7 @@ export class IntParam extends Param{
 	{
 		super();
 		this.defaultValue = defaultValue;
+
 	}
 
 	getValue()
@@ -16,4 +17,6 @@ export class IntParam extends Param{
 		super._processParams();
 		return this.defaultValue;
 	}
+
+
 }

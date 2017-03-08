@@ -7,6 +7,7 @@ import {PatternState} from './PatternState'
 import {PointUtils} from '../util/PointUtils'
 import {MathUtils} from '../util/MathUtils'
 import paper from 'paper'
+import * as editor from './editor/editor'
 
 /**
  * quad to a diagonal leaf
@@ -23,5 +24,12 @@ export class QuadToDiagonalLeafNode extends QuadToShapeNode
 	{
 		this.normalisedSegments = ( PointUtils.CreateNormalisedDiagonalLeaf(this.r));
 		super.process();
+	}
+
+	getEditorDefinition()
+	{
+		var def = new editor.NodeEditorDefinition("QuadToDiagonalLeaf");
+		def.addInputFloat('r');
+		return def;
 	}
 }

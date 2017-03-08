@@ -6,6 +6,7 @@ import {Node} from './Node'
 import {PatternState} from './PatternState'
 import paper from 'paper'
 import {BLEND_MODE} from './model'
+import * as editor from './editor/editor'
 
 /**
  *
@@ -76,4 +77,10 @@ export class FillNode extends Node
     //    PatternState.Instance().colour = this.colour;
         super.processChildNodes();
     }
+
+	getEditorDefinition()
+	{
+		var def = new editor.NodeEditorDefinition("Fill");
+		return def;
+	}
 }

@@ -1,7 +1,7 @@
 /**
  * Created by David on 27/02/2017.
  */
-
+import * as editor from './editor/editor'
 import {PatternState} from './PatternState'
 export class Node{
 
@@ -16,8 +16,13 @@ export class Node{
 
 		this._parentRefs = []; // array of parent references
 		// automatically push and set as a child node
-		this.push();
+		if(PatternState.Instance().autoPushNodeOnCreation) this.push();
     }
+
+	getEditorDefinition()
+	{
+		return new editor.NodeEditorDefinition(this.constructor.name);
+	}
 
 	_saveStateColour()
 	{

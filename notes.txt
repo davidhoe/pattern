@@ -55,7 +55,11 @@ Todo- nodes:
 
 
 ---------------
+- open params menu
+- click on a node to show params - focus
+
 - test 2 different canvases
+
 - nodeview  - make a connectorStartDragTarget , palce at the bottom
 - make a connectorDrag tool - pass inthe connector ref
 --tool - attach to (node, param) node events (enter,leave)
@@ -63,6 +67,8 @@ Todo- nodes:
 - on tool up - if over node then attac
 - connector follows mouse
 - line connection between 2 nodes
+
+do a cyclic check for a new connection line.
 
 - on node select - show Options (delete, params div)
 - on node deselect - hide Options

@@ -142,14 +142,21 @@ export default class ConnectorDragTool
 	{
 		// do additional checks
 		// including a cyclic check
+		var newConnectionMade = false;
 		var removeconnection = true;
 		if(this.foundConnnectionPoint   )
 		{
 			var alreadyContainsConnection = this.foundConnnectionPoint.node.containsExistingConnection(this.foundConnnectionPoint, this._startConnector );
+
+
 			if(!alreadyContainsConnection ) {
 				removeconnection = false;
 				this._connectionLine.setEndConnectionPoint(this.foundConnnectionPoint);
 				this._connectionLine.updateConnectionLine();
+				newConnectionMade = true;
+				// update model
+				//this.canvas.setPatternNodeChild(this._connectionLine);
+
 			}
 			this.foundConnnectionPoint.setHighlighted(false);
 
@@ -165,6 +172,10 @@ export default class ConnectorDragTool
 		this.draggingNode = null;
 		// do callback
 		this.canvas.onToolComplete(this);
+		if(newConnectionMade)
+		{
+			this.canvas.onModelUpdated();
+		}
 	}
 
 	onEnter(evt)

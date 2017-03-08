@@ -1,6 +1,7 @@
 import {Node} from './Node'
 import {PatternState} from './PatternState'
 import {PointUtils} from '../util/PointUtils'
+import * as editor from './editor/editor'
 
 import paper from 'paper'
 
@@ -126,5 +127,11 @@ export class QuadSubdivisionNode extends Node
 		return quads;
 	}
 
-
+	getEditorDefinition()
+	{
+		var def = new editor.NodeEditorDefinition("Quad subdivide");
+		def.addInputFloat('nrows');
+		def.addInputFloat('ncols');
+		return def;
+	}
 }

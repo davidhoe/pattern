@@ -26,6 +26,9 @@ export class TriGrid1
 
     init(colourset)
     {
+
+	    //console.log("paper project", paper.paper);
+
         //this.destroy();
 
         if(!colourset)

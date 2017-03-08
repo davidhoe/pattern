@@ -15,6 +15,7 @@ pattern select on the left
 phase 2:
 
 To test - nodes:
+
 DecisionNode - choose one of x children to execute, public index.
 RepeatNode  - repeat execution of children n times, public n
 PathNode - set a path. public path (for custom paths )
@@ -52,8 +53,42 @@ node.removeFromParent();
 
 Todo- nodes:
 
-TextureNode(filename)
+
+---------------
+- test 2 different canvases
+- nodeview  - make a connectorStartDragTarget , palce at the bottom
+- make a connectorDrag tool - pass inthe connector ref
+--tool - attach to (node, param) node events (enter,leave)
+- on leave - stop highlight, on enter start highlight
+- on tool up - if over node then attac
+- connector follows mouse
+- line connection between 2 nodes
+
+- on node select - show Options (delete, params div)
+- on node deselect - hide Options
+
+Node UI tree
+- node Defintion - label, type?
+- create a param Defintion list
+ - param has name, label, Type (float,int,colour, colourset), range?
+
+save /restore node
+save / restore whole tree
+
+- drag and drop node UI
+- set a heading from the defintion
+- generate param list
+
+------------
+
+OperatorFilterNode -  public value0, value1, operator eum (equals, less more, not equals)
+
+TextureNode(filename)  Raster
 TextureUtils - texture loading
+
+Gradient
+
+test view/project/paper scope
 
 pointutil.createPointTriGrid
 
@@ -75,5 +110,15 @@ ShapePathNode extends PathNode - set a regular shape like circle,line, star..
    - centered, anchorpoint?
 
 
+
+
+----------------
+
+milestone goals
+simple wallpaer creator - a few pattern modes,
+change the mode
+change the colour
+next (randomise)
+back
 
 

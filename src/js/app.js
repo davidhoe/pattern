@@ -1,6 +1,7 @@
 import paper from 'paper'
 import {MathUtils} from './pattern/util/MathUtils';
 import {ColourUtils} from './pattern/util/ColourUtils';
+import * as nodeui from './pattern/nodeui/nodeui';
 
 //import {Circles2} from './pattern/Circles2';
 //import {Lines} from './pattern/Lines';
@@ -16,15 +17,49 @@ import {ColourButton} from './pattern/colourui/ColourButton'
 // Get a reference to the canvas object
 var canvas = document.getElementById('canvas');
 // Create an empty project and a view for the canvas:
-paper.paper.setup(canvas);
 
-ColourUtils.Instance().loadColoursets(init);
+var mypaper = new paper.PaperScope();
+mypaper.setup(canvas);
+//mypaper.view.zoom = 2;
+mypaper.activate();
+//paper.paper.setup(canvas);
+//paper.paper = paper;
+
 var currentRender = null;
 // model
 var selectedColourset = null;
 
+
+var canvas = new paper.Project('canvas');
+var canvasUI = new paper.Project('canvasUI');
+
+var nodeEditorApp = new nodeui.NodeEditorApp(canvasUI);
+
+//colourUIproject.activate();
+canvas.activate();
 var renderLayer = new paper.Layer();
 var colourTrayLayer = new paper.Layer();
+
+//canvasUI.activate();
+
+console.log("paper.paper", mypaper);
+
+ColourUtils.Instance().loadColoursets(init);
+
+
+canvasUI.activate();
+var recttest = new paper.Shape.Rectangle(new paper.Rectangle(0,0,100,100));
+recttest.fillColor = 'blue';
+
+canvas.activate();
+
+canvasUI.view.onFrame = function(event) {
+	recttest.rotate(3);
+		// On each frame, rotate the path by 3 degrees:
+		//  path.rotate(3);
+		//console.log("frame");
+
+	}
 
 function init()
 {
@@ -98,11 +133,6 @@ function drawRender()
    // currentRender.globalgroup.position.x = 200;
 }
 
-paper.view.onFrame = function(event) {
-    // On each frame, rotate the path by 3 degrees:
-  //  path.rotate(3);
-    //console.log("frame");
-}
 
 function exportRenderToFile()
 {

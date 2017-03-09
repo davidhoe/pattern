@@ -74,7 +74,7 @@ export default class HTMLParamMenu
 			console.log("init menu", inputdef);
 			if(inputdef.type == model.FloatParamDef.name)
 			{
-				var input = HTMLParamMenu.CreateParamInput(this._nodemodel[inputdef.name], inputdef.name, menu);
+				var input = HTMLParamMenu.CreateNumberInput(this._nodemodel[inputdef.name], inputdef.name, menu);
 				input.inputdef = inputdef;
 				$(input).focusout(function () {
 					var val = $(this).val();
@@ -85,7 +85,7 @@ export default class HTMLParamMenu
 			}
 			else if(inputdef.type == model.IntParamDef.name)
 			{
-				var input = HTMLParamMenu.CreateParamInput(this._nodemodel[inputdef.name], inputdef.name, menu);
+				var input = HTMLParamMenu.CreateNumberInput(this._nodemodel[inputdef.name], inputdef.name, menu);
 				input.inputdef = inputdef;
 				$(input).focusout(function () {
 					var val = $(this).val();
@@ -107,7 +107,14 @@ export default class HTMLParamMenu
 			}
 			else if(inputdef.type == model.StringParamDef.name)
 			{
-
+				var input = HTMLParamMenu.CreateStringInput(this._nodemodel[inputdef.name], inputdef.name, menu);
+				input.inputdef = inputdef;
+				$(input).focusout(function () {
+					var val = $(this).val();
+					_this._nodemodel[this.inputdef.name] = (val);
+					console.log("new string value for " + this.inputdef.name + " set to : " + (val));
+					_this.onValueChanged();
+				});
 			}
 
 			$(menu).append('<br />');
@@ -171,10 +178,20 @@ export default class HTMLParamMenu
 		return element;
 	}
 
-	static CreateParamInput(value, id, parent)
+	static CreateNumberInput(value, id, parent)
 	{
 		var element = document.createElement("input");
 		element.setAttribute("type", "number");
+		element.setAttribute("value", value);
+		element.setAttribute("name", id);
+		parent.appendChild(element);
+		return element;
+	}
+
+	static CreateStringInput(value, id, parent)
+	{
+		var element = document.createElement("input");
+		element.setAttribute("type", "string");
 		element.setAttribute("value", value);
 		element.setAttribute("name", id);
 		parent.appendChild(element);

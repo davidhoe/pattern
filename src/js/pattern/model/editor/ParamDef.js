@@ -1,10 +1,10 @@
-
+import * as utils from '../../util/utils'
 export class ParamDef
 {
 	constructor(name, label, type)
 	{
 		this.name = name;
-		this.label = (label == null) ? name : label;
+		this.label = (label == null) ? utils.StringUtils.ConvertToLabel(name) : label;
 		this.type = type;
 	}
 }

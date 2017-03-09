@@ -12,6 +12,12 @@ export class Param extends Parameterizable
 		super();
 	}
 
+	getEditorDefinition()
+	{
+		var def = super.getEditorDefinition(["Param"]);
+		return def;
+	}
+
 	// overide this
 	getValue()
 	{

@@ -60,10 +60,16 @@ export default class NodeEditorApp
 		//make a node
 		var param;
 
-		param = new ParamNodeView(new model.FloatParamDef("float"));
+		param = new ParamNodeView(new model.FloatParam(2));
 		this.canvas.addPatternNode(param);
 		param.position.x = 300;
 		param.position.y = 350;
+
+		param = new ParamNodeView(new model.FloatParam(2));
+		this.canvas.addPatternNode(param);
+		param.position.x = 350;
+		param.position.y = 450;
+
 
 		var node2 = new PatternNodeView(new model.QuadNode(50,50,100,100).removeAllParents());
 		this.canvas.addPatternNode(node2);

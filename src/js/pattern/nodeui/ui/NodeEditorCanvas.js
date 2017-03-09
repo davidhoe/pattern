@@ -217,7 +217,7 @@ export default class NodeEditorCanvas
 		console.log("node clicked" , node);
 		this._nodemenu.init(node);
 		//console.log();
-		this._nodemenu.show(node.position.x + 50, node.position.y - 50);
+		this._nodemenu.show(node.position.x + 100, node.position.y );
 	}
 
 	// common

@@ -78,9 +78,4 @@ export class FillNode extends Node
         super.processChildNodes();
     }
 
-	getEditorDefinition()
-	{
-		var def = new editor.NodeEditorDefinition("Fill");
-		return def;
-	}
 }

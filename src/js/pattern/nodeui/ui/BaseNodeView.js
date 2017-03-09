@@ -2,6 +2,15 @@ import paper from 'paper'
 import {ArrayUtils} from '../../util/ArrayUtils'
 import * as model from '../../model/model'
 import {ConnectionPoint as ConnectionPoint} from './ConnectionPoint'
+import {PatternConnectionPoint as PatternConnectionPoint} from './ConnectionPoint'
+import {ParamInputConnectionPoint as ParamInputConnectionPoint} from './ConnectionPoint'
+import {ParamOutputConnectionPoint as ParamOutputConnectionPoint} from './ConnectionPoint'
+
+//import {PatternConnectorType } from './PatternNodeView'
+import {PatternConnectorType as PatternConnectorType} from '../model/ConnectorTypes'
+import {ParamConnectorType as ParamConnectorType} from '../model/ConnectorTypes'
+
+
 /**
  * base view of a draggable item. An node is either a pattern node or a parameter (Float,Int...)
  */
@@ -10,6 +19,8 @@ export default class BaseNodeView extends paper.Group
 	constructor(nodetype, nodemodel)
 	{
 		super();
+		this.nodedef = nodemodel.getEditorDefinition();
+
 		this.nodemodel = nodemodel;
 		this.canvas = null;
 		this.deletable = true;
@@ -20,8 +31,30 @@ export default class BaseNodeView extends paper.Group
 		this.connectionLines = [];
 		//this.applyMatrix = false;
 		//
+		this.pivot = new paper.Point(0,0);
+		this.position = new paper.Point(0,0);
+
+		var inputSpacingY = 15;
+		var inputsylen = this.nodedef.inputs.length*inputSpacingY;
+		this.bound = new paper.Rectangle(0,0,150,50 + inputsylen);
+		//add a rect background
+		this.rect = this._addBackground(this.bound, 'grey');
+		// add a text label
+		this.text = this._addCenteredTextLabel(this.nodedef.label,this.bound, 'black');
+		this.text.position.y = 30;
+		this.text.fontSize = 14;
+		//this.text.fontWeight ='bold';
 
 		// add the name of the
+		var startpos = new paper.Point(this.bound.x + this.bound.width, this.bound.y + 35);
+		this._addAllInputConnectionPoints(this.nodedef, startpos, inputSpacingY);
+
+
+	}
+
+	setBgColour(colour)
+	{
+		this.rect.fillColor = colour;
 	}
 
 	/////////////////////////////
@@ -36,7 +69,7 @@ export default class BaseNodeView extends paper.Group
 		rect.shadowColor = new paper.Color(0, 0, 0,0.2);
 		rect.shadowBlur =0;
 		rect.shadowOffset = new paper.Point(2, 3);
-		return this.rect;
+		return rect;
 	}
 
 	_addCenteredTextLabel(textlabel,bound, colour)
@@ -49,17 +82,58 @@ export default class BaseNodeView extends paper.Group
 		return text;
 	}
 
-	_addConnectorPoint(position, colour, connectorType, allowedConnectors)
+	_addAllInputConnectionPoints(modeldef, startp, inputSpacingY)
 	{
-		var cp = new ConnectionPoint(this, 10, colour);
-		cp.connectorType = connectorType;
-		cp.allowedConnectors = allowedConnectors;
+		var pos = startp ; //
+
+		for(var i =0; i< modeldef.inputs.length;++i)
+		{
+			var paramDef = modeldef.inputs[i];
+			pos.y += inputSpacingY;
+			this._addParamInputConnectorPoint(pos.clone(), paramDef);
+		}
+	}
+
+	_addParamInputConnectorPoint(position, paramDef)
+	{
+		var cp = new ParamInputConnectionPoint(this, paramDef);
+		cp.connectorType = ParamConnectorType.paramInput;
+		cp.allowedConnectors = [ParamConnectorType.paramOutput];
+		return this._addConnectorPoint(cp, position);
+	}
+
+	_addParamOutputConnectorPoint(position, paramDef)
+	{
+		var cp = new ParamOutputConnectionPoint(this, paramDef);
+		cp.connectorType = ParamConnectorType.paramOutput;
+		cp.allowedConnectors = [ParamConnectorType.paramInput];
+		return this._addConnectorPoint(cp, position);
+	}
+
+
+	_addPatternParentConnectorPoint(position)
+	{
+		var cp = new PatternConnectionPoint(this);
+		cp.connectorType = PatternConnectorType.patternNodeParent;
+		cp.allowedConnectors = [PatternConnectorType.patternNodeChild];
+		return this._addConnectorPoint(cp, position);
+	}
+
+	_addPatternChildConnectorPoint(position)
+	{
+		var cp = new PatternConnectionPoint(this);
+		cp.connectorType = PatternConnectorType.patternNodeChild;
+		cp.allowedConnectors = [PatternConnectorType.patternNodeParent];
+		return this._addConnectorPoint(cp, position);
+	}
+
+	_addConnectorPoint(cp, position)
+	{
 		super.addChild( cp);
 		cp.position = position ;
 		this.connectors.push(cp);
 		return cp;
 	}
-
 
 	/////////////////////////////
 

@@ -26,7 +26,7 @@ export class QuadToShapeNode extends Node
 
 	process()
 	{
-		super._processParams();
+		//super._processParams();
 		var path = super._getStatePath();
 		if(path.length < 4)
 		{

@@ -14,12 +14,12 @@ export class QuadSubdivisionNode extends Node
 	 * sudivide into a number of rows
 
 	 */
-	constructor(nrows, ncols)
+	constructor(nRows, nCols)
 	{
 		super();
 		// public
-		this.nrows = nrows;
-		this.ncols = ncols;
+		this.nRows = nRows;
+		this.nCols = nCols;
 		this._specificChildNodes = []; // store nodes attached to a specific child index
 
 	}
@@ -56,7 +56,7 @@ export class QuadSubdivisionNode extends Node
 		if(path.length >= 4)
 		{
 			super._saveStatePath();
-			var shapes = QuadSubdivisionNode.SubdivideQuad(this.nrows, this.ncols, path);
+			var shapes = QuadSubdivisionNode.SubdivideQuad(this.nRows, this.nCols, path);
 			for (var i = 0; i < shapes.length; i++) {
 				//
 				PatternState.Instance().path = shapes[i];
@@ -81,20 +81,20 @@ export class QuadSubdivisionNode extends Node
 		}
 	}
 
-	static GetGridPoints(nrows, ncols, quadPoints)
+	static GetGridPoints(nRows, nCols, quadPoints)
 	{
 		// create grid points
 		var rj, r, ri;
 		var gridpoints = [];
-		for(var j = 0; j<= nrows;++j)
+		for(var j = 0; j<= nRows;++j)
 		{
-			rj = j/ nrows;
+			rj = j/ nRows;
 			var p0 = PointUtils.LerpPoint(quadPoints[0],quadPoints[3], rj);
 			var p1 = PointUtils.LerpPoint(quadPoints[1],quadPoints[2], rj);
 			var prow = [];
-			for(var i =0; i<= ncols;++i)
+			for(var i =0; i<= nCols;++i)
 			{
-				ri = i/ncols;
+				ri = i/nCols;
 				var p = PointUtils.LerpPoint(p0,p1, ri);
 				prow.push(p);
 			}
@@ -104,18 +104,18 @@ export class QuadSubdivisionNode extends Node
 	}
 
 	// todo subdivide into X rows
-	static SubdivideQuad(nrows, ncols, quadpoints)
+	static SubdivideQuad(nRows, nCols, quadpoints)
 	{
-		var gridpoints = QuadSubdivisionNode.GetGridPoints(nrows, ncols, quadpoints);
+		var gridpoints = QuadSubdivisionNode.GetGridPoints(nRows, nCols, quadpoints);
 		var p0,p1,p2,p3;
 		var quads = [];
 		var prow0,prow1;
 		// for each row, make a row of triangles
-		for(var j = 0; j< nrows;++j)
+		for(var j = 0; j< nRows;++j)
 		{
 			prow0 = gridpoints[j];
 			prow1 = gridpoints[j+1];
-			for(var i=0; i< ncols;++i )
+			for(var i=0; i< nCols;++i )
 			{
 				p0 = prow0[i];
 				p1 = prow0[i+1];
@@ -131,8 +131,8 @@ export class QuadSubdivisionNode extends Node
 	getEditorDefinition()
 	{
 		var def = new editor.NodeEditorDefinition("Quad subdivide");
-		def.addInputFloat('nrows');
-		def.addInputFloat('ncols');
+		def.addInputFloat('nRows');
+		def.addInputFloat('nCols');
 		return def;
 	}*/
 }

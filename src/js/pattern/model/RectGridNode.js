@@ -22,6 +22,7 @@ export class RectGridNode extends Node
 
     process()
     {
+        this._processParams();
         var shapes = GridUtils.CreateGrid(PatternState.Instance().bound, this.angle, this.shapeSize);
         // var shapes = RectGridUtils.CreateGrid(PatternState.Instance().bound, this.angle, this.shapeSize);
         for(var i = 0; i < shapes.length  ;i++) {

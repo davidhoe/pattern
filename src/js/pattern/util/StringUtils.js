@@ -3,6 +3,7 @@ export class StringUtils
 
 	static ConvertToLabel(str, ignoreText = [])
 	{
+		if(ignoreText == str) return StringUtils.CapitalizeFirstLetter(str);
 		var newstr = str;
 		for(var i =0; i< ignoreText.length;++i)
 		{
@@ -10,6 +11,12 @@ export class StringUtils
 		}
 		var split = newstr.split(/(?=[A-Z])/);
 		var newstr = split.join(" ");
-		return newstr;
+		return StringUtils.CapitalizeFirstLetter(newstr);
+	}
+
+	static CapitalizeFirstLetter(string)
+	{
+		if(string == "" || string == null) return string;
+		return string.charAt(0).toUpperCase() + string.slice(1);
 	}
 }

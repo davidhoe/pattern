@@ -22,6 +22,8 @@ export class TriSubdivisionNode extends Node
 
     process()
     {
+        this._processParams();
+
         var path = super._getStatePath();
         if(path.length >= 3)
         {

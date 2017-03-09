@@ -1,6 +1,6 @@
 import paper from 'paper'
-import {ParamConnectorType} from './ParamNodeView'
-import {PatternConnectorType} from './PatternNodeView'
+import {PatternConnectorType as PatternConnectorType} from '../model/ConnectorTypes'
+import {ParamConnectorType as ParamConnectorType} from '../model/ConnectorTypes'
 import PatternNodeView from './PatternNodeView'
 import ParamNodeView from './ParamNodeView'
 
@@ -60,7 +60,7 @@ export default class ConnectionLine extends paper.Path
 		var c0 = this.startConnectionPoint;
 		var c1 = this.endConnectionPoint;
 		if(c1 == null || c0 == null) return;
-
+		console.log("updateModelOnRemove");
 		// update model on removal
 		if(this.isPatternParentToPatternChild())
 		{
@@ -76,13 +76,13 @@ export default class ConnectionLine extends paper.Path
 		{
 			console.log("start param(parent) - end param(child)");
 			// start is parent
-			c0.node.nodemodel.removeParam(c1.node.nodemodel);
+			c0.node.nodemodel.removeParam(c1.node.nodemodel, c0.paramDef.name);
 		}
 		else if(this.isEndConnectionParamInputParent())
 		{
-			//console.log("start pattern(child) <- end pattern(child)");
+			console.log("start pattern(child) <- end pattern(child)");
 			// end is parent
-			c1.node.nodemodel.removeParam(c0.node.nodemodel);
+			c1.node.nodemodel.removeParam(c0.node.nodemodel, c1.paramDef.name);
 		}
 	}
 
@@ -111,19 +111,30 @@ export default class ConnectionLine extends paper.Path
 		}
 		else if(this.isStartConnectionParamInputParent())
 		{
-			console.log("parent ", c0.node);
-			console.log("should be a param ", c1.node);
-			c0.node.nodemodel.setParam(c1.node.getParamName(), c1.node.nodemodel);
+			console.log("parent ", c0);
+			console.log("should be a param ", c1);
+			console.log("c0.paramdef.name ", c0.paramDef.name);
+
+			if(c0.connectedLine) c0.connectedLine.destroy();
+			c0.connectedLine = this;
+			c0.node.nodemodel.setParam(c0.paramDef.name, c1.node.nodemodel);
 		}
 		else if(this.isEndConnectionParamInputParent())
 		{
-			console.log("should be parent c1", c1.node);
-			console.log("should be a param c0", c0.node);
+			console.log("should be parent c1", c1);
+			console.log("should be a param c0", c0);
+			console.log("c1.paramdef.name ", c1.paramDef.name);
+
 			// c0.node should be a paramNodeView
 			// c1.node is a patternnode or param node view
-			c1.node.nodemodel.setParam(c0.node.getParamName(), c0.node.nodemodel);
+			if(c1.connectedLine)
+				c1.connectedLine.destroy();
+			c1.connectedLine = this;
+			c1.node.nodemodel.setParam(c1.paramDef.name, c0.node.nodemodel);
+			//}
 		}
 	}
+
 
 	isPatternParentToPatternChild()
 	{

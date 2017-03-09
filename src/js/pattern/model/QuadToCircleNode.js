@@ -22,6 +22,7 @@ export class QuadToCircleNode  extends QuadToShapeNode
 
 	process()
 	{
+		this._processParams();
 		var points =  PointUtils.CreateNormalisedCircle(this.r);
 		this.normalisedSegments = points;
 		super.process();

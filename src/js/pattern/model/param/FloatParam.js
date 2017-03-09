@@ -6,6 +6,7 @@ import {Param} from './Param'
 export class FloatParam extends Param{
     constructor(defaultValue)
     {
+        super();
         this.defaultValue = defaultValue;
     }
 

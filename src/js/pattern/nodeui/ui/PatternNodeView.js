@@ -2,9 +2,10 @@ import paper from 'paper'
 import BaseNodeView from './BaseNodeView'
 import * as model from '../../model/model'
 import ConnectionPoint from './ConnectionPoint'
-import {ParamConnectorType} from './ParamNodeView'
+import {PatternConnectorType as PatternConnectorType} from '../model/ConnectorTypes'
+import {ParamConnectorType as ParamConnectorType} from '../model/ConnectorTypes'
 
-export var PatternConnectorType = {patternNodeParent:"patternNodeParent", patternNodeChild:'patternNodeChild'};
+//export var PatternConnectorType = {patternNodeParent:"patternNodeParent", patternNodeChild:'patternNodeChild'};
 
 /**
  * pattern node view
@@ -13,39 +14,32 @@ export default class PatternNodeView extends BaseNodeView
 {
 	constructor(nodemodel, isRoot = false)
 	{
-		super(PatternNodeView.NodeType);
-		this.nodemodel = nodemodel;
-		this.nodedef = nodemodel.getEditorDefinition();
+		super(PatternNodeView.NodeType, nodemodel);
 
-		var colour = (isRoot) ? 'green' : new paper.Color(0.7);
+		this.setBgColour( (isRoot) ? 'green' : new paper.Color(0.7) );
 
-		var bound = new paper.Rectangle(0,0,150,50);
-		//add a rect background
-		this.rect = this._addBackground(bound, colour);
-		// add a text label
-		this.text = this._addCenteredTextLabel(this.nodedef.label, bound, 'black');
 
 		// add a parent connection point
-		this.patternParentConnector = this._addConnectorPoint(
-			new paper.Point(bound.width/2,bound.height),
-			'black',
-			PatternConnectorType.patternNodeParent,
-			[PatternConnectorType.patternNodeChild]);
+		this.patternParentConnector = this._addPatternParentConnectorPoint(
+			new paper.Point(this.bound.width/2,this.bound.height),
+			);
 
 		// add a child connection point
-		this.patternChildConnector = this._addConnectorPoint(
-			new paper.Point(bound.width/2,0),
-			'black',
-			PatternConnectorType.patternNodeChild,
-			[PatternConnectorType.patternNodeParent]);
+		this.patternChildConnector = this._addPatternChildConnectorPoint(
+			new paper.Point(this.bound.width/2,0),
+			);
 
+
+
+		//
+		/*
 		// add an input connection on the side
 		this.inputConnector = this._addConnectorPoint(
 			new paper.Point(bound.width*0.75,bound.height*0),
 			'grey',
 			ParamConnectorType.paramInput,
 			[ParamConnectorType.paramOutput]);
-
+*/
 		if(isRoot)
 		{
 			this.setChildConnectorEnabled(false);

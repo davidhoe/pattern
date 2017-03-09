@@ -22,10 +22,13 @@ export  class ConnectionPoint extends paper.Group
 		this.bg.fillColor = colour;
 		this.baseColour = colour;
 		//this.rect.applyMatrix = false;
+		this.pivot = new paper.Point(0,0);
+		this.position = new paper.Point(0,0);
+
 
 		this.addChild(this.bg);
 		var _this = this;
-		this.onMouseDown = function(evt)
+		this.bg.onMouseDown = function(evt)
 		{
 			if(_this.node)
 			{
@@ -68,6 +71,16 @@ export  class ConnectionPoint extends paper.Group
 		}
 		return false;
 	}
+
+	_createTextLabel(textlabel,pos, colour= 'black')
+	{
+		var text = new paper.PointText(pos);
+		super.addChild( text);
+		text.justification = 'center';
+		text.fillColor = colour;
+		text.content = textlabel;
+		return text;
+	}
 }
 
 
@@ -76,22 +89,28 @@ export  class ConnectionPoint extends paper.Group
 export class PatternConnectionPoint extends ConnectionPoint {
 	constructor(nodeview)
 	{
-		super(nodeview, 10, 'grey');
+		super(nodeview, 10, 'black');
 	}
 }
 
 // Param input connection point
 export class ParamInputConnectionPoint extends ConnectionPoint {
-	constructor(nodeview)
+	constructor(nodeview, paramDef)
 	{
 		super(nodeview, 7, 'grey');
+		this.paramDef = paramDef;
+		var textlabel = super._createTextLabel(paramDef.label, new paper.Point(-10,4));
+		textlabel.justification = 'right';
+
+		//
+		this.connectedLine = null;
 	}
 
 }
 
 // Param output connection point
 export class ParamOutputConnectionPoint extends ConnectionPoint {
-	constructor(nodeview)
+	constructor(nodeview, paramDef)
 	{
 		super(nodeview, 7, 'grey');
 	}

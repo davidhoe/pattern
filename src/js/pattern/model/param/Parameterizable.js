@@ -15,6 +15,40 @@ export class Parameterizable{
 		this._params = [];
 	}
 
+	getEditorDefinition(ignoreTextArray = [])
+	{
+		var classname = this.constructor.name;
+		var label = utils.StringUtils.ConvertToLabel(classname, ignoreTextArray);
+
+		//var label = (classname.toLowerCase() == "node") ? classname : utils.StringUtils.ConvertToLabel(classname, ["Node"]);
+		var def = new editor.NodeEditorDefinition(label);
+
+		//console.log("----def:" + this.constructor.name);
+		// try to automatically add the definitions
+		var keys = Object.keys(this);
+		for (var i = 0; i < keys.length; i++) {
+			var key = keys[i];
+			// use val
+			if(key.charAt(0) != '_')
+			{
+				//	console.log("key:", key);
+				if(key.toLowerCase().includes('index')) {
+					//treat as a int
+					def.addInputInt(key);
+				}
+				else if(key.toLowerCase().includes('colour'))
+				{
+					def.addInputColour(key);
+				}
+				else{
+					// treat as a float
+					def.addInputFloat(key);
+				}
+			}
+		}
+		return def;
+	}
+
 	_processParams()
 	{
 		for(var i =0; i < this._params.length;++i)
@@ -41,8 +75,10 @@ export class Parameterizable{
 		}
 	}
 
-	removeParam(paramObject)
+	// remove param, if paramName is null then it removes the param from all keys, otherwise just that key
+	removeParam(paramObject, paramName =null)
 	{
+		console.log("removeParam", paramObject, "paramName ", paramName);
 		var newarray = [];
 		for(var i =0; i< this._params.length;++i)
 		{
@@ -50,6 +86,9 @@ export class Parameterizable{
 			if(pair["object"] != paramObject)
 			{
 				newarray.push(pair);
+			}
+			else if(paramName != null && paramName !=  pair["key"]){
+				newarray.push(pair); // different paramName
 			}
 		}
 		this._params = newarray;

@@ -21,6 +21,7 @@ export class QuadShearNode  extends QuadToShapeNode
 
 	process()
 	{
+		super._processParams();
 		this.normalisedSegments = PointUtils.CreateNormalisedShearedQuad(this.shearRatio);
 		super.process();
 	}

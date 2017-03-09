@@ -30,6 +30,15 @@ export {FloatParamDef as FloatParamDef} from './editor/ParamDef';
 export {IntParamDef as IntParamDef} from './editor/ParamDef';
 export {ColourParamDef as ColourParamDef} from './editor/ParamDef';
 
+export {ColourParam as ColourParam} from './param/ColourParam';
+export {ColourSelectFromSetParam as ColourSelectFromSetParam} from './param/ColourSelectFromSetParam';
+export {FloatParam as FloatParam} from './param/FloatParam';
+export {IntParam as IntParam} from './param/IntParam';
+export {IntSelectFromArrayParam as IntSelectFromArrayParam} from './param/IntSelectFromArrayParam';
+export {Param as Param} from './param/Param';
+export {Parameterizable as Parameterizable} from './param/Parameterizable';
+
+
 export {ColourNode as ColourNode} from './ColourNode.js';
 export {CompoundPathNode as CompoundPathNode} from './CompoundPathNode.js';
 export {DecisionNode as DecisionNode} from './DecisionNode.js';

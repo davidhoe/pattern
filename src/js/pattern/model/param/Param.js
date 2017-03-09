@@ -1,47 +1,21 @@
 /**
  * Created by David on 24/03/2017.
  */
-
+import {Parameterizable} from './Parameterizable'
 /**
- * base class for a parameter
+ * base class for a parameter,, should it have a return type?
  */
-export class Param{
+export class Param extends Parameterizable
+{
 	constructor()
 	{
-		this._params = [];
+		super();
 	}
 
+	// overide this
 	getValue()
 	{
 		this._processParams();
+		return 0;
 	}
-
-	_processParams()
-	{
-		for(var i =0; i < this._params.length;++i)
-		{
-			var param = this._params[i];
-			var paramKey = param.key;
-			this[paramKey] = param.object.getValue();
-		}
-	}
-
-	setParam(paramName, paramObject)
-	{
-		if(Param.HasOwnProperty(this, paramName) ){
-			console.log("setParam", paramName, "has prop");
-			this._params.push({"key": paramName,"object" : paramObject});
-		}
-		else{
-			console.error("error: no param with the name exists for this node. Param ", paramName)
-		}
-	}
-
-	static HasOwnProperty(obj, prop)
-	{
-		var proto = obj.__proto__ || obj.constructor.prototype;
-		return (prop in obj) &&
-			(!(prop in proto) || proto[prop] !== obj[prop]);
-	}
-
 }

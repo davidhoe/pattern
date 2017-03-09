@@ -164,18 +164,22 @@ export default class ConnectorDragTool
 
 		if(removeconnection)
 		{
-			this.canvas.removeConnectionLine(this._connectionLine);
+			// remove lnie from the paper.js parent, but no need to fire event as state has not changed/
+			this.canvas.removeConnectionLine(this._connectionLine, false);
 		}
 
+		if(newConnectionMade)
+		{
+			this.canvas.addConnectionLine(this._connectionLine);
+		}
+
+		// reset
 		this._connectionLine = null;
 		this.foundConnnectionPoint = null;
 		this.draggingNode = null;
 		// do callback
 		this.canvas.onToolComplete(this);
-		if(newConnectionMade)
-		{
-			this.canvas.onModelUpdated();
-		}
+
 	}
 
 	onEnter(evt)

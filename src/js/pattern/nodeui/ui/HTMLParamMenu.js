@@ -8,19 +8,21 @@ export default class HTMLParamMenu
 		this.onValueChangedCallback = null;
 		this._nodemodel = null;
 		this._menudiv = null;
+		this.onDeleteClickedCallback = null;
+		this._nodeViewRef = null;
+		this._showing = false;
 	}
 
 	// create the html
-	init(nodemodel)
+	init(nodeView)
 	{
 		if(this._menudiv)
 		{
 			$(this._menudiv).remove();
 		}
-
-		this._nodemodel = nodemodel;
-		this._menudiv = this.createMenu(nodemodel);
-
+		this._nodeViewRef = nodeView;
+		this._nodemodel = nodeView.nodemodel;
+		this._menudiv = this.createMenu(nodeView);
 
 		// attach it
 		var div = document.getElementById("div2");
@@ -36,9 +38,11 @@ export default class HTMLParamMenu
 		}
 	}
 
-	createMenu(nodemodel)
+	createMenu(nodeView)
 	{
-		var nodedef = nodemodel.getEditorDefinition();
+
+		//console.log("createMenu"  , this._nodeViewRef);
+			var nodedef = nodeView.nodemodel.getEditorDefinition();
 
 		// background
 		var menu = document.createElement("div");
@@ -58,13 +62,10 @@ export default class HTMLParamMenu
 		HTMLParamMenu.SetElementPosition(menu, 0,40);
 
 		// set the title
-		var x = 0;
-		var y = 10;
 		var heading = HTMLParamMenu.CreateTextLabel(nodedef.label, menu);
 		$(menu).append('<br />');
 		$(menu).append('<br />');
-		y+=25;
-	var _this = this;
+		var _this = this;
 		for(var i =0; i< nodedef.inputs.length;++i)
 		{
 			var inputdef = nodedef.inputs[i];
@@ -82,13 +83,22 @@ export default class HTMLParamMenu
 
 			$(menu).append('<br />');
 
-			y+=25;
-
-
 		}
+		$(menu).append('<br />');
+
+
+		// add a  delete button
+		var button = HTMLParamMenu.CreateButton("delete", menu);
+		$(button).click (function()
+		{
+		//	console.log("butonn click",_this);
+			if(_this.onDeleteClickedCallback) _this.onDeleteClickedCallback(_this._nodeViewRef);
+		});
 
 		return menu;
 	}
+
+
 
 	static SetElementPosition(element,x,y)
 	{
@@ -116,15 +126,32 @@ export default class HTMLParamMenu
 		return element;
 	}
 
+	static CreateButton(label, parent)
+	{
+		var button = document.createElement("BUTTON");
+		var t = document.createTextNode(label);       // Create a text node
+		button.appendChild(t);
+		//$(label).width(50);
+		parent.appendChild(button);
+		return button;
+
+	}
+
+	isShowing()
+	{
+		return this._showing;
+	}
 
 	show(x,y)
 	{
+		this._showing = true;
 		$(this._menudiv).show();
 		HTMLParamMenu.SetElementPosition(this._menudiv, x,y);
 	}
 
 	hide()
 	{
+		this._showing = false;
 		$(this._menudiv).hide();
 
 	}

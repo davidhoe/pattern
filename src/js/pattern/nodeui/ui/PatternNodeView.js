@@ -55,6 +55,12 @@ export default class PatternNodeView extends BaseNodeView
 
 	}
 
+	removeConnectionLine(line)
+	{
+		// find the other connection
+		super.removeConnectionLine(line);
+	}
+
 	isConnectionAllowed(connectorType)
 	{
 		return connectorType == PatternConnectorType.patternNodeChild ||

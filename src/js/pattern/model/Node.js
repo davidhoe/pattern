@@ -4,16 +4,18 @@
 import * as utils from '../util/utils'
 import * as editor from './editor/editor'
 import {PatternState} from './PatternState'
-export class Node{
+import {Parameterizable} from './param/Parameterizable'
+
+export class Node extends Parameterizable{
 
     constructor()
     {
+	    super();
         this._childNodes = [];
         this._savedPath = null;
 	    this._savedMatrix = null;
 	    this._savedColour = null;
 	    this._savedGroup = null;
-	    this._params = [];
 
 		this._parentRefs = []; // array of parent references
 		// automatically push and set as a child node
@@ -219,34 +221,6 @@ export class Node{
         // process children
 	    this.processChildNodes();
     }
-
-	_processParams()
-	{
-		for(var i =0; i < this._params.length;++i)
-		{
-			var param = this._params[i];
-			var paramKey = param.key;
-			this[paramKey] = param.object.getValue();
-		}
-	}
-
-	setParam(paramName, paramObject)
-	{
-		if(Node.HasOwnProperty(this, paramName) ){
-			console.log("setParam", paramName, "has prop");
-			this._params.push({"key": paramName,"object" : paramObject});
-		}
-		else{
-			console.error("error: no param with the name exists for this node. Param ", paramName)
-		}
-	}
-
-	static HasOwnProperty(obj, prop)
-	{
-		var proto = obj.__proto__ || obj.constructor.prototype;
-		return (prop in obj) &&
-			(!(prop in proto) || proto[prop] !== obj[prop]);
-	}
 
     processChildNodes()
     {

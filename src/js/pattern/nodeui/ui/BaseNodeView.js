@@ -21,6 +21,14 @@ export default class BaseNodeView extends paper.Group
 		// add the name of the
 	}
 
+	destroy()
+	{
+		this.remove();
+		this.removeAllConnections();
+	}
+
+
+
 	onPositionUpdate()
 	{
 		for(var i =0;i < this.connectionLines.length;++i)
@@ -41,14 +49,14 @@ export default class BaseNodeView extends paper.Group
 		return false;
 	}
 
-	removeConnectionLine(line)
+	onConnectionLineRemoved(line)
 	{
 		console.log("before",this.connectionLines);
 		this.connectionLines = ArrayUtils.RemoveObject(this.connectionLines,line);
 		console.log("after",this.connectionLines);
 	}
 
-	addConnectionLine(line)
+	onConnectionLineAdded(line)
 	{
 		if(!ArrayUtils.ContainsObject(this.connectionLines,line))
 		{
@@ -56,5 +64,13 @@ export default class BaseNodeView extends paper.Group
 		}
 	}
 
-
+	removeAllConnections()
+	{
+		var lines = this.connectionLines;
+		for(var i =0; i< lines.length;++i)
+		{
+			lines[i].destroy();
+		}
+		this.connectionLines = [];
+	}
 }

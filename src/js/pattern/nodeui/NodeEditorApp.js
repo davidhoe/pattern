@@ -26,16 +26,17 @@ export default class NodeEditorApp
 		//this.test();
 
 		// add a button to test refresh
-		var button = this.makeDebugButton("refresh", 10, 10);
 		var _this = this;
-		button.onClick = function(e)
-		{
-			_this.refreshPattern();
-		}
+		var button = this.makeDebugButton("Refresh", 10, 10);
+		button.onClick = function(e) {_this.refreshPattern();}
+		var delbutton = this.makeDebugButton("Delete all connections", 70, 10);
+		delbutton.onClick = function(e) {_this.canvas.removeAllConnections(); _this.refreshPattern();}
+		var delbutton2 = this.makeDebugButton("Delete all nodes", 230, 10);
+		delbutton2.onClick = function(e) { _this.canvas.removeAllNodes();}
+
 
 		console.log("createStartNode", this.startnode);
 		this.canvas.onModelUpdated = function(){ _this.refreshPattern()};
-		this.canvas._nodemenu.onValueChangedCallback = function(){ _this.refreshPattern()};
 	}
 
 
@@ -68,7 +69,7 @@ export default class NodeEditorApp
 		node3.position.x = 139;
 		node3.position.y = 500;
 
-		var node = new PatternNodeView(new model.FillNode().removeAllParents(), 'blue');
+		var node = new PatternNodeView(new model.FillNode().removeAllParents());
 		this.canvas.addPatternNode(node);
 		node.position.x = 139;
 		node.position.y = 650;

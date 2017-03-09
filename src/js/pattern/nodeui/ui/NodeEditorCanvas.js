@@ -18,6 +18,8 @@ export default class NodeEditorCanvas
 {
 	constructor(project)
 	{
+		var _this = this;
+
 		this.onModelUpdatedCallback = null;
 		this.project = project;
 		this.project.activate();
@@ -29,9 +31,15 @@ export default class NodeEditorCanvas
 		this.connectionLines = [];
 		//node param menu
 		this._nodemenu = new HTMLParamMenu();
+		this._nodemenu.onValueChangedCallback = function(){ _this.onModelUpdated()};
+		this._nodemenu.onDeleteClickedCallback = function(nodeView)
+		{
+			//console.log("onDeleteClickedCallback nodeView" , nodeView);
+			_this.removeNode(nodeView);
+			_this._nodemenu.hide();
+		}
 
 		// tools
-		var _this = this;
 		this.defaultTool = new paper.Tool();
 		this.connectorDragTool = new ConnectorDragTool(this);
 		this.activeTool = null;
@@ -53,6 +61,8 @@ export default class NodeEditorCanvas
 
 	//	this.nodeDragTool.activate();
 		this.draggingNode = null;
+
+
 	}
 
 
@@ -74,23 +84,56 @@ export default class NodeEditorCanvas
 	onConnectorDragStart(connectionPoint)
 	{
 		var connectionline = new ConnectionLine();
-		this.connectionLayer.addChild(connectionline);
 		connectionline.setStartConnectionPoint( connectionPoint);
-		this.connectionLines.push(connectionline);
+		this.connectionLayer.addChild(connectionline);
 
+		//this.connectionLines.push(connectionline);
 		console.log("dragstart connector", connectionPoint.constructor.name );
 		// check type
 		this.activeTool = this.connectorDragTool;
 		this.connectorDragTool.startDrag(connectionPoint, connectionline);
-
-
+		this._nodemenu.hide();
 	}
 
+	// add a successful connection line
+	addConnectionLine(connectionline, fireEvent = true)
+	{
+		if(!utils.ArrayUtils.ContainsObject(this.connectionLines,connectionline))
+		{
+			this.connectionLines.push(connectionline);
+		}
+		this.connectionLayer.addChild(connectionline);
 
-	removeConnectionLine(connectionLine)
+		if(fireEvent)
+		{
+			this._emitModelUpdateEvent();
+		}
+	}
+
+	removeAllConnections(fireEvent = true)
+	{
+		var lines = this.connectionLines;
+		console.log("removeallconnecions", lines);
+		for(var i =0; i< lines.length;++i)
+		{
+			lines[i].destroy();
+		}
+		this.connectionLines = [];
+		if(fireEvent)
+		{
+			this._emitModelUpdateEvent();
+		}
+	}
+
+	removeConnectionLine(connectionLine, fireEvent = true)
 	{
 		this.connectionLines = utils.ArrayUtils.RemoveObject(this.connectionLines, connectionLine);
 		connectionLine.destroy();
+
+		if(fireEvent)
+		{
+			this._emitModelUpdateEvent();
+		}
 	}
 
 	onNodeEnter(evt)
@@ -113,10 +156,64 @@ export default class NodeEditorCanvas
 		node.on('click', function(){_this.nodeClicked(this)})
 	}
 
+	removeNode(node, fireEvent = true)
+	{
+		node.destroy(); // this removes all of its connections
+		//console.log("removeNode ", this.patternNodes);
+		this.patternNodes = utils.ArrayUtils.RemoveObject(this.patternNodes, node);
+
+		if(this._nodemenu._nodeViewRef == node)
+		{
+			this._nodemenu.hide();
+		}
+		if(fireEvent)
+		{
+			this._emitModelUpdateEvent();
+		}
+	}
+
+	removeAllNodes(fireEvent = true)
+	{
+		var temp = this.patternNodes;
+		for(var i =0; i< temp.length;++i)
+		{
+			this.removeNode(temp[i] ,false);
+		}
+		this.patternNodes = [];
+		if(fireEvent)
+		{
+			this._emitModelUpdateEvent();
+		}
+	}
+
 	nodeClicked(node)
 	{
+		if(this.nodeDragTool.isDragging())
+		{
+			return;
+		}
+		var currentNode= this._nodemenu._nodeViewRef;
+		if(this._nodemenu.isShowing())
+		{
+			if(currentNode == node)
+			{
+				//hide it
+				this._nodemenu.hide();
+			}
+			else{
+				// show it
+				this.showMenuForNode(node);
+			}
+		}
+		else{
+			this.showMenuForNode(node);
+		}
+	}
+
+	showMenuForNode(node)
+	{
 		console.log("node clicked" , node);
-		this._nodemenu.init(node.nodemodel);
+		this._nodemenu.init(node);
 		//console.log();
 		this._nodemenu.show(node.position.x + 50, node.position.y - 50);
 	}
@@ -136,26 +233,22 @@ export default class NodeEditorCanvas
 			_this.activeTool = _this.nodeDragTool;
 			//console.log("node mouse down");
 			//_this.nodeDragTool.emit('mousedown', evt);
-			_this.nodeDragTool.startDrag(node);
+			_this.nodeDragTool.startDragDetect(node);
+			//_this._nodemenu.hide();
+
 		}
 	}
 
-
-	// remove node from the canvas
-	removeNode(node)
+	onDragDetected()
 	{
-		this.nodes = utils.ArrayUtils.RemoveObject(this.nodes, node);
-		this.nodeLayer.removeChild(node);
+		this._nodemenu.hide();
 	}
 
-	// add a connection line that links 2 nodes
-	addConnection()
+	_emitModelUpdateEvent()
 	{
-		//var connector = new Connection
-	}
-
-	removeConnection()
-	{
-
+		if(this.onModelUpdated)
+		{
+			this.onModelUpdated();
+		}
 	}
 }

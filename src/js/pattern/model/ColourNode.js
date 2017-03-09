@@ -24,9 +24,5 @@ export class ColourNode extends Node
         super.processChildNodes();
     }
 
-    getEditorDefinition()
-    {
-        // return a definition to help the view control
-        return {'label': 'Node'};
-    }
+
 }

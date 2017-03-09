@@ -22,7 +22,7 @@ export class FillNode extends Node
 	    this.blendMode = BLEND_MODE.normal;
 	    this.opacity = 1;
 	    this.clipMask = false;
-        this.shapeAtts = shapeAtts; // all other
+        this._shapeAtts = shapeAtts; // all other
     }
 
     // only works if shape is in a group
@@ -42,6 +42,13 @@ export class FillNode extends Node
 	{
 		this.opacity = opacity;
 		return this;
+	}
+
+	getEditorDefinition()
+	{
+		var def = super.getEditorDefinition();
+		def.addInputBool("clipMask");
+		return def;
 	}
 
     process()
@@ -64,12 +71,12 @@ export class FillNode extends Node
         shape.matrix = PatternState.Instance().matrix.clone();
 
 
-        if(this.shapeAtts != null)
+        if(this._shapeAtts != null)
         {
-            for (var key in this.shapeAtts) {
-                if (this.shapeAtts.hasOwnProperty(key)) {
+            for (var key in this._shapeAtts) {
+                if (this._shapeAtts.hasOwnProperty(key)) {
                     //console.log("shape att", key , "val", this.shapeAtts[key]);
-                    shape[key] = this.shapeAtts[key];
+                    shape[key] = this._shapeAtts[key];
                 }
             }
 

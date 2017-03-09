@@ -29,6 +29,8 @@ export {ParamDef as ParamDef} from './editor/ParamDef';
 export {FloatParamDef as FloatParamDef} from './editor/ParamDef';
 export {IntParamDef as IntParamDef} from './editor/ParamDef';
 export {ColourParamDef as ColourParamDef} from './editor/ParamDef';
+export {BoolParamDef as BoolParamDef} from './editor/ParamDef';
+export {StringParamDef as StringParamDef} from './editor/ParamDef';
 
 export {ColourParam as ColourParam} from './param/ColourParam';
 export {ColourSelectFromSetParam as ColourSelectFromSetParam} from './param/ColourSelectFromSetParam';

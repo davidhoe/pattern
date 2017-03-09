@@ -1,4 +1,5 @@
 import $ from 'jquery'
+import * as model from '../../model/model'
 
 export default class HTMLParamMenu
 {
@@ -70,16 +71,44 @@ export default class HTMLParamMenu
 		{
 			var inputdef = nodedef.inputs[i];
 			HTMLParamMenu.CreateTextLabel(inputdef.label , menu);
-			var input = HTMLParamMenu.CreateParamInput(this._nodemodel[inputdef.name] , inputdef.name , menu);
-			input.inputdef = inputdef;
-
-			$(input).focusout (function()
+			console.log("init menu", inputdef);
+			if(inputdef.type == model.FloatParamDef.name)
 			{
-				var val = $(this).val();
-				_this._nodemodel[this.inputdef.name] = parseFloat( val);
-				console.log("new value for " + this.inputdef.name + " set to : " + parseFloat(val));
-				_this.onValueChanged();
-			});
+				var input = HTMLParamMenu.CreateParamInput(this._nodemodel[inputdef.name], inputdef.name, menu);
+				input.inputdef = inputdef;
+				$(input).focusout(function () {
+					var val = $(this).val();
+					_this._nodemodel[this.inputdef.name] = parseFloat(val);
+					console.log("new float value for " + this.inputdef.name + " set to : " + parseFloat(val));
+					_this.onValueChanged();
+				});
+			}
+			else if(inputdef.type == model.IntParamDef.name)
+			{
+				var input = HTMLParamMenu.CreateParamInput(this._nodemodel[inputdef.name], inputdef.name, menu);
+				input.inputdef = inputdef;
+				$(input).focusout(function () {
+					var val = $(this).val();
+					_this._nodemodel[this.inputdef.name] = parseInt(val);
+					console.log("new int value for " + this.inputdef.name + " set to : " + parseInt(val));
+					_this.onValueChanged();
+				});
+			}
+			else if(inputdef.type == model.BoolParamDef.name)
+			{
+				var input = HTMLParamMenu.CreateBoolInput(this._nodemodel[inputdef.name], menu);
+				input.inputdef = inputdef;
+				$(input).change(function () {
+					var val = $(this).is(':checked');
+					_this._nodemodel[this.inputdef.name] = (val);
+					console.log("new bool value for " + this.inputdef.name + " set to : " + (val));
+					_this.onValueChanged();
+				});
+			}
+			else if(inputdef.type == model.StringParamDef.name)
+			{
+
+			}
 
 			$(menu).append('<br />');
 
@@ -113,6 +142,33 @@ export default class HTMLParamMenu
 		parent.appendChild(label);
 		return label;
 
+	}
+
+	static CreateSelectionDropdown(keyValueArray, value, parent)
+	{
+		var selectList = document.createElement("select");
+		//selectList.id = "mySelect";
+		selectList.value = value;
+		parent.appendChild(selectList);
+
+		for (var i = 0; i < keyValueArray.length; i++) {
+			var pair = keyValueArray[i];
+			option.value = pair.value;
+			option.text = pair.key;
+			selectList.appendChild(option);
+		}
+		return selectList;
+	}
+
+	static CreateBoolInput(value, parent)
+	{
+		var element = document.createElement("input");
+		element.setAttribute("type", "checkbox");
+		element.checked = value;
+		element.value = true;
+		//element.setAttribute("name", "chechbox");
+		parent.appendChild(element);
+		return element;
 	}
 
 	static CreateParamInput(value, id, parent)

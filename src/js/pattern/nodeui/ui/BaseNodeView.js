@@ -97,19 +97,28 @@ export default class BaseNodeView extends paper.Group
 	_addParamInputConnectorPoint(position, paramDef)
 	{
 		var cp = new ParamInputConnectionPoint(this, paramDef);
-		cp.connectorType = ParamConnectorType.paramInput;
-		cp.allowedConnectors = [ParamConnectorType.paramOutput];
+		cp.connectorType = ParamConnectorType.paramInput + " " + paramDef.type;
+		var compatibleTypes = paramDef.getCompatibleTypes();
+		cp.allowedConnectors = [];
+		for(var i =0; i< compatibleTypes.length;++i) {
+			cp.allowedConnectors.push(ParamConnectorType.paramOutput + " " + compatibleTypes[i]);
+		}
 		return this._addConnectorPoint(cp, position);
 	}
 
 	_addParamOutputConnectorPoint(position, paramDef)
 	{
 		var cp = new ParamOutputConnectionPoint(this, paramDef);
-		cp.connectorType = ParamConnectorType.paramOutput;
-		cp.allowedConnectors = [ParamConnectorType.paramInput];
+
+		cp.connectorType = ParamConnectorType.paramOutput+ " " + paramDef.type;
+		var compatibleTypes = paramDef.getCompatibleTypes();
+		cp.allowedConnectors = [];
+		for(var i =0; i< compatibleTypes.length;++i) {
+			cp.allowedConnectors.push(ParamConnectorType.paramInput + " " + compatibleTypes[i]);
+		}
+
 		return this._addConnectorPoint(cp, position);
 	}
-
 
 	_addPatternParentConnectorPoint(position)
 	{

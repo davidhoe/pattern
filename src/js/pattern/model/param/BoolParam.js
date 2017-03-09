@@ -1,20 +1,18 @@
 /**
- * Created by David on 27/02/2017.
+ * Created by David on 09/03/2017.
  */
 import {Param} from './Param'
 
-//import {PatternState} from './PatternState'
-export class IntParam extends Param{
+export class BoolParam extends Param{
 	constructor(defaultValue)
 	{
 		super();
 		this.value = defaultValue;
-
 	}
 
 	getEditorDefinition()
 	{
-		return super.getEditorDefinition().setOutputInt();
+		return super.getEditorDefinition().setOutputBool();
 	}
 
 	getValue()

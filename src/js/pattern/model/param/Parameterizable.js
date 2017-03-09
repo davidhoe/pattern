@@ -4,7 +4,7 @@
 import * as utils from '../../util/utils'
 import * as editor from '../editor/editor'
 import {PatternState} from '../PatternState'
-
+import paper from 'paper'
 /*
  * model that can have Params attached to it
  */
@@ -29,21 +29,42 @@ export class Parameterizable{
 		for (var i = 0; i < keys.length; i++) {
 			var key = keys[i];
 			// use val
-			if(key.charAt(0) != '_')
+			if(key.charAt(0) != '_') // ignore private varaibles
 			{
-				//	console.log("key:", key);
-				if(key.toLowerCase().includes('index')) {
-					//treat as a int
-					def.addInputInt(key);
-				}
-				else if(key.toLowerCase().includes('colour'))
+				var vartype = typeof(this[key]);
+				if(vartype == 'number')
 				{
-					def.addInputColour(key);
+					if(key.toLowerCase().includes('index')) {
+						//treat as a int
+						def.addInputInt(key);
+					}
+					else{
+						// treat as a float
+						def.addInputFloat(key);
+					}
 				}
-				else{
-					// treat as a float
-					def.addInputFloat(key);
+				else if(vartype == "boolean")
+				{
+					def.addInputBool(key);
 				}
+				else if(vartype == "string")
+				{
+					def.addInputString(key);
+				}
+				else if(vartype == "object"  && this[key] != null)
+				{
+					console.log("this[key]", key, this[key]);
+					var classname = this[key].constructor.name;
+					if(classname == paper.Color.name)
+					{
+						def.addInputColour(key);
+					}
+				}
+
+
+				//	console.log("key:", key);
+
+
 			}
 		}
 		return def;
@@ -73,6 +94,7 @@ export class Parameterizable{
 		else{
 			console.error("error: no param with the name exists for this . Param ", paramName)
 		}
+
 	}
 
 	// remove param, if paramName is null then it removes the param from all keys, otherwise just that key

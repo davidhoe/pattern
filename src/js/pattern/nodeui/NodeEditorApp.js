@@ -65,10 +65,15 @@ export default class NodeEditorApp
 		param.position.x = 300;
 		param.position.y = 350;
 
-		param = new ParamNodeView(new model.FloatParam(2));
+		param = new ParamNodeView(new model.IntParam(2));
 		this.canvas.addPatternNode(param);
 		param.position.x = 350;
 		param.position.y = 450;
+
+		param = new ParamNodeView(new model.ColourParam());
+		this.canvas.addPatternNode(param);
+		param.position.x = 450;
+		param.position.y = 550;
 
 
 		var node2 = new PatternNodeView(new model.QuadNode(50,50,100,100).removeAllParents());
@@ -106,6 +111,11 @@ export default class NodeEditorApp
 		this.canvas.addPatternNode(node);
 		node.position.x = 339;
 		node.position.y = 950;
+
+		node = new PatternNodeView(new model.ColourNode().removeAllParents());
+		this.canvas.addPatternNode(node);
+		node.position.x = 339;
+		node.position.y = 350;
 
 //		var m = new model.QuadNode();
 //		m.getEditorDefinition();

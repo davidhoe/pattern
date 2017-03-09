@@ -31,7 +31,8 @@ export default class ParamNodeView extends BaseNodeView
 
 
 		this.outputConnector = this._addParamOutputConnectorPoint(
-			new paper.Point(this.bound.width/2,this.bound.height)
+			new paper.Point(this.bound.width/2,this.bound.height),
+			this.nodedef.output
 		);
 
 	}

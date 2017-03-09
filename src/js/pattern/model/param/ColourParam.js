@@ -13,6 +13,11 @@ export class ColourParam extends Param{
 		this.b = 0;
 	}
 
+	getEditorDefinition()
+	{
+		return super.getEditorDefinition().setOutputColour();
+	}
+
 	getValue()
 	{
 		super._processParams();

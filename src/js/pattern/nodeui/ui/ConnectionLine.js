@@ -153,13 +153,13 @@ export default class ConnectionLine extends paper.Path
 	isStartConnectionParamInputParent()
 	{
 		var c0 = this.startConnectionPoint;
-		return c0.connectorType == ParamConnectorType.paramInput;
+		return c0.connectorType.includes( ParamConnectorType.paramInput );
 	}
 
 	isEndConnectionParamInputParent()
 	{
 		var c1 = this.endConnectionPoint;
-		return c1.connectorType == ParamConnectorType.paramInput;
+		return c1.connectorType.includes(ParamConnectorType.paramInput );
 	}
 
 

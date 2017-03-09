@@ -7,12 +7,17 @@ export class FloatParam extends Param{
     constructor(defaultValue)
     {
         super();
-        this.defaultValue = defaultValue;
+        this.value = defaultValue;
+    }
+
+    getEditorDefinition()
+    {
+        return super.getEditorDefinition().setOutputFloat();
     }
 
     getValue()
     {
         super._processParams();
-        return this.defaultValue;
+        return this.value;
     }
 }

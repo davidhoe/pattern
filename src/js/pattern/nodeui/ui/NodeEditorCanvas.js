@@ -26,7 +26,7 @@ export default class NodeEditorCanvas
 		this.connectionLayer = new paper.Layer();
 		this.nodeLayer = new paper.Layer();
 		this.connections = [];
-		this.patternNodes = [];
+		this.nodeViews = [];
 		this.paramNodes = [];
 		this.connectionLines = [];
 		//node param menu
@@ -144,11 +144,11 @@ export default class NodeEditorCanvas
 	// add node to the canvas
 	addPatternNode(node)
 	{
-		if(utils.ArrayUtils.ContainsObject(this.patternNodes, node))
+		if(utils.ArrayUtils.ContainsObject(this.nodeViews, node))
 		{
 			return;
 		}
-		this.patternNodes.push(node);
+		this.nodeViews.push(node);
 		this._addNode(node);
 		node.canvas = this;
 
@@ -159,8 +159,8 @@ export default class NodeEditorCanvas
 	removeNode(node, fireEvent = true)
 	{
 		node.destroy(); // this removes all of its connections
-		//console.log("removeNode ", this.patternNodes);
-		this.patternNodes = utils.ArrayUtils.RemoveObject(this.patternNodes, node);
+		//console.log("removeNode ", this.nodeViews);
+		this.nodeViews = utils.ArrayUtils.RemoveObject(this.nodeViews, node);
 
 		if(this._nodemenu._nodeViewRef == node)
 		{
@@ -172,14 +172,16 @@ export default class NodeEditorCanvas
 		}
 	}
 
-	removeAllNodes(fireEvent = true)
+	removeAllNodes(includeNonDeletables = false, fireEvent = true)
 	{
-		var temp = this.patternNodes;
+		var temp = this.nodeViews;
 		for(var i =0; i< temp.length;++i)
 		{
-			this.removeNode(temp[i] ,false);
+			if( (includeNonDeletables && !temp[i].deletable) || temp[i].deletable ) {
+				this.removeNode(temp[i], false);
+			}
 		}
-		this.patternNodes = [];
+		this.nodeViews = [];
 		if(fireEvent)
 		{
 			this._emitModelUpdateEvent();

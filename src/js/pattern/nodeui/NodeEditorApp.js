@@ -18,7 +18,7 @@ export default class NodeEditorApp
 
 
 		// make a start node
-		this.startnode = new PatternNodeView(new model.Node().removeAllParents(), 'green');
+		this.startnode = new PatternNodeView(new model.Node().removeAllParents(), true);
 		this.canvas.addPatternNode(this.startnode);
 		this.startnode.position.x = 139;
 		this.startnode.position.y = 100;
@@ -58,6 +58,12 @@ export default class NodeEditorApp
 	test()
 	{
 		//make a node
+		var param;
+
+		param = new ParamNodeView(new model.FloatParamDef("float"));
+		this.canvas.addPatternNode(param);
+		param.position.x = 300;
+		param.position.y = 350;
 
 		var node2 = new PatternNodeView(new model.QuadNode(50,50,100,100).removeAllParents());
 		this.canvas.addPatternNode(node2);

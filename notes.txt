@@ -53,6 +53,10 @@ node.removeFromParent();
 
 Todo- nodes:
 
+ParamView - simple
+Delete A connection
+HTMLNodeList - callback on clicked with the data constructor name)
+
 
 ---------------
 - open params menu

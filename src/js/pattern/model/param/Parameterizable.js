@@ -27,6 +27,11 @@ export class Parameterizable{
 
 	setParam(paramName, paramObject)
 	{
+		if(paramName == "" || paramName == null)
+		{
+			console.error("error: no paramName is null or empty string, ignoring.");
+			return ;
+		}
 		if(Parameterizable.HasOwnProperty(this, paramName) ){
 			console.log("setParam", paramName, "has prop");
 			this._params.push({"key": paramName,"object" : paramObject});

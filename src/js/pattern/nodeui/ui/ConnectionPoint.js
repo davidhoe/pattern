@@ -1,19 +1,26 @@
 import paper from 'paper'
 import * as model from '../../model/model'
+
+
 /**
  *
  */
-export default class ConnectionPoint extends paper.Group
+export  class ConnectionPoint extends paper.Group
 {
-	constructor(node, model, testcolour = 'black')
+	constructor(nodeview, circleRadius = 10, colour = 'black')
 	{
 		super();
-		this.node= node;
+		this.paramName = null;
+		this.paramLabel = null; // todo?
+		this.node = nodeview;
 		this.dragging = false;
 		//this.applyMatrix = false;
 		//test rect background
-		this.bg = new paper.Shape.Circle(new paper.Point(0,0),10);// new paper.Shape.Rectangle(new paper.Rectangle(-10,-10,20,20));
-		this.bg.fillColor = testcolour;
+
+		// bg is used by ConnectionLine for doing global to local
+		this.bg = new paper.Shape.Circle(new paper.Point(0,0),circleRadius);// new paper.Shape.Rectangle(new paper.Rectangle(-10,-10,20,20));
+		this.bg.fillColor = colour;
+		this.baseColour = colour;
 		//this.rect.applyMatrix = false;
 
 		this.addChild(this.bg);
@@ -32,14 +39,24 @@ export default class ConnectionPoint extends paper.Group
 		// add the name of the
 	}
 
+	setToHighlightColour(colour)
+	{
+		this.bg.fillColor = colour;
+	}
+
+	setToBaseColour()
+	{
+		this.bg.fillColor = this.baseColour;
+	}
+
 	setHighlighted(highlighted)
 	{
 		if(highlighted)
 		{
-			this.bg.fillColor = 'green';
+			this.setToHighlightColour('green');
 		}
 		else{
-			this.bg.fillColor = 'black';
+			this.setToBaseColour();
 		}
 	}
 
@@ -50,5 +67,32 @@ export default class ConnectionPoint extends paper.Group
 			if(this.allowedConnectors[i] == type) return true;
 		}
 		return false;
+	}
+}
+
+
+
+// child and parent pattern connection point
+export class PatternConnectionPoint extends ConnectionPoint {
+	constructor(nodeview)
+	{
+		super(nodeview, 10, 'grey');
+	}
+}
+
+// Param input connection point
+export class ParamInputConnectionPoint extends ConnectionPoint {
+	constructor(nodeview)
+	{
+		super(nodeview, 7, 'grey');
+	}
+
+}
+
+// Param output connection point
+export class ParamOutputConnectionPoint extends ConnectionPoint {
+	constructor(nodeview)
+	{
+		super(nodeview, 7, 'grey');
 	}
 }

@@ -32,7 +32,7 @@ export default class ConnectorDragTool
 		this._startConnector = startConnector;
 		this.draggingNode = startConnector.node;
 		this._checkNodes = [];
-		var pnodes = this.canvas.patternNodes;
+		var pnodes = this.canvas.nodeViews;
 		//console.log("pnodes", pnodes);
 
 		for(var i =0; i< pnodes.length;++i)

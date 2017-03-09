@@ -86,15 +86,14 @@ export default class HTMLParamMenu
 		}
 		$(menu).append('<br />');
 
-
-		// add a  delete button
-		var button = HTMLParamMenu.CreateButton("delete", menu);
-		$(button).click (function()
-		{
-		//	console.log("butonn click",_this);
-			if(_this.onDeleteClickedCallback) _this.onDeleteClickedCallback(_this._nodeViewRef);
-		});
-
+		if(nodeView.deletable) {
+			// add a  delete button
+			var button = HTMLParamMenu.CreateButton("delete", menu);
+			$(button).click(function () {
+				//	console.log("butonn click",_this);
+				if (_this.onDeleteClickedCallback) _this.onDeleteClickedCallback(_this._nodeViewRef);
+			});
+		}
 		return menu;
 	}
 

@@ -116,4 +116,17 @@ export class ColourUtils {
         return ColourUtils._instance;
     }
 
+    static ColourToHex(colour)
+    {
+        return colour.toCSS(true);
+    }
+    static HexToColour(hex)
+    {
+        hex = hex.replace('#','');
+        var r = parseInt(hex.substring(0,2), 16)/255;
+        var  g = parseInt(hex.substring(2,4), 16)/255;
+        var b = parseInt(hex.substring(4,6), 16)/255;
+        return new paper.Color(r,g,b);
+    }
+
 }

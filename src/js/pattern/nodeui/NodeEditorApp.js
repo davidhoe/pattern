@@ -112,7 +112,7 @@ export default class NodeEditorApp
 		node.position.x = 339;
 		node.position.y = 950;
 
-		node = new PatternNodeView(new model.ColourNode().removeAllParents());
+		node = new PatternNodeView(new model.ColourNode(new paper.Color(1,0,0)).removeAllParents());
 		this.canvas.addPatternNode(node);
 		node.position.x = 339;
 		node.position.y = 350;

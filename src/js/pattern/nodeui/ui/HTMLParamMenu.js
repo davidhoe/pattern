@@ -1,5 +1,6 @@
 import $ from 'jquery'
 import * as model from '../../model/model'
+import * as utils from '../../util/utils'
 
 export default class HTMLParamMenu
 {
@@ -116,6 +117,19 @@ export default class HTMLParamMenu
 					_this.onValueChanged();
 				});
 			}
+			else if(inputdef.type == model.ColourParamDef.name)
+			{
+				var input = HTMLParamMenu.CreateColourInput(this._nodemodel[inputdef.name], menu);
+				input.inputdef = inputdef;
+				$(input).change(function () {
+					var val = $(this).val();
+					var col = utils.ColourUtils.HexToColour(val);
+					console.log("new colour value for " + this.inputdef.name + " set to : " + (val) , col);
+					_this._nodemodel[this.inputdef.name] = col;
+					_this.onValueChanged();
+
+				});
+			}
 
 			$(menu).append('<br />');
 
@@ -184,6 +198,15 @@ export default class HTMLParamMenu
 		element.setAttribute("type", "number");
 		element.setAttribute("value", value);
 		element.setAttribute("name", id);
+		parent.appendChild(element);
+		return element;
+	}
+
+	static CreateColourInput(value, parent)
+	{
+		var element = document.createElement("input");
+		element.setAttribute("type", "color");
+		element.setAttribute("value", utils.ColourUtils.ColourToHex(value));
 		parent.appendChild(element);
 		return element;
 	}

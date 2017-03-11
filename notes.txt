@@ -53,6 +53,17 @@ node.removeFromParent();
 
 Todo- nodes:
 
+change to multiple outputs -
+have an array of outputs?
+outputs[]
+getOutput()
+{
+}
+get the definitions from the output values?
+paramDef
+array of outputs
+
+
 ParamView - simple
 Delete A connection
 HTMLNodeList - callback on clicked with the data constructor name)

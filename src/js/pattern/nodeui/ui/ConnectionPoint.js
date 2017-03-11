@@ -1,5 +1,6 @@
 import paper from 'paper'
 import * as model from '../../model/model'
+import * as utils from '../../util/utils'
 
 
 /**
@@ -10,9 +11,13 @@ export  class ConnectionPoint extends paper.Group
 	constructor(nodeview, circleRadius = 10, colour = 'black')
 	{
 		super();
+		this.validRelationships = [];
+		this.validTypes = [];
+		this.connectedLines = [];
+		this.allowMultipleConnections = true;
 		this.paramName = null;
 		this.paramLabel = null; // todo?
-		this.node = nodeview;
+		this.nodeview = nodeview;
 		this.dragging = false;
 		//this.applyMatrix = false;
 		//test rect background
@@ -30,15 +35,15 @@ export  class ConnectionPoint extends paper.Group
 		var _this = this;
 		this.bg.onMouseDown = function(evt)
 		{
-			if(_this.node)
+			if(_this.nodeview)
 			{
-				_this.node.canvas.onConnectorDragStart(_this);
+				_this.nodeview.canvas.onConnectorDragStart(_this);
 			}
 			evt.stopPropagation();
 		}
 
-		this.connectorType = "";
-		this.allowedConnectors = [];
+		//this.connectorType = "";
+		//this.allowedConnectors = [];
 		// add the name of the
 	}
 
@@ -63,6 +68,7 @@ export  class ConnectionPoint extends paper.Group
 		}
 	}
 
+	/*
 	isConnectionAllowed(type)
 	{
 		for(var i =0; i< this.allowedConnectors.length;++i)
@@ -70,7 +76,7 @@ export  class ConnectionPoint extends paper.Group
 			if(this.allowedConnectors[i] == type) return true;
 		}
 		return false;
-	}
+	}*/
 
 	_createTextLabel(textlabel,pos, colour= 'black')
 	{
@@ -81,15 +87,114 @@ export  class ConnectionPoint extends paper.Group
 		text.content = textlabel;
 		return text;
 	}
+
+	isValidConnection(otherPoint)
+	{
+		var validRelationshipFound = this.validRelationships.indexOf(otherPoint.relationship) != -1;
+		var validTypeFound = this.validTypes.indexOf(otherPoint.type) != -1;
+
+		return validTypeFound && validRelationshipFound;
+
+		/*
+		var validRelationshipFound = false;
+		for(var i =0; i< this.validRelationships.length;++i)
+		{
+			if(this.validRelationships[i] == otherPoint.relationship){
+				validRelationshipFound = true;
+				break;
+			}
+		}
+
+		for(var i =0; i< this.validTypes.length;++i)
+		{
+			if(this.validTypes[i] == otherPoint.type) return true;
+		}
+		return false;
+		*/
+	}
+
+	onConnectionAdded(line)
+	{
+		var otherPoint = line.getOtherPoint(this);
+		if(!this.isValidConnection(otherPoint)) return;
+
+		console.log("onConnectionAdded this.allowMultipleConnections", this.allowMultipleConnections );
+		if(!this.allowMultipleConnections) {
+			console.log("this.connectedLines.length", this.connectedLines.length);
+			var lines = this.connectedLines;
+			for(var i = 0; i< lines.length;++i)
+			{
+				lines[i].destroy();
+			}
+			this.connectedLines = [];
+			//if (this.connectedLine) this.connectedLine.destroy();
+		}
+		this.connectedLines.push(line);
+	}
+
+	onConnectionRemoved(line)
+	{
+		console.log("onConnectionREmoved");
+		this.connectedLines = utils.ArrayUtils.RemoveObject(this.connectedLines, line);
+	}
 }
 
 
-
-// child and parent pattern connection point
-export class PatternConnectionPoint extends ConnectionPoint {
+// Parent
+export class PatternParentConnectionPoint extends ConnectionPoint {
 	constructor(nodeview)
 	{
 		super(nodeview, 10, 'black');
+		this.type = "Node";
+		this.validTypes = ["Node"];
+		this.relationship = PatternParentConnectionPoint.name;
+		this.validRelationships = [PatternChildConnectionPoint.name];
+	}
+
+	onConnectionAdded(line)
+	{
+		var otherPoint = line.getOtherPoint(this);
+		if(!this.isValidConnection(otherPoint)) return;
+		super.onConnectionAdded(line);
+
+		// delegate the logic to the mode ?
+		this.nodeview.nodemodel.addChild(otherPoint.nodeview.nodemodel);
+	}
+
+	onConnectionRemoved(line)
+	{
+		super.onConnectionRemoved(line);
+		var otherPoint = line.getOtherPoint(this);
+		if(otherPoint) this.nodeview.nodemodel.removeChild(otherPoint.nodeview.nodemodel);
+	}
+}
+
+// child
+export class PatternChildConnectionPoint extends ConnectionPoint {
+	constructor(nodeview)
+	{
+		super(nodeview, 10, 'black');
+		this.type = "Node";
+		this.validTypes = ["Node"];
+		this.relationship = PatternChildConnectionPoint.name;
+		this.validRelationships = [PatternParentConnectionPoint.name];
+	}
+
+	// otherpoint is the parent node
+	onConnectionAdded(line)
+	{
+		var otherPoint = line.getOtherPoint(this);
+		if(!this.isValidConnection(otherPoint)) return;
+		super.onConnectionAdded(line);
+
+		otherPoint.nodeview.nodemodel.addChild(this.nodeview.nodemodel);
+	}
+
+	onConnectionRemoved(line)
+	{
+		super.onConnectionRemoved(line);
+		var otherPoint = line.getOtherPoint(this);
+		if(otherPoint) otherPoint.nodeview.nodemodel.removeChild(this.nodeview.nodemodel);
 	}
 }
 
@@ -101,11 +206,31 @@ export class ParamInputConnectionPoint extends ConnectionPoint {
 		this.paramDef = paramDef;
 		var textlabel = super._createTextLabel(paramDef.label, new paper.Point(-10,4));
 		textlabel.justification = 'right';
-
 		//
 		this.connectedLine = null;
+
+		this.allowMultipleConnections = false;
+		this.type = paramDef.type;
+		this.validTypes = paramDef.getCompatibleTypes();
+		this.relationship = ParamInputConnectionPoint.name;
+		this.validRelationships = [ParamOutputConnectionPoint.name];
 	}
 
+	onConnectionAdded(line)
+	{
+		var otherPoint = line.getOtherPoint(this);
+		if(!this.isValidConnection(otherPoint)) return;
+		super.onConnectionAdded(line);
+		this.nodeview.nodemodel.setParam(this.paramDef.name, otherPoint.nodeview.nodemodel);
+
+	}
+
+	onConnectionRemoved(line)
+	{
+		super.onConnectionRemoved(line);
+		var otherPoint = line.getOtherPoint(this);
+		if(otherPoint) this.nodeview.nodemodel.removeParam(otherPoint.nodeview.nodemodel, this.paramDef.name);
+	}
 }
 
 // Param output connection point
@@ -113,5 +238,27 @@ export class ParamOutputConnectionPoint extends ConnectionPoint {
 	constructor(nodeview, paramDef)
 	{
 		super(nodeview, 7, 'grey');
+
+		this.type = paramDef.type;
+		this.validTypes = paramDef.getCompatibleTypes();
+		this.relationship = ParamOutputConnectionPoint.name;
+		this.validRelationships = [ParamInputConnectionPoint.name];
+	}
+
+	onConnectionAdded(line)
+	{
+		var otherPoint = line.getOtherPoint(this);
+		if(!this.isValidConnection(otherPoint)) return;
+		super.onConnectionAdded(line);
+		console.log(line);
+		otherPoint.nodeview.nodemodel.setParam(otherPoint.paramDef.name, this.nodeview.nodemodel);
+
+	}
+
+	onConnectionRemoved(line)
+	{
+		super.onConnectionRemoved(line);
+		var otherPoint = line.getOtherPoint(this);
+		if(otherPoint) otherPoint.nodeview.nodemodel.removeParam(this.nodeview.nodemodel, otherPoint.paramDef.name);
 	}
 }

@@ -21,18 +21,26 @@ export default class ConnectionLine extends paper.Path
 //		this.line = new paper.Path.Line(this.p0,this.p1);
 	}
 
+	getOtherPoint(connector)
+	{
+		return (connector == this.startConnectionPoint)? this.endConnectionPoint : this.startConnectionPoint;
+	}
+
 	destroy()
 	{
-		this.updateModelOnRemove();
+		//this.updateModelOnRemove();
+
 
 		this.remove();
 		if(this.startConnectionPoint)
 		{
-			this.startConnectionPoint.node.onConnectionLineRemoved(this);
+			this.startConnectionPoint.onConnectionRemoved(this);
+			this.startConnectionPoint.nodeview.onConnectionLineRemoved(this);
 		}
 		if(this.endConnectionPoint)
 		{
-			this.endConnectionPoint.node.onConnectionLineRemoved(this);
+			this.endConnectionPoint.onConnectionRemoved(this);
+			this.endConnectionPoint.nodeview.onConnectionLineRemoved(this);
 		}
 
 
@@ -41,19 +49,21 @@ export default class ConnectionLine extends paper.Path
 	setStartConnectionPoint(conpoint)
 	{
 		this.startConnectionPoint = conpoint;
-		conpoint.node.onConnectionLineAdded(this);
+		conpoint.nodeview.onConnectionLineAdded(this);
 	}
 
 	setEndConnectionPoint(conpoint)
 	{
 		this.endConnectionPoint = conpoint;
-		conpoint.node.onConnectionLineAdded(this);
+		conpoint.nodeview.onConnectionLineAdded(this);
 
 		// logic here?
-		this.updateModel();
+		//this.updateModel();
+		this.startConnectionPoint.onConnectionAdded(this);
+		this.endConnectionPoint.onConnectionAdded(this);
 
 	}
-
+/*
 	// update model when a connection is removed between 2 nodeviews
 	updateModelOnRemove()
 	{
@@ -65,27 +75,28 @@ export default class ConnectionLine extends paper.Path
 		if(this.isPatternParentToPatternChild())
 		{
 			console.log("start pattern(parent)-> end pattern(child)");
-			c0.node.nodemodel.removeChild(c1.node.nodemodel);
+			c0.nodeview.nodemodel.removeChild(c1.nodeview.nodemodel);
 		}
 		else if(this.isPatternChildToPatternParent())
 		{
 			console.log("start pattern(child) <- end pattern(parent)");
-			c1.node.nodemodel.removeChild(c0.node.nodemodel);
+			c1.nodeview.nodemodel.removeChild(c0.nodeview.nodemodel);
 		}
 		else if(this.isStartConnectionParamInputParent())
 		{
 			console.log("start param(parent) - end param(child)");
 			// start is parent
-			c0.node.nodemodel.removeParam(c1.node.nodemodel, c0.paramDef.name);
+			c0.nodeview.nodemodel.removeParam(c1.nodeview.nodemodel, c0.paramDef.name);
 		}
 		else if(this.isEndConnectionParamInputParent())
 		{
 			console.log("start pattern(child) <- end pattern(child)");
 			// end is parent
-			c1.node.nodemodel.removeParam(c0.node.nodemodel, c1.paramDef.name);
+			c1.nodeview.nodemodel.removeParam(c0.nodeview.nodemodel, c1.paramDef.name);
 		}
-	}
+	}*/
 
+/*
 	///there are 3 types of connection
 	// pattern(parent)-> pattern(child)
 	// pattern(input - parent ) <- param(output)
@@ -102,12 +113,12 @@ export default class ConnectionLine extends paper.Path
 		if(this.isPatternParentToPatternChild())
 		{
 			console.log("start pattern(parent)-> end pattern(child)");
-			c0.node.nodemodel.addChild(c1.node.nodemodel);
+			c0.nodeview.nodemodel.addChild(c1.nodeview.nodemodel);
 		}
 		else if(this.isPatternChildToPatternParent())
 		{
 			console.log("start pattern(child) <- end pattern(child)");
-			c1.node.nodemodel.addChild(c0.node.nodemodel);
+			c1.nodeview.nodemodel.addChild(c0.nodeview.nodemodel);
 		}
 		else if(this.isStartConnectionParamInputParent())
 		{
@@ -117,7 +128,7 @@ export default class ConnectionLine extends paper.Path
 
 			if(c0.connectedLine) c0.connectedLine.destroy();
 			c0.connectedLine = this;
-			c0.node.nodemodel.setParam(c0.paramDef.name, c1.node.nodemodel);
+			c0.nodeview.nodemodel.setParam(c0.paramDef.name, c1.nodeview.nodemodel);
 		}
 		else if(this.isEndConnectionParamInputParent())
 		{
@@ -130,12 +141,12 @@ export default class ConnectionLine extends paper.Path
 			if(c1.connectedLine)
 				c1.connectedLine.destroy();
 			c1.connectedLine = this;
-			c1.node.nodemodel.setParam(c1.paramDef.name, c0.node.nodemodel);
+			c1.nodeview.nodemodel.setParam(c1.paramDef.name, c0.nodeview.nodemodel);
 			//}
 		}
 	}
-
-
+*/
+/*
 	isPatternParentToPatternChild()
 	{
 		var c0 = this.startConnectionPoint;
@@ -161,7 +172,7 @@ export default class ConnectionLine extends paper.Path
 		var c1 = this.endConnectionPoint;
 		return c1.connectorType.includes(ParamConnectorType.paramInput );
 	}
-
+*/
 
 
 	updateConnectionLine()

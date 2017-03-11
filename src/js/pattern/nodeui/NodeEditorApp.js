@@ -75,7 +75,6 @@ export default class NodeEditorApp
 		param.position.x = 450;
 		param.position.y = 550;
 
-
 		var node2 = new PatternNodeView(new model.QuadNode(50,50,100,100).removeAllParents());
 		this.canvas.addPatternNode(node2);
 		node2.position.x = 139;
@@ -91,11 +90,10 @@ export default class NodeEditorApp
 		node.position.x = 139;
 		node.position.y = 650;
 
-		 node = new PatternNodeView(new model.QuadMirrorNode().removeAllParents());
+		node = new PatternNodeView(new model.QuadMirrorNode().removeAllParents());
 		this.canvas.addPatternNode(node);
 		node.position.x = 139;
 		node.position.y = 750;
-
 
 		node = new PatternNodeView(new model.QuadToDiagonalLeafNode().removeAllParents());
 		this.canvas.addPatternNode(node);

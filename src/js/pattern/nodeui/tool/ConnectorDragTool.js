@@ -88,7 +88,8 @@ export default class ConnectorDragTool
 					{
 
 			//			console.log("hit connector ", hitconnector.allowedConnectors);
-						if(  hitconnector.isConnectionAllowed(this._startConnector.connectorType))
+						if(  this._startConnector.isValidConnection(hitconnector))
+						//if(  hitconnector.isConnectionAllowed(this._startConnector.connectorType))
 						{
 			//				console.log("connection allowed, true");
 							//
@@ -146,7 +147,7 @@ export default class ConnectorDragTool
 		var removeconnection = true;
 		if(this.foundConnnectionPoint   )
 		{
-			var alreadyContainsConnection = this.foundConnnectionPoint.node.containsExistingConnection(this.foundConnnectionPoint, this._startConnector );
+			var alreadyContainsConnection = this.foundConnnectionPoint.nodeview.containsExistingConnection(this.foundConnnectionPoint, this._startConnector );
 
 
 			if(!alreadyContainsConnection ) {

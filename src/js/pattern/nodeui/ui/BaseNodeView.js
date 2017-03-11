@@ -2,7 +2,8 @@ import paper from 'paper'
 import {ArrayUtils} from '../../util/ArrayUtils'
 import * as model from '../../model/model'
 import {ConnectionPoint as ConnectionPoint} from './ConnectionPoint'
-import {PatternConnectionPoint as PatternConnectionPoint} from './ConnectionPoint'
+import {PatternChildConnectionPoint as PatternChildConnectionPoint} from './ConnectionPoint'
+import {PatternParentConnectionPoint as PatternParentConnectionPoint} from './ConnectionPoint'
 import {ParamInputConnectionPoint as ParamInputConnectionPoint} from './ConnectionPoint'
 import {ParamOutputConnectionPoint as ParamOutputConnectionPoint} from './ConnectionPoint'
 
@@ -97,42 +98,44 @@ export default class BaseNodeView extends paper.Group
 	_addParamInputConnectorPoint(position, paramDef)
 	{
 		var cp = new ParamInputConnectionPoint(this, paramDef);
+/*
 		cp.connectorType = ParamConnectorType.paramInput + " " + paramDef.type;
 		var compatibleTypes = paramDef.getCompatibleTypes();
 		cp.allowedConnectors = [];
 		for(var i =0; i< compatibleTypes.length;++i) {
 			cp.allowedConnectors.push(ParamConnectorType.paramOutput + " " + compatibleTypes[i]);
 		}
+		*/
 		return this._addConnectorPoint(cp, position);
 	}
 
 	_addParamOutputConnectorPoint(position, paramDef)
 	{
 		var cp = new ParamOutputConnectionPoint(this, paramDef);
-
+		/*
 		cp.connectorType = ParamConnectorType.paramOutput+ " " + paramDef.type;
 		var compatibleTypes = paramDef.getCompatibleTypes();
 		cp.allowedConnectors = [];
 		for(var i =0; i< compatibleTypes.length;++i) {
 			cp.allowedConnectors.push(ParamConnectorType.paramInput + " " + compatibleTypes[i]);
 		}
-
+*/
 		return this._addConnectorPoint(cp, position);
 	}
 
 	_addPatternParentConnectorPoint(position)
 	{
-		var cp = new PatternConnectionPoint(this);
-		cp.connectorType = PatternConnectorType.patternNodeParent;
-		cp.allowedConnectors = [PatternConnectorType.patternNodeChild];
+		var cp = new PatternParentConnectionPoint(this);
+		//cp.connectorType = PatternConnectorType.patternNodeParent;
+		//cp.allowedConnectors = [PatternConnectorType.patternNodeChild];
 		return this._addConnectorPoint(cp, position);
 	}
 
 	_addPatternChildConnectorPoint(position)
 	{
-		var cp = new PatternConnectionPoint(this);
-		cp.connectorType = PatternConnectorType.patternNodeChild;
-		cp.allowedConnectors = [PatternConnectorType.patternNodeParent];
+		var cp = new PatternChildConnectionPoint(this);
+		//cp.connectorType = PatternConnectorType.patternNodeChild;
+		//cp.allowedConnectors = [PatternConnectorType.patternNodeParent];
 		return this._addConnectorPoint(cp, position);
 	}
 

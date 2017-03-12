@@ -4,7 +4,7 @@
 import {Param} from './Param'
 
 export class FloatParam extends Param{
-    constructor(defaultValue)
+    constructor(defaultValue = 0)
     {
         super();
         this.value = defaultValue;

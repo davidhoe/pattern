@@ -5,7 +5,7 @@ import {Param} from './Param'
 
 //import {PatternState} from './PatternState'
 export class IntParam extends Param{
-	constructor(defaultValue)
+	constructor(defaultValue = 0)
 	{
 		super();
 		this.value = defaultValue;

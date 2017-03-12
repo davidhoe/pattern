@@ -8,6 +8,7 @@ import NodeDragTool from '../tool/NodeDragTool'
 import ConnectorDragTool from '../tool/ConnectorDragTool'
 import ConnectionLine from './ConnectionLine'
 import HTMLParamMenu from './HTMLParamMenu'
+import HTMLConnectorMenu from './HTMLConnectorMenu'
 
 /**
  * Canvas is the main surface to add Nodes to.
@@ -31,6 +32,14 @@ export default class NodeEditorCanvas
 		this.connectionLines = [];
 		//node param menu
 		this._nodemenu = new HTMLParamMenu();
+		this._connectorMenu = new HTMLConnectorMenu();
+		this._connectorMenu.onDeleteClickedCallback = function(line)
+		{
+			//console.log("onDeleteClickedCallback nodeView" , nodeView);
+			_this.removeConnectionLine(line);
+			_this._connectorMenu.hide();
+		}
+
 		this._nodemenu.onValueChangedCallback = function(){ _this.onModelUpdated()};
 		this._nodemenu.onDeleteClickedCallback = function(nodeView)
 		{
@@ -62,6 +71,8 @@ export default class NodeEditorCanvas
 	//	this.nodeDragTool.activate();
 		this.draggingNode = null;
 
+		this._selectedLine = null;
+		this._selectedObject = null;
 
 	}
 
@@ -104,11 +115,36 @@ export default class NodeEditorCanvas
 		}
 		this.connectionLayer.addChild(connectionline);
 
+		var _this = this;
+		connectionline.on('click', function(){_this.connectionLineClicked(this)})
+
 		if(fireEvent)
 		{
 			this._emitModelUpdateEvent();
 		}
 	}
+
+	connectionLineClicked(line)
+	{
+
+		if(this._nodemenu.isShowing())
+		{
+			this._nodemenu.hide();
+		}
+
+		console.log("connection line clicked");
+		if(this._selectedLine == line) {
+			this._selectedLine = null;
+			this._connectorMenu.hide();
+		}
+		else{
+			this._selectedLine = line;
+			this._connectorMenu.init(line);
+			var p = line.getMidPoint();
+			this._connectorMenu.show(p.x, p.y)
+		}
+	}
+
 
 	removeAllConnections(fireEvent = true)
 	{
@@ -190,6 +226,12 @@ export default class NodeEditorCanvas
 
 	nodeClicked(node)
 	{
+		if(this._connectorMenu.isShowing())
+		{
+			this._selectedLine = null;
+			this._connectorMenu.hide();
+		}
+
 		if(this.nodeDragTool.isDragging())
 		{
 			return;
@@ -244,6 +286,8 @@ export default class NodeEditorCanvas
 	onDragDetected()
 	{
 		this._nodemenu.hide();
+		this._connectorMenu.hide();
+
 	}
 
 	_emitModelUpdateEvent()

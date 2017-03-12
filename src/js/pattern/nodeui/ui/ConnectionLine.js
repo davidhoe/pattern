@@ -18,7 +18,14 @@ export default class ConnectionLine extends paper.Path
 		this.endConnectionPoint = null;
 		this.segments = [this.p0,this.p1];
 		this.strokeColor = new paper.Color(0.3);
+		this.strokeWidth = 5;
 //		this.line = new paper.Path.Line(this.p0,this.p1);
+		this.selected = false;
+	}
+
+	getMidPoint()
+	{
+		return new paper.Point(this.p0.x*0.5 + this.p1.x*0.5, this.p0.y*0.5 + this.p1.y*0.5);
 	}
 
 	getOtherPoint(connector)
@@ -42,8 +49,6 @@ export default class ConnectionLine extends paper.Path
 			this.endConnectionPoint.onConnectionRemoved(this);
 			this.endConnectionPoint.nodeview.onConnectionLineRemoved(this);
 		}
-
-
 	}
 
 	setStartConnectionPoint(conpoint)
@@ -63,117 +68,6 @@ export default class ConnectionLine extends paper.Path
 		this.endConnectionPoint.onConnectionAdded(this);
 
 	}
-/*
-	// update model when a connection is removed between 2 nodeviews
-	updateModelOnRemove()
-	{
-		var c0 = this.startConnectionPoint;
-		var c1 = this.endConnectionPoint;
-		if(c1 == null || c0 == null) return;
-		console.log("updateModelOnRemove");
-		// update model on removal
-		if(this.isPatternParentToPatternChild())
-		{
-			console.log("start pattern(parent)-> end pattern(child)");
-			c0.nodeview.nodemodel.removeChild(c1.nodeview.nodemodel);
-		}
-		else if(this.isPatternChildToPatternParent())
-		{
-			console.log("start pattern(child) <- end pattern(parent)");
-			c1.nodeview.nodemodel.removeChild(c0.nodeview.nodemodel);
-		}
-		else if(this.isStartConnectionParamInputParent())
-		{
-			console.log("start param(parent) - end param(child)");
-			// start is parent
-			c0.nodeview.nodemodel.removeParam(c1.nodeview.nodemodel, c0.paramDef.name);
-		}
-		else if(this.isEndConnectionParamInputParent())
-		{
-			console.log("start pattern(child) <- end pattern(child)");
-			// end is parent
-			c1.nodeview.nodemodel.removeParam(c0.nodeview.nodemodel, c1.paramDef.name);
-		}
-	}*/
-
-/*
-	///there are 3 types of connection
-	// pattern(parent)-> pattern(child)
-	// pattern(input - parent ) <- param(output)
-	// param (input - parent ) <- param(output)
-	//
-	// update model for when a connection is made between to nodeviews
-	updateModel()
-	{
-		//
-		var c0 = this.startConnectionPoint;
-		var c1 = this.endConnectionPoint;
-
-		var parent,child;
-		if(this.isPatternParentToPatternChild())
-		{
-			console.log("start pattern(parent)-> end pattern(child)");
-			c0.nodeview.nodemodel.addChild(c1.nodeview.nodemodel);
-		}
-		else if(this.isPatternChildToPatternParent())
-		{
-			console.log("start pattern(child) <- end pattern(child)");
-			c1.nodeview.nodemodel.addChild(c0.nodeview.nodemodel);
-		}
-		else if(this.isStartConnectionParamInputParent())
-		{
-			console.log("parent ", c0);
-			console.log("should be a param ", c1);
-			console.log("c0.paramdef.name ", c0.paramDef.name);
-
-			if(c0.connectedLine) c0.connectedLine.destroy();
-			c0.connectedLine = this;
-			c0.nodeview.nodemodel.setParam(c0.paramDef.name, c1.nodeview.nodemodel);
-		}
-		else if(this.isEndConnectionParamInputParent())
-		{
-			console.log("should be parent c1", c1);
-			console.log("should be a param c0", c0);
-			console.log("c1.paramdef.name ", c1.paramDef.name);
-
-			// c0.node should be a paramNodeView
-			// c1.node is a patternnode or param node view
-			if(c1.connectedLine)
-				c1.connectedLine.destroy();
-			c1.connectedLine = this;
-			c1.nodeview.nodemodel.setParam(c1.paramDef.name, c0.nodeview.nodemodel);
-			//}
-		}
-	}
-*/
-/*
-	isPatternParentToPatternChild()
-	{
-		var c0 = this.startConnectionPoint;
-		var c1 = this.endConnectionPoint;
-		return (c0.connectorType == PatternConnectorType.patternNodeParent ) && (c1.connectorType == PatternConnectorType.patternNodeChild) ;
-	}
-
-	isPatternChildToPatternParent()
-	{
-		var c0 = this.startConnectionPoint;
-		var c1 = this.endConnectionPoint;
-		return (c1.connectorType == PatternConnectorType.patternNodeParent ) && (c0.connectorType == PatternConnectorType.patternNodeChild) ;
-	}
-
-	isStartConnectionParamInputParent()
-	{
-		var c0 = this.startConnectionPoint;
-		return c0.connectorType.includes( ParamConnectorType.paramInput );
-	}
-
-	isEndConnectionParamInputParent()
-	{
-		var c1 = this.endConnectionPoint;
-		return c1.connectorType.includes(ParamConnectorType.paramInput );
-	}
-*/
-
 
 	updateConnectionLine()
 	{
@@ -188,6 +82,7 @@ export default class ConnectionLine extends paper.Path
 			this.p1 = this.endConnectionPoint.bg.localToGlobal();
 		}
 		this.segments = [this.p0,this.p1];
+
 
 	}
 

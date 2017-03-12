@@ -13,7 +13,7 @@ import paper from 'paper'
  */
 export class RotatePathIndexNode extends Node
 {
-	constructor(shift)
+	constructor(shift = 1)
 	{
 		super();
 		this.shift = shift;

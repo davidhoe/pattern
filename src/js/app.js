@@ -103,7 +103,7 @@ function init()
     var node = new model.FillNode();
     node.process();
 */
-    nodeEditorApp.test();
+    //nodeEditorApp.maketestNodes();
 
 
 

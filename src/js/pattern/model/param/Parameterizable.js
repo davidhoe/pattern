@@ -77,10 +77,11 @@ export class Parameterizable{
 			var param = this._params[i];
 			var paramKey = param.key;
 			this[paramKey] = param.object.getValue();
+			//todo here - add param type
 		}
 	}
 
-	setParam(paramName, paramObject)
+	setParam(paramName, paramObject, outputName= null)
 	{
 		if(paramName == "" || paramName == null)
 		{
@@ -89,12 +90,11 @@ export class Parameterizable{
 		}
 		if(Parameterizable.HasOwnProperty(this, paramName) ){
 			console.log("setParam", paramName, "has prop");
-			this._params.push({"key": paramName,"object" : paramObject});
+			this._params.push({"key": paramName,"object" : paramObject, "outputName": outputName});
 		}
 		else{
 			console.error("error: no param with the name exists for this . Param ", paramName)
 		}
-
 	}
 
 	// remove param, if paramName is null then it removes the param from all keys, otherwise just that key

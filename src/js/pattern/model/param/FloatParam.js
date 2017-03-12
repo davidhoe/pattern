@@ -8,6 +8,8 @@ export class FloatParam extends Param{
     {
         super();
         this.value = defaultValue;
+
+        // this._params[""];
     }
 
     getEditorDefinition()

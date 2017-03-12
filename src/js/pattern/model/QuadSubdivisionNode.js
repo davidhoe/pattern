@@ -14,7 +14,7 @@ export class QuadSubdivisionNode extends Node
 	 * sudivide into a number of rows
 
 	 */
-	constructor(nRows, nCols)
+	constructor(nRows = 2, nCols = 2)
 	{
 		super();
 		// public

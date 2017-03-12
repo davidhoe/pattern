@@ -118,9 +118,9 @@ export  class ConnectionPoint extends paper.Group
 		var otherPoint = line.getOtherPoint(this);
 		if(!this.isValidConnection(otherPoint)) return;
 
-		console.log("onConnectionAdded this.allowMultipleConnections", this.allowMultipleConnections );
+		//console.log("onConnectionAdded this.allowMultipleConnections", this.allowMultipleConnections );
 		if(!this.allowMultipleConnections) {
-			console.log("this.connectedLines.length", this.connectedLines.length);
+		//	console.log("this.connectedLines.length", this.connectedLines.length);
 			var lines = this.connectedLines;
 			for(var i = 0; i< lines.length;++i)
 			{
@@ -134,7 +134,7 @@ export  class ConnectionPoint extends paper.Group
 
 	onConnectionRemoved(line)
 	{
-		console.log("onConnectionREmoved");
+	//	console.log("onConnectionREmoved");
 		this.connectedLines = utils.ArrayUtils.RemoveObject(this.connectedLines, line);
 	}
 }
@@ -198,7 +198,7 @@ export class PatternChildConnectionPoint extends ConnectionPoint {
 	}
 }
 
-// Param input connection point
+// Param input connection point - single point
 export class ParamInputConnectionPoint extends ConnectionPoint {
 	constructor(nodeview, paramDef)
 	{
@@ -207,7 +207,7 @@ export class ParamInputConnectionPoint extends ConnectionPoint {
 		var textlabel = super._createTextLabel(paramDef.label, new paper.Point(-10,4));
 		textlabel.justification = 'right';
 		//
-		this.connectedLine = null;
+		//this.connectedLine = null;
 
 		this.allowMultipleConnections = false;
 		this.type = paramDef.type;
@@ -222,7 +222,6 @@ export class ParamInputConnectionPoint extends ConnectionPoint {
 		if(!this.isValidConnection(otherPoint)) return;
 		super.onConnectionAdded(line);
 		this.nodeview.nodemodel.setParam(this.paramDef.name, otherPoint.nodeview.nodemodel);
-
 	}
 
 	onConnectionRemoved(line)
@@ -232,6 +231,41 @@ export class ParamInputConnectionPoint extends ConnectionPoint {
 		if(otherPoint) this.nodeview.nodemodel.removeParam(otherPoint.nodeview.nodemodel, this.paramDef.name);
 	}
 }
+
+// Param input connection point - allows multiple points of the same type to connect - todo
+export class ParamInputArrayConnectionPoint extends ConnectionPoint {
+	constructor(nodeview, paramDef)
+	{
+		super(nodeview, 7, 'grey');
+		this.paramDef = paramDef;
+		var textlabel = super._createTextLabel(paramDef.label, new paper.Point(-10,4));
+		textlabel.justification = 'right';
+		//
+		//this.connectedLine = null;
+
+		this.allowMultipleConnections = true;
+		this.type = paramDef.type;
+		this.validTypes = paramDef.getCompatibleTypes();
+		this.relationship = ParamInputConnectionPoint.name;
+		this.validRelationships = [ParamOutputConnectionPoint.name];
+	}
+
+	onConnectionAdded(line)
+	{
+		var otherPoint = line.getOtherPoint(this);
+		if(!this.isValidConnection(otherPoint)) return;
+		super.onConnectionAdded(line);
+		this.nodeview.nodemodel.setParam(this.paramDef.name, otherPoint.nodeview.nodemodel);
+	}
+
+	onConnectionRemoved(line)
+	{
+		super.onConnectionRemoved(line);
+		var otherPoint = line.getOtherPoint(this);
+		if(otherPoint) this.nodeview.nodemodel.removeParam(otherPoint.nodeview.nodemodel, this.paramDef.name);
+	}
+}
+
 
 // Param output connection point
 export class ParamOutputConnectionPoint extends ConnectionPoint {
@@ -250,7 +284,7 @@ export class ParamOutputConnectionPoint extends ConnectionPoint {
 		var otherPoint = line.getOtherPoint(this);
 		if(!this.isValidConnection(otherPoint)) return;
 		super.onConnectionAdded(line);
-		console.log(line);
+	//	console.log(line);
 		otherPoint.nodeview.nodemodel.setParam(otherPoint.paramDef.name, this.nodeview.nodemodel);
 
 	}

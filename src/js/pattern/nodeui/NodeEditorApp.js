@@ -5,6 +5,7 @@ import * as model from '../model/model'
 import PatternNodeView from './ui/PatternNodeView'
 import NodeEditorCanvas from './ui/NodeEditorCanvas'
 import ConnectionLine from './ui/ConnectionLine'
+import HTMLNodeList from './ui/HTMLNodeList'
 
 /**
  * main app for the node editor
@@ -20,12 +21,12 @@ export default class NodeEditorApp
 		// make a start node
 		this.startnode = new PatternNodeView(new model.Node().removeAllParents(), true);
 		this.canvas.addPatternNode(this.startnode);
-		this.startnode.position.x = 139;
+		this.startnode.position.x = 339;
 		this.startnode.position.y = 100;
 
 		//this.test();
 
-		// add a button to test refresh
+		// add some paperjs buttons to test some methods
 		var _this = this;
 		var button = this.makeDebugButton("Refresh", 10, 10);
 		button.onClick = function(e) {_this.refreshPattern();}
@@ -34,9 +35,35 @@ export default class NodeEditorApp
 		var delbutton2 = this.makeDebugButton("Delete all nodes", 230, 10);
 		delbutton2.onClick = function(e) { _this.canvas.removeAllNodes();}
 
-
 		console.log("createStartNode", this.startnode);
 		this.canvas.onModelUpdated = function(){ _this.refreshPattern()};
+
+		// add a simple html node list
+		this._nodelist = new HTMLNodeList();
+		this._nodelist.init("div2");
+		this._nodelist.onPatternNodeSelectedCallback = function(nodeclassName){_this.onNewPatternNodeSelected(nodeclassName) } ;
+		this._nodelist.onParamNodeSelectedCallback = function(nodeclassName){_this.onParamNodeSelectedCallback(nodeclassName) } ;
+
+		//console.log("variable.constructor ", variable.constructor.name == Array.name);
+	}
+
+
+	onParamNodeSelectedCallback(nodeclassName)
+	{
+		var nodemodel = HTMLNodeList.CreateNodeInstance(nodeclassName);
+		var nodeview = new ParamNodeView(nodemodel);
+		this.canvas.addPatternNode(nodeview);
+		nodeview.position.x = 339 + Math.random()*30;
+		nodeview.position.y = 300 + Math.random()*30;
+	}
+
+	onNewPatternNodeSelected(nodeclassName)
+	{
+		var nodemodel = HTMLNodeList.CreateNodeInstance(nodeclassName);
+		var nodeview = new PatternNodeView(nodemodel.removeAllParents());
+		this.canvas.addPatternNode(nodeview);
+		nodeview.position.x = 339+ Math.random()*20;
+		nodeview.position.y = 300+ Math.random()*20;
 	}
 
 
@@ -55,8 +82,9 @@ export default class NodeEditorApp
 		return group;
 	}
 
-	test()
+	maketestNodes()
 	{
+
 		//make a node
 		var param;
 

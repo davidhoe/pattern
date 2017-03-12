@@ -12,10 +12,10 @@ import {ColourUtils} from '../util/ColourUtils'
  */
 export class RandomColourFromSetNode extends Node
 {
-    constructor(colourset)
+    constructor(colourset = null)
     {
         super();
-        this.colourset = colourset;
+        this.colourset = (colourset == null ) ? ColourUtils.GetRandomColourset() : colourset ;
     }
 
     process()

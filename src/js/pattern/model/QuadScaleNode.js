@@ -13,7 +13,7 @@ import paper from 'paper'
  */
 export class QuadScaleNode extends Node
 {
-	constructor(scale, anchorp = null)
+	constructor(scale = 1, anchorp = null)
 	{
 		super();
 		this.anchorp = (anchorp == null) ? new paper.Point(0.5,0.5): anchorp;

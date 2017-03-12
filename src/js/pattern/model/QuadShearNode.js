@@ -13,7 +13,7 @@ import paper from 'paper'
  */
 export class QuadShearNode  extends QuadToShapeNode
 {
-	constructor(shearRatio)
+	constructor(shearRatio = null)
 	{
 		super();
 		this.shearRatio = ( shearRatio == null) ? 0.25 : shearRatio;

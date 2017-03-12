@@ -12,18 +12,19 @@ import GridUtils from '../util/RectGridUtils'
  */
 export class RectGridNode extends Node
 {
-    constructor(angle,shapeSize)
+    constructor(angle = 0, shapeSize = null)
     {
         super();
         // public
         this.angle = angle;
-        this.shapeSize = shapeSize;
+        this.shapeWidth = (shapeSize == null) ? 100 : shapeSize.width;
+        this.shapeHeight = (shapeSize == null) ? 100 : shapeSize.height;
     }
 
     process()
     {
         this._processParams();
-        var shapes = GridUtils.CreateGrid(PatternState.Instance().bound, this.angle, this.shapeSize);
+        var shapes = GridUtils.CreateGrid(PatternState.Instance().bound, this.angle, new paper.Size(this.shapeWidth, this.shapeHeight));
         // var shapes = RectGridUtils.CreateGrid(PatternState.Instance().bound, this.angle, this.shapeSize);
         for(var i = 0; i < shapes.length  ;i++) {
             //

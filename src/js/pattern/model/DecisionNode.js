@@ -13,7 +13,7 @@ import paper from 'paper'
  */
 export class DecisionNode extends Node
 {
-    constructor(choiceIndex)
+    constructor(choiceIndex = 0)
     {
         super();
         // public

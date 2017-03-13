@@ -17,11 +17,12 @@ import {ParamConnectorType as ParamConnectorType} from '../model/ConnectorTypes'
  */
 export default class PatternNodeView extends BaseNodeView
 {
-	constructor(nodemodel, isRoot = false)
+	constructor(nodemodel)
 	{
 		super(PatternNodeView.NodeType, nodemodel);
+		this.setBgColour( new paper.Color(0.7) );
 
-		this.setBgColour( (isRoot) ? new paper.Color(0.4,0.5,0.4) : new paper.Color(0.7) );
+		//this.setBgColour( (isRoot) ? new paper.Color(0.4,0.5,0.4) : new paper.Color(0.7) );
 
 
 		// add a parent connection point
@@ -33,9 +34,6 @@ export default class PatternNodeView extends BaseNodeView
 		this.patternChildConnector = this._addPatternChildConnectorPoint(
 			new paper.Point(this.bound.width/2,0),
 			);
-
-
-
 		//
 		/*
 		// add an input connection on the side
@@ -45,11 +43,21 @@ export default class PatternNodeView extends BaseNodeView
 			ParamConnectorType.paramInput,
 			[ParamConnectorType.paramOutput]);
 */
-		if(isRoot)
-		{
-			this.setChildConnectorEnabled(false);
-			this.deletable = false;
-		}
+
+	}
+
+	setAsStartNode()
+	{
+		this.setBgColour(  new paper.Color(0.4,0.5,0.4) );
+		this.setChildConnectorEnabled(false);
+		this.deletable = false;
+	}
+
+	toJsonObject(data = null)
+	{
+		data = (data == null) ? {} : data;
+		data = super.toJsonObject(data);
+		return data;
 	}
 
 	fromJsonObject(data, nodeviews, canvas)

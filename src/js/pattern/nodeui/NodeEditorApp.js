@@ -21,7 +21,7 @@ export default class NodeEditorApp
 		// make a start node
 		var  startnode = new PatternNodeView(new model.QuadNode(0,0,500,500).removeAllParents(), true);
 		this.canvas.addNodeView(startnode);
-		this.canvas.startnode = startnode;
+		this.canvas.setStartNodeview(startnode);
 		startnode.position.x = 339;
 		startnode.position.y = 100;
 

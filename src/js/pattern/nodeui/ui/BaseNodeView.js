@@ -60,13 +60,17 @@ export default class BaseNodeView extends paper.Group
 		return this._id;
 	}
 
-
+	// override, meant for patternnode only
+	setAsStartNode()
+	{}
 
 	// export to json
-	toJsonObject()
+	toJsonObject(data = null)
 	{
 		var data = {};
+
 		data["guid"] = this.getID();
+		data["deletable"] = this.deletable;
 		data["position"] = {'x':this.position.x, 'y': this.position.y};
 		data["classname"] = this.constructor.name;
 		data["nodemodel"] =  this.nodemodel.getID();// this.nodemodel.toJsonObject();
@@ -76,6 +80,7 @@ export default class BaseNodeView extends paper.Group
 	fromJsonObject(data, nodeviews, canvas)
 	{
 		this._id = data["guid"];
+		this.deletable = data["deletable"];
 		this.position.x =  data["position"].x;
 		this.position.y =  data["position"].y;
 		console.log("-------------------------", this.nodemodel._params.length);

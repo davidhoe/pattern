@@ -161,7 +161,8 @@ export default class NodeEditorCanvas
 		}
 
 		//set start node
-		this.startnode = utils.ArrayUtils.FindObjectByParameter( this.nodeViews, "_id", data["startnode"]);
+		var startnode = utils.ArrayUtils.FindObjectByParameter( this.nodeViews, "_id", data["startnode"]);
+		this.setStartNodeview(startnode);
 		console.log('this.startnode',this.startnode);
 		console.log('fromJsonObject models',models);
 		console.log('this.nodeViews',this.nodeViews);
@@ -177,6 +178,12 @@ export default class NodeEditorCanvas
 
 		// refresh pattern render
 		this.onModelUpdated();
+	}
+
+	setStartNodeview(nodeview)
+	{
+		this.startnode = nodeview;
+		this.startnode.setAsStartNode();
 	}
 
 	onModelUpdated()

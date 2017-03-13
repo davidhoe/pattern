@@ -104,7 +104,7 @@ function init()
     node.process();
 */
     //nodeEditorApp.maketestNodes();
-
+    nodeEditorApp.testparse();
 
 
 /*

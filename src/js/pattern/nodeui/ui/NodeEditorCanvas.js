@@ -82,6 +82,8 @@ export default class NodeEditorCanvas
 	{
 		var data = this.toJsonObject();
 		console.log("toJsonObject", data);
+		var str = JSON.stringify(data);
+		console.log(str);
 		this.removeAllNodes(true);
 
 		this.fromJsonObject(data);

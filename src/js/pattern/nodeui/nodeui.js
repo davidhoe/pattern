@@ -3,7 +3,7 @@
 //export Connection from './ui/Connection';
 export {default as NodeEditorApp} from './NodeEditorApp';
 export {default as PatternNodeView} from './ui/PatternNodeView';
-export {default as PatternNodeView} from './ui/ParamNodeView';
+export {default as ParamNodeView} from './ui/ParamNodeView';
 export {default as BaseNodeView} from './ui/BaseNodeView';
 
 // usage

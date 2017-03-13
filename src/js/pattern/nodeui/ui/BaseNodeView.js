@@ -24,6 +24,7 @@ export default class BaseNodeView extends paper.Group
 
 		this.nodemodel = nodemodel;
 		this.canvas = null;
+		this._inputConnectionPoints= [];
 		this.deletable = true;
 		this.type = nodetype;
 		//this.model  = model;
@@ -72,12 +73,29 @@ export default class BaseNodeView extends paper.Group
 		return data;
 	}
 
-	fromJsonObject(data, nodeviews)
+	fromJsonObject(data, nodeviews, canvas)
 	{
 		this._id = data["guid"];
 		this.position.x =  data["position"].x;
 		this.position.y =  data["position"].y;
+		console.log("-------------------------", this.nodemodel._params.length);
 
+		// add param connections back
+		for(var i =0; i< this.nodemodel._params.length; ++i)
+		{
+			var paramModel = this.nodemodel._params[i];
+			var childView = utils.ArrayUtils.FindObjectByParameter(nodeviews,"nodemodel", paramModel.object);
+			// add a parent/child connection
+			console.log("paramModel.object", paramModel.object);
+
+			console.log("childView", childView);
+
+			var inputpoint = this._getInputConnectionPointForParam(paramModel.key);
+			console.log("inputpoint", inputpoint);
+
+			canvas.addConnectionViewBetweenPoints(inputpoint, childView.outputConnector);
+
+		}
 	}
 
 	setBgColour(colour)
@@ -110,6 +128,15 @@ export default class BaseNodeView extends paper.Group
 		return text;
 	}
 
+	_getInputConnectionPointForParam(paramName)
+	{
+		for(var i =0; i< this._inputConnectionPoints.length;++i)
+		{
+			if(this._inputConnectionPoints[i].paramDef.name == paramName) return this._inputConnectionPoints[i];
+		}
+		return null;
+	}
+
 	_addAllInputConnectionPoints(modeldef, startp, inputSpacingY)
 	{
 		var pos = startp ; //
@@ -125,6 +152,8 @@ export default class BaseNodeView extends paper.Group
 	_addParamInputConnectorPoint(position, paramDef)
 	{
 		var cp = new ParamInputConnectionPoint(this, paramDef);
+
+		this._inputConnectionPoints.push(cp);
 /*
 		cp.connectorType = ParamConnectorType.paramInput + " " + paramDef.type;
 		var compatibleTypes = paramDef.getCompatibleTypes();

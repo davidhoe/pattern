@@ -1,5 +1,5 @@
 import paper from 'paper'
-import {ArrayUtils} from '../../util/ArrayUtils'
+import * as utils from '../../util/utils'
 import * as model from '../../model/model'
 import {ConnectionPoint as ConnectionPoint} from './ConnectionPoint'
 import {PatternChildConnectionPoint as PatternChildConnectionPoint} from './ConnectionPoint'
@@ -50,6 +50,33 @@ export default class BaseNodeView extends paper.Group
 		var startpos = new paper.Point(this.bound.x + this.bound.width, this.bound.y + 35);
 		this._addAllInputConnectionPoints(this.nodedef, startpos, inputSpacingY);
 
+		this._id =  utils.MathUtils.GenerateUUID();// generate a random id
+
+	}
+
+	getID()
+	{
+		return this._id;
+	}
+
+
+
+	// export to json
+	toJsonObject()
+	{
+		var data = {};
+		data["guid"] = this.getID();
+		data["position"] = {'x':this.position.x, 'y': this.position.y};
+		data["classname"] = this.constructor.name;
+		data["nodemodel"] =  this.nodemodel.getID();// this.nodemodel.toJsonObject();
+		return data;
+	}
+
+	fromJsonObject(data, nodeviews)
+	{
+		this._id = data["guid"];
+		this.position.x =  data["position"].x;
+		this.position.y =  data["position"].y;
 
 	}
 
@@ -177,16 +204,19 @@ export default class BaseNodeView extends paper.Group
 		return false;
 	}
 
+
+
+
 	onConnectionLineRemoved(line)
 	{
 		console.log("before",this.connectionLines);
-		this.connectionLines = ArrayUtils.RemoveObject(this.connectionLines,line);
+		this.connectionLines = utils.ArrayUtils.RemoveObject(this.connectionLines,line);
 		console.log("after",this.connectionLines);
 	}
 
 	onConnectionLineAdded(line)
 	{
-		if(!ArrayUtils.ContainsObject(this.connectionLines,line))
+		if(!utils.ArrayUtils.ContainsObject(this.connectionLines,line))
 		{
 			this.connectionLines.push(line);
 		}

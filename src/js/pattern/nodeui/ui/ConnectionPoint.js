@@ -137,6 +137,14 @@ export  class ConnectionPoint extends paper.Group
 	//	console.log("onConnectionREmoved");
 		this.connectedLines = utils.ArrayUtils.RemoveObject(this.connectedLines, line);
 	}
+
+	// overide
+	updateModelOnConnectionAdded(line) {
+	}
+
+	// overide
+	updateModelOnConnectionRemoved(line) {
+	}
 }
 
 
@@ -151,19 +159,14 @@ export class PatternParentConnectionPoint extends ConnectionPoint {
 		this.validRelationships = [PatternChildConnectionPoint.name];
 	}
 
-	onConnectionAdded(line)
+	updateModelOnConnectionAdded(line)
 	{
 		var otherPoint = line.getOtherPoint(this);
-		if(!this.isValidConnection(otherPoint)) return;
-		super.onConnectionAdded(line);
-
-		// delegate the logic to the mode ?
 		this.nodeview.nodemodel.addChild(otherPoint.nodeview.nodemodel);
 	}
 
-	onConnectionRemoved(line)
+	updateModelOnConnectionRemoved(line)
 	{
-		super.onConnectionRemoved(line);
 		var otherPoint = line.getOtherPoint(this);
 		if(otherPoint) this.nodeview.nodemodel.removeChild(otherPoint.nodeview.nodemodel);
 	}
@@ -180,22 +183,18 @@ export class PatternChildConnectionPoint extends ConnectionPoint {
 		this.validRelationships = [PatternParentConnectionPoint.name];
 	}
 
-	// otherpoint is the parent node
-	onConnectionAdded(line)
+	updateModelOnConnectionAdded(line)
 	{
 		var otherPoint = line.getOtherPoint(this);
-		if(!this.isValidConnection(otherPoint)) return;
-		super.onConnectionAdded(line);
-
 		otherPoint.nodeview.nodemodel.addChild(this.nodeview.nodemodel);
 	}
 
-	onConnectionRemoved(line)
+	updateModelOnConnectionRemoved(line)
 	{
-		super.onConnectionRemoved(line);
 		var otherPoint = line.getOtherPoint(this);
-		if(otherPoint) otherPoint.nodeview.nodemodel.removeChild(this.nodeview.nodemodel);
+		if(otherPoint) this.nodeview.nodemodel.removeChild(otherPoint.nodeview.nodemodel);
 	}
+
 }
 
 // Param input connection point - single point
@@ -216,20 +215,19 @@ export class ParamInputConnectionPoint extends ConnectionPoint {
 		this.validRelationships = [ParamOutputConnectionPoint.name];
 	}
 
-	onConnectionAdded(line)
+	updateModelOnConnectionAdded(line)
 	{
 		var otherPoint = line.getOtherPoint(this);
-		if(!this.isValidConnection(otherPoint)) return;
-		super.onConnectionAdded(line);
 		this.nodeview.nodemodel.setParam(this.paramDef.name, otherPoint.nodeview.nodemodel);
 	}
 
-	onConnectionRemoved(line)
+	updateModelOnConnectionRemoved(line)
 	{
-		super.onConnectionRemoved(line);
 		var otherPoint = line.getOtherPoint(this);
 		if(otherPoint) this.nodeview.nodemodel.removeParam(otherPoint.nodeview.nodemodel, this.paramDef.name);
 	}
+
+
 }
 
 // Param input connection point - allows multiple points of the same type to connect - todo
@@ -250,20 +248,19 @@ export class ParamInputArrayConnectionPoint extends ConnectionPoint {
 		this.validRelationships = [ParamOutputConnectionPoint.name];
 	}
 
-	onConnectionAdded(line)
+	updateModelOnConnectionAdded(line)
 	{
 		var otherPoint = line.getOtherPoint(this);
-		if(!this.isValidConnection(otherPoint)) return;
-		super.onConnectionAdded(line);
 		this.nodeview.nodemodel.setParam(this.paramDef.name, otherPoint.nodeview.nodemodel);
 	}
 
-	onConnectionRemoved(line)
+	updateModelOnConnectionRemoved(line)
 	{
-		super.onConnectionRemoved(line);
 		var otherPoint = line.getOtherPoint(this);
 		if(otherPoint) this.nodeview.nodemodel.removeParam(otherPoint.nodeview.nodemodel, this.paramDef.name);
 	}
+
+
 }
 
 
@@ -279,19 +276,16 @@ export class ParamOutputConnectionPoint extends ConnectionPoint {
 		this.validRelationships = [ParamInputConnectionPoint.name];
 	}
 
-	onConnectionAdded(line)
+
+
+	updateModelOnConnectionAdded(line)
 	{
 		var otherPoint = line.getOtherPoint(this);
-		if(!this.isValidConnection(otherPoint)) return;
-		super.onConnectionAdded(line);
-	//	console.log(line);
 		otherPoint.nodeview.nodemodel.setParam(otherPoint.paramDef.name, this.nodeview.nodemodel);
-
 	}
 
-	onConnectionRemoved(line)
+	updateModelOnConnectionRemoved(line)
 	{
-		super.onConnectionRemoved(line);
 		var otherPoint = line.getOtherPoint(this);
 		if(otherPoint) otherPoint.nodeview.nodemodel.removeParam(this.nodeview.nodemodel, otherPoint.paramDef.name);
 	}

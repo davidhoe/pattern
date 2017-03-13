@@ -1,7 +1,12 @@
 import paper from 'paper'
 import BaseNodeView from './BaseNodeView'
+import * as utils from '../../util/utils'
 import * as model from '../../model/model'
 import ConnectionPoint from './ConnectionPoint'
+import ConnectionLine from './ConnectionLine'
+import {PatternChildConnectionPoint} from './ConnectionPoint'
+import {PatternParentConnectionPoint} from './ConnectionPoint'
+
 import {PatternConnectorType as PatternConnectorType} from '../model/ConnectorTypes'
 import {ParamConnectorType as ParamConnectorType} from '../model/ConnectorTypes'
 
@@ -16,7 +21,7 @@ export default class PatternNodeView extends BaseNodeView
 	{
 		super(PatternNodeView.NodeType, nodemodel);
 
-		this.setBgColour( (isRoot) ? 'green' : new paper.Color(0.7) );
+		this.setBgColour( (isRoot) ? new paper.Color(0.4,0.5,0.4) : new paper.Color(0.7) );
 
 
 		// add a parent connection point
@@ -47,7 +52,30 @@ export default class PatternNodeView extends BaseNodeView
 		}
 	}
 
+	fromJsonObject(data, nodeviews, canvas)
+	{
+		super.fromJsonObject(data, nodeviews, canvas);
 
+		console.log("this.nodemodel", this.nodemodel);
+		// add children conections
+		for(var i =0; i< this.nodemodel._childNodes.length; ++i)
+		{
+			var childModel = this.nodemodel._childNodes[i];
+			var childView = utils.ArrayUtils.FindObjectByParameter(nodeviews,"nodemodel", childModel);
+			// add a parent/child connection
+			canvas.addConnectionViewBetweenPoints(this.patternParentConnector, childView.patternChildConnector);
+		}
+	}
+
+	/*
+	static FindNodeViewWithModelGuid(nodeviews, guid)
+	{
+		for(var i =0; i< nodeviews.length;++i)
+		{
+			if(nodeviews[i].nodemodel.getID() == guid) return nodeviews[i];
+		}
+		return null;
+	}*/
 
 	setParentConnectorEnabled(enabled)
 	{

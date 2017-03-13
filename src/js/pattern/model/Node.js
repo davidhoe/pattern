@@ -22,6 +22,34 @@ export class Node extends Parameterizable{
 		if(PatternState.Instance().autoPushNodeOnCreation) this.push();
     }
 
+    fromJsonObject(data, models)
+    {
+	    super.fromJsonObject(data, models);
+
+	    var childdata =data["childNodes"] ;
+	    for(var i =0 ;i < childdata.length;++i)
+	    {
+		    var childNode = utils.ArrayUtils.FindObjectByParameter(models,"_id", childdata[i]);
+		    this.addChild(childNode);
+		    //childdata.push(this._childNodes[i].getID());
+	    }
+
+    }
+
+	toJsonObject(data = null)
+	{
+		data = (data == null)? {} : data;
+		data = super.toJsonObject(data);
+		// save child nodes
+		var childdata = [];
+		data["childNodes"] = childdata;
+		for(var i =0 ;i < this._childNodes.length;++i)
+		{
+			childdata.push(this._childNodes[i].getID());
+		}
+		return data;
+    }
+
 	getEditorDefinition()
 	{
 		var def = super.getEditorDefinition(["Node"]);

@@ -19,11 +19,18 @@ export default class NodeEditorApp
 
 
 		// make a start node
-		this.startnode = new PatternNodeView(new model.Node().removeAllParents(), true);
-		this.canvas.addPatternNode(this.startnode);
-		this.startnode.position.x = 339;
-		this.startnode.position.y = 100;
+		var  startnode = new PatternNodeView(new model.QuadNode(0,0,500,500).removeAllParents(), true);
+		this.canvas.addNodeView(startnode);
+		this.canvas.startnode = startnode;
+		startnode.position.x = 339;
+		startnode.position.y = 100;
 
+
+		// add a fill node
+		var node = new PatternNodeView(new model.FillNode().removeAllParents());
+		this.canvas.addNodeView(node);
+		node.position.x = 339;
+		node.position.y = 650;
 		//this.test();
 
 		// add some paperjs buttons to test some methods
@@ -34,6 +41,8 @@ export default class NodeEditorApp
 		delbutton.onClick = function(e) {_this.canvas.removeAllConnections(); _this.refreshPattern();}
 		var delbutton2 = this.makeDebugButton("Delete all nodes", 230, 10);
 		delbutton2.onClick = function(e) { _this.canvas.removeAllNodes();}
+		var delbutton2 = this.makeDebugButton("Export", 400, 10);
+		delbutton2.onClick = function(e) { _this.canvas.saveToFile();}
 
 		console.log("createStartNode", this.startnode);
 		this.canvas.onModelUpdated = function(){ _this.refreshPattern()};
@@ -52,7 +61,7 @@ export default class NodeEditorApp
 	{
 		var nodemodel = HTMLNodeList.CreateNodeInstance(nodeclassName);
 		var nodeview = new ParamNodeView(nodemodel);
-		this.canvas.addPatternNode(nodeview);
+		this.canvas.addNodeView(nodeview);
 		nodeview.position.x = 339 + Math.random()*30;
 		nodeview.position.y = 300 + Math.random()*30;
 	}
@@ -61,7 +70,7 @@ export default class NodeEditorApp
 	{
 		var nodemodel = HTMLNodeList.CreateNodeInstance(nodeclassName);
 		var nodeview = new PatternNodeView(nodemodel.removeAllParents());
-		this.canvas.addPatternNode(nodeview);
+		this.canvas.addNodeView(nodeview);
 		nodeview.position.x = 339+ Math.random()*20;
 		nodeview.position.y = 300+ Math.random()*20;
 	}
@@ -89,57 +98,57 @@ export default class NodeEditorApp
 		var param;
 
 		param = new ParamNodeView(new model.FloatParam(2));
-		this.canvas.addPatternNode(param);
+		this.canvas.addNodeView(param);
 		param.position.x = 300;
 		param.position.y = 350;
 
 		param = new ParamNodeView(new model.IntParam(2));
-		this.canvas.addPatternNode(param);
+		this.canvas.addNodeView(param);
 		param.position.x = 350;
 		param.position.y = 450;
 
 		param = new ParamNodeView(new model.ColourParam());
-		this.canvas.addPatternNode(param);
+		this.canvas.addNodeView(param);
 		param.position.x = 450;
 		param.position.y = 550;
 
 		var node2 = new PatternNodeView(new model.QuadNode(50,50,100,100).removeAllParents());
-		this.canvas.addPatternNode(node2);
+		this.canvas.addNodeView(node2);
 		node2.position.x = 139;
 		node2.position.y = 300;
 
 		var node3 = new PatternNodeView(new model.QuadToCircleNode().removeAllParents());
-		this.canvas.addPatternNode(node3);
+		this.canvas.addNodeView(node3);
 		node3.position.x = 139;
 		node3.position.y = 500;
 
 		var node = new PatternNodeView(new model.FillNode().removeAllParents());
-		this.canvas.addPatternNode(node);
+		this.canvas.addNodeView(node);
 		node.position.x = 139;
 		node.position.y = 650;
 
 		node = new PatternNodeView(new model.QuadMirrorNode().removeAllParents());
-		this.canvas.addPatternNode(node);
+		this.canvas.addNodeView(node);
 		node.position.x = 139;
 		node.position.y = 750;
 
 		node = new PatternNodeView(new model.QuadToDiagonalLeafNode().removeAllParents());
-		this.canvas.addPatternNode(node);
+		this.canvas.addNodeView(node);
 		node.position.x = 239;
 		node.position.y = 750;
 
 		node = new PatternNodeView(new model.RandomColourFromSetNode(util.ColourUtils.GetRandomColourset()).removeAllParents());
-		this.canvas.addPatternNode(node);
+		this.canvas.addNodeView(node);
 		node.position.x = 239;
 		node.position.y = 950;
 
 		node = new PatternNodeView(new model.QuadSubdivisionNode(2,2).removeAllParents());
-		this.canvas.addPatternNode(node);
+		this.canvas.addNodeView(node);
 		node.position.x = 339;
 		node.position.y = 950;
 
 		node = new PatternNodeView(new model.ColourNode(new paper.Color(1,0,0)).removeAllParents());
-		this.canvas.addPatternNode(node);
+		this.canvas.addNodeView(node);
 		node.position.x = 339;
 		node.position.y = 350;
 
@@ -151,8 +160,8 @@ export default class NodeEditorApp
 	refreshPattern()
 	{
 		//
-		console.log("refresh", this.startnode.nodemodel);
-		if(this.onModelUpdated ) this.onModelUpdated(this.startnode.nodemodel);
+		console.log("refresh", this.canvas.startnode.nodemodel);
+		if(this.onModelUpdated ) this.onModelUpdated(this.canvas.startnode.nodemodel);
 	}
 
 }

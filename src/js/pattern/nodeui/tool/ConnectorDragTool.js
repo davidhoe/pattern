@@ -39,11 +39,12 @@ export default class ConnectorDragTool
 		{
 			if(this.draggingNode != pnodes[i]) this._checkNodes.push( pnodes[i] );
 		}
+		/*
 		pnodes = this.canvas.paramNodes;
 		for(var i =0; i< pnodes.length;++i)
 		{
 			if(this.draggingNode != pnodes[i]) this._checkNodes.push( pnodes[i] );
-		}
+		}*/
 		//this.activate();
 
 		//console.log("startDrag", this.draggingNode.constructor.name);

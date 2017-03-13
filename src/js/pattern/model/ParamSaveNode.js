@@ -13,7 +13,7 @@ import paper from 'paper'
  */
 export class ParamSaveNode extends Node
 {
-	constructor(param = "x")
+	constructor(param = null)
 	{
 		super();
 		// public

@@ -39,6 +39,7 @@ export {IntParam as IntParam} from './param/IntParam';
 export {IntSelectFromArrayParam as IntSelectFromArrayParam} from './param/IntSelectFromArrayParam';
 export {Param as Param} from './param/Param';
 export {Parameterizable as Parameterizable} from './param/Parameterizable';
+export {RandomIntInRangeParam as RandomIntInRangeParam} from './param/RandomIntInRangeParam';
 
 
 export {ColourNode as ColourNode} from './ColourNode.js';

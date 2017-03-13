@@ -1,4 +1,5 @@
 import paper from 'paper'
+import * as utils from '../../util/utils'
 import {PatternConnectorType as PatternConnectorType} from '../model/ConnectorTypes'
 import {ParamConnectorType as ParamConnectorType} from '../model/ConnectorTypes'
 import PatternNodeView from './PatternNodeView'
@@ -21,7 +22,15 @@ export default class ConnectionLine extends paper.Path
 		this.strokeWidth = 5;
 //		this.line = new paper.Path.Line(this.p0,this.p1);
 		this.selected = false;
+		//this._id =  utils.MathUtils.GenerateUUID();// generate a random id
+
 	}
+
+	/*
+	getID()
+	{
+		return this._id;
+	}*/
 
 	getMidPoint()
 	{
@@ -49,6 +58,14 @@ export default class ConnectionLine extends paper.Path
 			this.endConnectionPoint.onConnectionRemoved(this);
 			this.endConnectionPoint.nodeview.onConnectionLineRemoved(this);
 		}
+
+		// update model
+		if(this.startConnectionPoint)
+			this.startConnectionPoint.updateModelOnConnectionRemoved(this);
+		else if(this.endConnectionPoint)
+			this.endConnectionPoint.updateModelOnConnectionRemoved(this);
+
+
 	}
 
 	setStartConnectionPoint(conpoint)
@@ -66,6 +83,8 @@ export default class ConnectionLine extends paper.Path
 		//this.updateModel();
 		this.startConnectionPoint.onConnectionAdded(this);
 		this.endConnectionPoint.onConnectionAdded(this);
+
+		this.startConnectionPoint.updateModelOnConnectionAdded(this);
 
 	}
 

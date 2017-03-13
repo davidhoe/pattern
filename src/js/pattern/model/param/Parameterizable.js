@@ -13,6 +13,58 @@ export class Parameterizable{
 	constructor()
 	{
 		this._params = [];
+		this._id =  utils.MathUtils.GenerateUUID();// generate a random id
+		console.log("id", this._id);
+	}
+
+	getID()
+	{
+		return this._id;
+	}
+
+	toJsonObject(data = null)
+	{
+		data = (data == null)? {} : data;
+		var paramData = [];
+		data["classname"] = this.constructor.name;
+		data["guid"] = this.getID();
+		data["params"] = paramData;
+		for(var i =0; i < this._params.length;++i)
+		{
+			var param = this._params[i];
+			paramData.push({"key": param.key,"object" : param.object.getID(), "outputName": param.outputName});
+		}
+
+		var valuesData = [];
+		data["values"] = valuesData;
+		var def = this.getEditorDefinition();
+		for(var i =0; i < def.inputs.length;++i) {
+			var param = def.inputs[i];
+			valuesData.push({"name" : param.name, "value": this[param.name] });
+		}
+		return data;
+	}
+
+
+
+	fromJsonObject(data, models)
+	{
+		this._id = data["guid"];
+
+		var paramData = data["params"];
+		for(var i =0; i < paramData.length;++i)
+		{
+			var dparam = paramData[i];
+			var paramModel = utils.ArrayUtils.FindObjectByParameter(models,"_id", dparam["object"]);
+			this.setParam(dparam["key"], paramModel, dparam["outputName"]);
+		}
+
+		var valuesData = data["values"];
+		for(var i = 0;i <valuesData.length;++i)
+		{
+			var dvalue = valuesData[i];
+			this[dvalue.name] = dvalue.value;
+		}
 	}
 
 	getEditorDefinition(ignoreTextArray = [])

@@ -4,6 +4,8 @@ import * as model from '../../model/model'
 import BaseNodeView from './BaseNodeView'
 import ParamNodeView from './ParamNodeView'
 import PatternNodeView from './PatternNodeView'
+import * as nodeui from '../nodeui'
+
 import NodeDragTool from '../tool/NodeDragTool'
 import ConnectorDragTool from '../tool/ConnectorDragTool'
 import ConnectionLine from './ConnectionLine'
@@ -20,15 +22,15 @@ export default class NodeEditorCanvas
 	constructor(project)
 	{
 		var _this = this;
-
+		this.startnode = null;
 		this.onModelUpdatedCallback = null;
 		this.project = project;
 		this.project.activate();
 		this.connectionLayer = new paper.Layer();
 		this.nodeLayer = new paper.Layer();
-		this.connections = [];
+		//this.connections = [];
 		this.nodeViews = [];
-		this.paramNodes = [];
+		//this.paramNodes = [];
 		this.connectionLines = [];
 		//node param menu
 		this._nodemenu = new HTMLParamMenu();
@@ -76,6 +78,106 @@ export default class NodeEditorCanvas
 
 	}
 
+	saveToFile()
+	{
+		var data = this.toJsonObject();
+		console.log("toJsonObject", data);
+		this.removeAllNodes(true);
+
+		this.fromJsonObject(data);
+
+	}
+
+	toJsonObject()
+	{
+		var data = {};
+
+		data["startnode"] = this.startnode.getID();
+
+		var modelsdata  = [];
+		//save the node models (this includes params)
+		for(var i =0; i < this.nodeViews.length;++i)
+		{
+			modelsdata.push(this.nodeViews[i].nodemodel.toJsonObject());
+		}
+		data["nodemodels"] = modelsdata;
+
+		//save the node views
+		var viewsdata = [];
+		for(var i =0; i < this.nodeViews.length;++i)
+		{
+			viewsdata.push(this.nodeViews[i].toJsonObject());
+		}
+		data["nodeviews"] = viewsdata;
+
+		// connection lines dont need saving as they can be recreated form matching the model guids
+
+		return data;
+		// save the connections
+	}
+
+	fromJsonObject(data)
+	{
+		var models = [];
+		var modelsdata = data["nodemodels"];
+		// create model instances first
+		for(var i =0; i < modelsdata.length;++i)
+		{
+			var mdata = modelsdata[i];
+			var classname = mdata["classname"];
+			console.log(classname );
+			var nodemodel = new model[classname]();
+			nodemodel._id = mdata["guid"];
+			models.push(nodemodel);
+		}
+		// then link them and set data
+		for(var i =0; i < modelsdata.length;++i)
+		{
+			var mdata = modelsdata[i];
+			models[i].fromJsonObject(mdata,models );
+		}
+
+		// then create the view instances next and set their respective model
+		var viewsdata = data["nodeviews"];
+		for(var i =0; i < viewsdata.length;++i)
+		{
+			var vdata = viewsdata[i];
+			var classname = vdata["classname"];
+			console.log(classname );
+			var nodemodel = utils.ArrayUtils.FindObjectByParameter(models, "_id", vdata["nodemodel"]);
+			console.log("nodemodel", nodemodel);
+			var nodeview = new nodeui[classname]( nodemodel);
+			nodeview._id = vdata["guid"];
+			//models.push(nodemodel);
+			this.addNodeView(nodeview);
+			//viewsdata.push(this.nodeViews[i].toJsonObject());
+		}
+
+
+		// and link them
+		for(var i =0; i < this.nodeViews.length;++i)
+		{
+			this.nodeViews[i].fromJsonObject(viewsdata[i], this.nodeViews, this);
+		}
+
+		//set start node
+		this.startnode = utils.ArrayUtils.FindObjectByParameter( this.nodeViews, "_id", data["startnode"]);
+		console.log('this.startnode',this.startnode);
+		console.log('fromJsonObject models',models);
+		console.log('this.nodeViews',this.nodeViews);
+
+		// set start node
+
+
+		// refresh view
+		for(var i =0; i< this.connectionLines.length;++i)
+		{
+			this.connectionLines[i].updateConnectionLine();
+		}
+
+		// refresh pattern render
+		this.onModelUpdated();
+	}
 
 	onModelUpdated()
 	{
@@ -172,13 +274,28 @@ export default class NodeEditorCanvas
 		}
 	}
 
+	// on load from json/file
+	addConnectionViewBetweenPoints(startp, endp)
+	{
+		var connection = new ConnectionLine();
+		connection.startConnectionPoint = startp;
+		connection.endConnectionPoint = endp;
+
+		this.addConnectionLine(connection, false);
+		startp.nodeview.onConnectionLineAdded(connection);
+		endp.nodeview.onConnectionLineAdded(connection);
+		connection.startConnectionPoint.onConnectionAdded(connection);
+		connection.endConnectionPoint.onConnectionAdded(connection);
+
+	}
+
 	onNodeEnter(evt)
 	{
 		console.log("node enter");
 	}
 
 	// add node to the canvas
-	addPatternNode(node)
+	addNodeView(node)
 	{
 		if(utils.ArrayUtils.ContainsObject(this.nodeViews, node))
 		{

@@ -5,12 +5,12 @@ import BaseNodeView from './BaseNodeView'
 import ParamNodeView from './ParamNodeView'
 import PatternNodeView from './PatternNodeView'
 import * as nodeui from '../nodeui'
-
 import NodeDragTool from '../tool/NodeDragTool'
 import ConnectorDragTool from '../tool/ConnectorDragTool'
 import ConnectionLine from './ConnectionLine'
 import HTMLParamMenu from './HTMLParamMenu'
 import HTMLConnectorMenu from './HTMLConnectorMenu'
+import $ from 'jquery'
 
 /**
  * Canvas is the main surface to add Nodes to.
@@ -78,15 +78,27 @@ export default class NodeEditorCanvas
 
 	}
 
+	loadFromFile(filepath)
+	{
+		var _this = this;
+		$.getJSON( filepath, function( data ) {
+			_this.fromJsonObject(data);
+		});
+	}
+
 	saveToFile()
 	{
 		var data = this.toJsonObject();
 		console.log("toJsonObject", data);
 		var str = JSON.stringify(data);
 		console.log(str);
-		this.removeAllNodes(true);
 
-		this.fromJsonObject(data);
+		var blob = new Blob([str], {type: "application/json"});
+		var saveAs = window.saveAs;
+		saveAs(blob, "nodetree.json");
+
+		//this.removeAllNodes(true);
+		//this.fromJsonObject(data);
 
 	}
 
@@ -118,8 +130,13 @@ export default class NodeEditorCanvas
 		// save the connections
 	}
 
-	fromJsonObject(data)
+	fromJsonObject(data, doClear = true)
 	{
+		if(doClear)
+		{
+			this.removeAllNodes(true);
+		}
+
 		var models = [];
 		var modelsdata = data["nodemodels"];
 		// create model instances first

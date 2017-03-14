@@ -28,6 +28,7 @@ export class NodeEditorDefinition
 	//todo  add an id to the inputs, null is default
 	setOutputFloat(outputName = "")
 	{
+		console.log("**setOutputFloat");
 		this.addOutput( new editor.FloatParamDef(outputName));
 		return this;
 	}

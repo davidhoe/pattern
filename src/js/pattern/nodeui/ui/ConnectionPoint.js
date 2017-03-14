@@ -218,6 +218,7 @@ export class ParamInputConnectionPoint extends ConnectionPoint {
 	updateModelOnConnectionAdded(line)
 	{
 		var otherPoint = line.getOtherPoint(this);
+		console.log("------updateModelOnConnectionAdded", "otherPoint.paramDef.name", otherPoint.paramDef.name );
 		this.nodeview.nodemodel.setParam(this.paramDef.name, otherPoint.nodeview.nodemodel, otherPoint.paramDef.name);
 	}
 
@@ -251,7 +252,8 @@ export class ParamInputArrayConnectionPoint extends ConnectionPoint {
 	updateModelOnConnectionAdded(line)
 	{
 		var otherPoint = line.getOtherPoint(this);
-		this.nodeview.nodemodel.setParam(this.paramDef.name, otherPoint.nodeview.nodemodel);
+		console.log("------updateModelOnConnectionAdded", "otherPoint.paramDef.name", otherPoint.paramDef.name );
+		this.nodeview.nodemodel.setParam(this.paramDef.name, otherPoint.nodeview.nodemodel, otherPoint.paramDef.name);
 	}
 
 	updateModelOnConnectionRemoved(line)
@@ -281,7 +283,8 @@ export class ParamOutputConnectionPoint extends ConnectionPoint {
 	updateModelOnConnectionAdded(line)
 	{
 		var otherPoint = line.getOtherPoint(this);
-		otherPoint.nodeview.nodemodel.setParam(otherPoint.paramDef.name, this.nodeview.nodemodel);
+		console.log("------updateModelOnConnectionAdded", "this.paramDef.name", this.paramDef.name );
+		otherPoint.nodeview.nodemodel.setParam(otherPoint.paramDef.name, this.nodeview.nodemodel , this.paramDef.name);
 	}
 
 	updateModelOnConnectionRemoved(line)

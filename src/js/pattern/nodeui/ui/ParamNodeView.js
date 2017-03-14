@@ -29,18 +29,8 @@ export default class ParamNodeView extends BaseNodeView
 		this.text = this._addCenteredTextLabel(model.label, bound, 'black');
 */
 
-		this.outputConnectors = [];
-
-		// create an output connector for each
-		for(var i =0; i< this.nodedef.outputs.length;++i) {
-
-			var outputConnector = this._addParamOutputConnectorPoint(
-				new paper.Point(this.bound.width / 2, this.bound.height),
-				this.nodedef.outputs[i]
-			);
-			this.outputConnector = outputConnector;
-			this.outputConnectors.push(outputConnector);
-		}
+		var startp = new paper.Point(this.bound.width / 2, this.bound.height);
+		this._createOutputConnectors(startp);
 	}
 
 	getOutputConnectorByName(outputName)
@@ -52,6 +42,12 @@ export default class ParamNodeView extends BaseNodeView
 				return this.outputConnectors[i];
 			}
 		}
+		return null;
+	}
+
+	getAnyOutputConnector()
+	{
+		if(this.outputConnectors.length > 0) return this.outputConnectors[0];
 		return null;
 	}
 

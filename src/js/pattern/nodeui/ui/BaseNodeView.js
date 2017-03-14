@@ -32,6 +32,7 @@ export default class BaseNodeView extends paper.Group
 		this.connectors = [];
 		this.connectionLines = [];
 		//this.applyMatrix = false;
+		this.outputConnectors = [];
 		//
 		this.pivot = new paper.Point(0,0);
 		this.position = new paper.Point(0,0);
@@ -53,6 +54,22 @@ export default class BaseNodeView extends paper.Group
 
 		this._id =  utils.MathUtils.GenerateUUID();// generate a random id
 
+	}
+
+	_createOutputConnectors(startp)
+	{
+
+		console.log("--_createOutputConnectors", this.nodedef.outputs);
+		// create an output connector for each
+		for(var i =0; i< this.nodedef.outputs.length;++i) {
+
+			var outputConnector = this._addParamOutputConnectorPoint(
+				new paper.Point(startp.x + i*20, startp.y),
+				this.nodedef.outputs[i]
+			);
+			//this.outputConnector = outputConnector;
+			this.outputConnectors.push(outputConnector);
+		}
 	}
 
 	getID()
@@ -99,9 +116,13 @@ export default class BaseNodeView extends paper.Group
 			console.log("inputpoint", inputpoint);
 
 			// todo link up the correct output connector by outputName
-			var outputPoint = childView.getOutputConnectorByName("");
+			var outputPoint = childView.getOutputConnectorByName(paramModel.name);
 			if(outputPoint) {
 				canvas.addConnectionViewBetweenPoints(inputpoint, outputPoint);
+			}
+			else if(childView.getAnyOutputConnector())
+			{
+				canvas.addConnectionViewBetweenPoints(inputpoint, childView.getAnyOutputConnector());
 			}
 		}
 	}

@@ -19,6 +19,8 @@ export class QuadToSubQuadNode extends Node
 		this.normalisedQuadPoints = normalisedQuadPoints;
 	}
 
+
+
 	process()
 	{
 		super._processParams();

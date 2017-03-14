@@ -104,7 +104,8 @@ function init()
     node.process();
 */
     //nodeEditorApp.maketestNodes();
-    nodeEditorApp.testparse();
+    //nodeEditorApp.testparse();
+    nodeEditorApp.canvas.loadFromFile("assets/nodetree02.json");
 
 
 /*

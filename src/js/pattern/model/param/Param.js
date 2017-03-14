@@ -15,7 +15,7 @@ export class Param extends Parameterizable
 	getEditorDefinition()
 	{
 		var def = super.getEditorDefinition(["Param"]);
-		def.setOutputFloat();
+//		def.setOutputFloat();
 		return def;
 	}
 
@@ -23,7 +23,7 @@ export class Param extends Parameterizable
 	getValue(outputName = "")
 	{
 		this._processParams();
-		return super.getOutputValue(outputName);
+		return 0;// super.getValue(outputName);
 	}
 
 

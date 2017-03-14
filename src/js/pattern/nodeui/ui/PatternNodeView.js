@@ -44,7 +44,12 @@ export default class PatternNodeView extends BaseNodeView
 			[ParamConnectorType.paramOutput]);
 */
 
+		var startp = new paper.Point(this.bound.width / 2 - 60, this.bound.height);
+		this._createOutputConnectors(startp);
+
 	}
+
+
 
 	setAsStartNode()
 	{

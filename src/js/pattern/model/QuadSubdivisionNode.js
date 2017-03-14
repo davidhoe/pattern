@@ -22,6 +22,7 @@ export class QuadSubdivisionNode extends Node
 		this.nCols = nCols;
 		this._specificChildNodes = []; // store nodes attached to a specific child index
 
+		this._ix = 0;
 		// specify some output defintions
 		// - link to variables
 		// add {label:, name:"ix"};
@@ -32,6 +33,20 @@ export class QuadSubdivisionNode extends Node
 		// outputID comes from the paramDef,
 		// outputs["default"] = ..
 		// outputs["children"] = ... - special one.?
+	}
+
+	getEditorDefinition()
+	{
+		return super.getEditorDefinition().setOutputFloat("ix");
+	}
+
+	getValue(outputName = "")
+	{
+		if(outputName == "ix")
+		{
+			return this._ix;
+		}
+		return 0;
 	}
 
 	/**
@@ -80,6 +95,7 @@ export class QuadSubdivisionNode extends Node
 				var indexes = pair.indexes;
 				for(var k =0; k< indexes.length; ++k)
 				{
+					this._ix = k;
 					//console.log("indexes[k]", indexes[k]);
 					PatternState.Instance().path = shapes[indexes[k]];
 					//console.log(node.constructor.name);

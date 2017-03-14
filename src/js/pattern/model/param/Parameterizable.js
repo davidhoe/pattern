@@ -17,6 +17,11 @@ export class Parameterizable{
 		this._id =  utils.MathUtils.GenerateUUID();// generate a random id
 		console.log("id", this._id);
 	}
+
+	getValue(outputName = "")
+	{
+		return 0;// super.getValue(outputName);
+	}
 /*
 	getOutputValue(outputName = "")
 	{

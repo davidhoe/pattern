@@ -20,10 +20,12 @@ export class Param extends Parameterizable
 	}
 
 	// overide this
-	getValue()
+	getValue(outputName = "")
 	{
 		this._processParams();
-		return 0;
+		return super.getOutputValue(outputName);
 	}
+
+
 
 }

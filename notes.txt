@@ -53,6 +53,24 @@ node.removeFromParent();
 
 Todo- nodes:
 
+basenodeview - 102
+add a param
+
+test a pattern nodeview with an output?
+-apply this for:
+* repeatnode (ix)
+* saveparamnode - test
+* anything with a for loop inside?
+
+
+param nodes:
+Colourset - public int (ix), output: colourarray, (int) n?
+RandomColourset - output: colourarray, (int) n?
+
+ArrayCreate - single colours into an array input: X colour slots, output 1 colour slot.
+ArrayInterlaceSplit - 1 array, mode (odd,even) , 1 array?
+ArrayCombine -input 2 arrays, output array
+
 change to multiple outputs -
 have an array of outputs?
 outputs[]

@@ -22,6 +22,16 @@ export class QuadSubdivisionNode extends Node
 		this.nCols = nCols;
 		this._specificChildNodes = []; // store nodes attached to a specific child index
 
+		// specify some output defintions
+		// - link to variables
+		// add {label:, name:"ix"};
+		// outputs["ix"] = ...
+		// outputmodel.getValue() in connectionPoint
+		// change to  ouputmode.getValue("outputID")
+		// each connectionPoint output has an outputID.
+		// outputID comes from the paramDef,
+		// outputs["default"] = ..
+		// outputs["children"] = ... - special one.?
 	}
 
 	/**

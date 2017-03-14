@@ -15,7 +15,7 @@ export class StringParam extends Param{
 		return super.getEditorDefinition().setOutputString();
 	}
 
-	getValue()
+	getValue(outputName = "")
 	{
 		super._processParams();
 		return this.defaultValue;

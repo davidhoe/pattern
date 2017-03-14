@@ -11,7 +11,7 @@ export class ColourSetParam extends Param{
 	    this.colours = [];
 	}
 
-	getValue()
+	getValue(outputName = "")
 	{
 		super._processParams();
 		return this.colours;

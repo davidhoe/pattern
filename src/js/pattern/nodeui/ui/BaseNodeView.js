@@ -98,8 +98,11 @@ export default class BaseNodeView extends paper.Group
 			var inputpoint = this._getInputConnectionPointForParam(paramModel.key);
 			console.log("inputpoint", inputpoint);
 
-			canvas.addConnectionViewBetweenPoints(inputpoint, childView.outputConnector);
-
+			// todo link up the correct output connector by outputName
+			var outputPoint = childView.getOutputConnectorByName("");
+			if(outputPoint) {
+				canvas.addConnectionViewBetweenPoints(inputpoint, outputPoint);
+			}
 		}
 	}
 

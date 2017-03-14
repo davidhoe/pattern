@@ -15,7 +15,7 @@ export class ColourSelectFromSetParam extends ColourParam
 		this.index = index;
 	}
 
-	getValue()
+	getValue(outputName = "")
 	{
 		super._processParams();
 		if(this.index < this.colourset.length)

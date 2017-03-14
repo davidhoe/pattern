@@ -8,40 +8,46 @@ export class NodeEditorDefinition
 	{
 		this.label = label;
 		this.inputs = [];
-		this.output = null;
+
+		//todo  change this to an array
+		this.outputs = [];
 	}
 
-	setOutputString()
+	setOutputString(outputName = "")
 	{
-		this.output = new editor.StringParamDef("");
+		this.addOutput(new editor.StringParamDef(outputName));
 		return this;
 	}
 
-	setOutputBool()
+	setOutputBool(outputName = "")
 	{
-		this.output = new editor.BoolParamDef("");
+		this.addOutput(new editor.BoolParamDef(outputName));
 		return this;
 	}
 
-	setOutputFloat()
+	//todo  add an id to the inputs, null is default
+	setOutputFloat(outputName = "")
 	{
-		this.output = new editor.FloatParamDef("");
+		this.addOutput( new editor.FloatParamDef(outputName));
 		return this;
 	}
 
-	setOutputInt()
+	setOutputInt(outputName = "")
 	{
-		this.output = new editor.IntParamDef("");
+		this.addOutput( new editor.IntParamDef(outputName));
 		return this;
 	}
 
-	setOutputColour()
+	setOutputColour(outputName = "")
 	{
-		this.output = new editor.ColourParamDef("");
+		this.addOutput( new editor.ColourParamDef(outputName));
 		return this;
 	}
 
-
+	addOutput( paramDef)
+	{
+		this.outputs.push(paramDef);
+	}
 
 	addInputFloat(name,label = null, rangemin = null, rangemax = null)
 	{

@@ -18,7 +18,7 @@ export class ColourParam extends Param{
 		return super.getEditorDefinition().setOutputColour();
 	}
 
-	getValue()
+	getValue(outputName = "")
 	{
 		super._processParams();
 		return new paper.Color(this.r,this.g,this.b);

@@ -17,7 +17,7 @@ export class IntParam extends Param{
 		return super.getEditorDefinition().setOutputInt();
 	}
 
-	getValue()
+	getValue(outputName = "")
 	{
 		super._processParams();
 		return this.value;

@@ -16,7 +16,7 @@ export class PointParam extends Param{
 
     // process params here like a node
 
-    getValue()
+    getValue(outputName = "")
     {
         super._processParams();
         return this.point;

@@ -15,7 +15,7 @@ export class IntSelectFromArrayParam extends IntParam
 		this.mode = mode;
 	}
 
-	getValue()
+	getValue(outputName = "")
 	{
 		super._processParams();
 		var random = true;

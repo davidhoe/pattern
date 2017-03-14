@@ -12,10 +12,24 @@ export class Parameterizable{
 
 	constructor()
 	{
+		//this.outputValues = {};
 		this._params = [];
 		this._id =  utils.MathUtils.GenerateUUID();// generate a random id
 		console.log("id", this._id);
 	}
+/*
+	getOutputValue(outputName = "")
+	{
+		if(Parameterizable.HasOwnProperty(this.outputValues, outputName)) {
+			return this.outputValues[outputName];
+		}
+		return null;
+	}*/
+/*
+	setOutputValue(value, outputName = "")
+	{
+		this.outputValues[outputName] = value;
+	}*/
 
 	getID()
 	{
@@ -133,7 +147,7 @@ export class Parameterizable{
 		}
 	}
 
-	setParam(paramName, paramObject, outputName= null)
+	setParam(paramName, paramObject, outputName= "")
 	{
 		if(paramName == "" || paramName == null)
 		{

@@ -218,7 +218,7 @@ export class ParamInputConnectionPoint extends ConnectionPoint {
 	updateModelOnConnectionAdded(line)
 	{
 		var otherPoint = line.getOtherPoint(this);
-		this.nodeview.nodemodel.setParam(this.paramDef.name, otherPoint.nodeview.nodemodel);
+		this.nodeview.nodemodel.setParam(this.paramDef.name, otherPoint.nodeview.nodemodel, otherPoint.paramDef.name);
 	}
 
 	updateModelOnConnectionRemoved(line)
@@ -269,7 +269,7 @@ export class ParamOutputConnectionPoint extends ConnectionPoint {
 	constructor(nodeview, paramDef)
 	{
 		super(nodeview, 7, 'grey');
-
+		this.paramDef = paramDef;
 		this.type = paramDef.type;
 		this.validTypes = paramDef.getCompatibleTypes();
 		this.relationship = ParamOutputConnectionPoint.name;

@@ -14,7 +14,7 @@ export class ColourSelectRandomFromSetParam extends ColourParam
 		this.colourset = colourset;
 	}
 
-	getValue()
+	getValue(outputName = "")
 	{
 		super._processParams();
 		if(this.colourset.length > 0)

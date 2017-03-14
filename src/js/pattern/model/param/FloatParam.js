@@ -17,7 +17,7 @@ export class FloatParam extends Param{
         return super.getEditorDefinition().setOutputFloat();
     }
 
-    getValue()
+    getValue(outputName = "")
     {
         super._processParams();
         return this.value;

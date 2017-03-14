@@ -15,11 +15,10 @@ export class BoolParam extends Param{
 		return super.getEditorDefinition().setOutputBool();
 	}
 
-	getValue()
+	_getValue(outputName = "")
 	{
 		super._processParams();
 		return this.value;
 	}
-
 
 }

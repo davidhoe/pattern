@@ -1,17 +1,22 @@
 
 import paper from 'paper'
-import {ColourParam} from './ColourParam'
+import {Param} from './Param'
 import * as utils from '../../util/utils'
 
 /**
  * select a random colour from an colour set
  */
-export class ColourSelectRandomFromSetParam extends ColourParam
+export class ColourSelectRandomFromSetParam extends Param
 {
-	constructor(colourset)
+	constructor(colourset = [new paper.Color()])
 	{
 		super();
 		this.colourset = colourset;
+	}
+
+	getEditorDefinition()
+	{
+		return super.getEditorDefinition().setOutputColour();
 	}
 
 	getValue(outputName = "")

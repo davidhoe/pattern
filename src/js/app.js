@@ -98,11 +98,7 @@ function init()
     // create new seed
 
     MathUtils.SetSeed(MathUtils.GetRandomIntBetween(0,100000));
-    /*
-    renderLayer.removeChildren();
-    var node = new model.FillNode();
-    node.process();
-*/
+
     //nodeEditorApp.maketestNodes();
     //nodeEditorApp.testparse();
     nodeEditorApp.canvas.loadFromFile("assets/nodetree02.json");

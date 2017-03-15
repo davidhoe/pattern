@@ -104,3 +104,44 @@ export class ColourParamDef extends ParamDef
 		return [ColourParamDef.name];
 	}
 }
+
+export class PointParamDef extends ParamDef
+{
+	constructor(name, label= null)
+	{
+		super(name, label, PointParamDef.name);
+	}
+}
+
+
+export class ColourArrayParamDef extends ParamDef
+{
+	constructor(name, label= null)
+	{
+		super(name, label, ColourArrayParamDef.name);
+	}
+}
+
+export class FloatArrayParamDef extends ParamDef
+{
+	constructor(name, label= null)
+	{
+		super(name, label, FloatArrayParamDef.name);
+	}
+}
+
+export class IntArrayParamDef extends ParamDef
+{
+	constructor(name, label= null)
+	{
+		super(name, label, IntArrayParamDef.name);
+	}
+}
+
+export class PointArrayParamDef extends ParamDef
+{
+	constructor(name, label= null)
+	{
+		super(name, label, PointArrayParamDef.name);
+	}
+}

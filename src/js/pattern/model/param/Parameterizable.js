@@ -94,41 +94,85 @@ export class Parameterizable{
 		//var label = (classname.toLowerCase() == "node") ? classname : utils.StringUtils.ConvertToLabel(classname, ["Node"]);
 		var def = new editor.NodeEditorDefinition(label);
 
+
 		//console.log("----def:" + this.constructor.name);
 		// try to automatically add the definitions
 		var keys = Object.keys(this);
+		var vartype, obj;
 		for (var i = 0; i < keys.length; i++) {
 			var key = keys[i];
 			// use val
 			if(key.charAt(0) != '_') // ignore private varaibles
 			{
-				var vartype = typeof(this[key]);
-				if(vartype == 'number')
+				obj = this[key];
+				if(	Array.isArray(obj) && obj.length > 0 )  // is an array, check the first object in array for the type
 				{
-					if(key.toLowerCase().includes('index')) {
-						//treat as a int
-						def.addInputInt(key);
-					}
-					else{
-						// treat as a float
-						def.addInputFloat(key);
-					}
-				}
-				else if(vartype == "boolean")
-				{
-					def.addInputBool(key);
-				}
-				else if(vartype == "string")
-				{
-					def.addInputString(key);
-				}
-				else if(vartype == "object"  && this[key] != null)
-				{
-					console.log("this[key]", key, this[key]);
-					var classname = this[key].constructor.name;
-					if(classname == paper.Color.name)
+					obj = obj[0];
+					vartype = typeof(obj);
+					if(vartype == 'number')
 					{
-						def.addInputColour(key);
+						if(key.toLowerCase().includes('index')) {
+							//treat as a int
+							def.addInputIntArray(key);
+						}
+						else{
+							// treat as a float
+							def.addInputFloatArray(key);
+						}
+					}
+					else if(vartype == "boolean")
+					{
+						//def.addInputBoolArray(key);
+					}
+					else if(vartype == "string")
+					{
+						//def.addInputStringArray(key);
+					}
+					else if(vartype == "object"  && obj != null)
+					{
+						console.log("this[key]", key, obj);
+						var classname = obj.constructor.name;
+						if(classname == paper.Color.name)
+						{
+							def.addInputColourArray(key);
+						}
+						else if(classname == paper.Point.name)
+						{
+							def.addInputPointArray(key);
+						}
+					}
+				}
+				else { // not an array
+
+					obj = this[key];
+					vartype = typeof(obj);
+
+					if (vartype == 'number') {
+						if (key.toLowerCase().includes('index')) {
+							//treat as a int
+							def.addInputInt(key);
+						}
+						else {
+							// treat as a float
+							def.addInputFloat(key);
+						}
+					}
+					else if (vartype == "boolean") {
+						def.addInputBool(key);
+					}
+					else if (vartype == "string") {
+						def.addInputString(key);
+					}
+					else if (vartype == "object" && obj != null) {
+						console.log("this[key]", key, obj);
+						var classname = obj.constructor.name;
+						if (classname == paper.Color.name) {
+							def.addInputColour(key);
+						}
+						else if(classname == paper.Point.name)
+						{
+							def.addInputPoint(key);
+						}
 					}
 				}
 

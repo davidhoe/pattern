@@ -34,6 +34,8 @@ export {StringParamDef as StringParamDef} from './editor/ParamDef';
 
 export {ColourParam as ColourParam} from './param/ColourParam';
 export {ColourSelectFromSetParam as ColourSelectFromSetParam} from './param/ColourSelectFromSetParam';
+export {ColourSelectRandomFromSetParam as ColourSelectRandomFromSetParam} from './param/ColourSelectRandomFromSetParam';
+export {ColoursetPresetParam  as ColoursetPresetParam } from './param/ColoursetPresetParam';
 export {FloatParam as FloatParam} from './param/FloatParam';
 export {IntParam as IntParam} from './param/IntParam';
 export {IntSelectFromArrayParam as IntSelectFromArrayParam} from './param/IntSelectFromArrayParam';

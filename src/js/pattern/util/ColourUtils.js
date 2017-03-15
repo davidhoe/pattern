@@ -36,6 +36,7 @@ export class ColourUtils {
      */
     getColourset(ix)
     {
+        ix = ix % ColourUtils.Coloursets.length;
         console.log("getColourset "   + ix);
 
         var colset = [];
@@ -62,7 +63,7 @@ export class ColourUtils {
 
 
     static GetColourset(ix)
-    {ColourUtils.Instance().getColourset()
+    {
         return ColourUtils.Instance().getColourset(ix);
     }
 

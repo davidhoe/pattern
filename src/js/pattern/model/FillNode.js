@@ -25,6 +25,14 @@ export class FillNode extends Node
         this._shapeAtts = shapeAtts; // all other
     }
 
+	getEditorDefinition()
+	{
+		var def =  super.getEditorDefinition();
+		def.addInputStringSelectDropdown("blendMode", null, BLEND_MODE);
+		console.log("---fillnode getEditorDefinition ", def);
+		return def;
+	}
+
     // only works if shape is in a group
     setClipMask(isMask)
     {
@@ -44,12 +52,6 @@ export class FillNode extends Node
 		return this;
 	}
 
-	getEditorDefinition()
-	{
-		var def = super.getEditorDefinition();
-		def.addInputBool("clipMask");
-		return def;
-	}
 
     process()
     {

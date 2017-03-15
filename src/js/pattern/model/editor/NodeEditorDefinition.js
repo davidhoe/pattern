@@ -45,10 +45,35 @@ export class NodeEditorDefinition
 		return this;
 	}
 
+	setOutputColourArray(outputName = "")
+	{
+		this.addOutput( new editor.ColourArrayParamDef(outputName));
+		return this;
+	}
+	setOutputIntArray(outputName = "")
+	{
+		this.addOutput( new editor.IntArrayParamDef(outputName));
+		return this;
+	}
+
+	setOutputFloatArray(outputName = "")
+	{
+		this.addOutput( new editor.FloatArrayParamDef(outputName));
+		return this;
+	}
+
+	setOutputPointArray(outputName = "")
+	{
+		this.addOutput( new editor.PointArrayParamDef(outputName));
+		return this;
+	}
+
 	addOutput( paramDef)
 	{
 		this.outputs.push(paramDef);
 	}
+
+	/////////////////////////////////////////////////////////////////////////
 
 	addInputFloat(name,label = null, rangemin = null, rangemax = null)
 	{
@@ -61,6 +86,14 @@ export class NodeEditorDefinition
 		paramDef.keyValuePairs = keyValueDictionary;
 		this.addInput(paramDef);
 	}
+
+	addInputStringSelectDropdown(name,label, keyValueDictionary)
+	{
+		var paramDef = new editor.StringParamDef(name, label);
+		paramDef.keyValuePairs = keyValueDictionary;
+		this.addInput(paramDef);
+	}
+
 
 	addInputInt(name,label = null, rangemin = null, rangemax = null)
 	{
@@ -77,9 +110,34 @@ export class NodeEditorDefinition
 		this.addInput( new editor.BoolParamDef(name, label));
 	}
 
+	addInputPoint(name,label = null)
+	{
+		this.addInput( new editor.PointParamDef(name, label));
+	}
+
 	addInputString(name,label = null)
 	{
 		this.addInput( new editor.StringParamDef(name, label));
+	}
+
+	addInputColourArray(name,label = null)
+	{
+		this.addInput( new editor.ColourArrayParamDef(name, label));
+	}
+
+	addInputPointArray(name,label = null)
+	{
+		this.addInput( new editor.PointArrayParamDef(name, label));
+	}
+
+	addInputFloatArray(name,label = null)
+	{
+		this.addInput( new editor.FloatArrayParamDef(name, label));
+	}
+
+	addInputIntArray(name,label = null)
+	{
+		this.addInput( new editor.IntArrayParamDef(name, label));
 	}
 
 	addInput(paramDef)

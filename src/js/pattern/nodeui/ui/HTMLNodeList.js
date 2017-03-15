@@ -29,6 +29,7 @@ export default class HTMLNodeList
 
 		// add buttons for nodes
 		this.addPatternNodeButtons(menu);
+		$(menu).append('<br />');
 		this.addParamNodeButtons(menu);
 		return menu;
 	}

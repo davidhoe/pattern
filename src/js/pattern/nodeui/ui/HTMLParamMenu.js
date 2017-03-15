@@ -125,14 +125,32 @@ export default class HTMLParamMenu
 			}
 			else if(inputdef.type == model.StringParamDef.name)
 			{
-				var input = HTMLParamMenu.CreateStringInput(this._nodemodel[inputdef.name], inputdef.name, menu);
-				input.inputdef = inputdef;
-				$(input).focusout(function () {
-					var val = $(this).val();
-					_this._nodemodel[this.inputdef.name] = (val);
-					console.log("new string value for " + this.inputdef.name + " set to : " + (val));
-					_this.onValueChanged();
-				});
+				var isKeyValueInput = inputdef.keyValuePairs != null; // todo flag in Param
+				console.log("------string isKeyValueInput" ,isKeyValueInput );
+
+				if(isKeyValueInput) {
+					// create a dropdown field and populate with values
+					var input = HTMLParamMenu.CreateSelectionDropdown(inputdef.keyValuePairs, this._nodemodel[inputdef.name], menu);
+					input.inputdef = inputdef;
+					var currentVal = this._nodemodel[inputdef.name];
+					$(input).val(currentVal);
+					$(input).change(function () {
+						var val = $(this).val();
+						_this._nodemodel[this.inputdef.name] = val;
+						console.log("new int value select field for " + this.inputdef.name + " set to : " + val);
+						_this.onValueChanged();
+					});
+				}
+				else{
+					var input = HTMLParamMenu.CreateStringInput(this._nodemodel[inputdef.name], inputdef.name, menu);
+					input.inputdef = inputdef;
+					$(input).focusout(function () {
+						var val = $(this).val();
+						_this._nodemodel[this.inputdef.name] = (val);
+						console.log("new string value for " + this.inputdef.name + " set to : " + (val));
+						_this.onValueChanged();
+					});
+				}
 			}
 			else if(inputdef.type == model.ColourParamDef.name)
 			{

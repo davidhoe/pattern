@@ -37,6 +37,7 @@ export {ColourSelectFromSetParam as ColourSelectFromSetParam} from './param/Colo
 export {FloatParam as FloatParam} from './param/FloatParam';
 export {IntParam as IntParam} from './param/IntParam';
 export {IntSelectFromArrayParam as IntSelectFromArrayParam} from './param/IntSelectFromArrayParam';
+export {NumberMultiplyParam as NumberMultiplyParam} from './param/NumberMultiplyParam';
 export {Param as Param} from './param/Param';
 export {Parameterizable as Parameterizable} from './param/Parameterizable';
 export {RandomIntInRangeParam as RandomIntInRangeParam} from './param/RandomIntInRangeParam';

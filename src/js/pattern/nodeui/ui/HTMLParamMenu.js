@@ -86,14 +86,31 @@ export default class HTMLParamMenu
 			}
 			else if(inputdef.type == model.IntParamDef.name)
 			{
-				var input = HTMLParamMenu.CreateNumberInput(this._nodemodel[inputdef.name], inputdef.name, menu);
-				input.inputdef = inputdef;
-				$(input).focusout(function () {
-					var val = $(this).val();
-					_this._nodemodel[this.inputdef.name] = parseInt(val);
-					console.log("new int value for " + this.inputdef.name + " set to : " + parseInt(val));
-					_this.onValueChanged();
-				});
+				var isKeyValueInput = inputdef.keyValuePairs != null; // todo flag in Param
+				if(isKeyValueInput) {
+					// create a dropdown field and populate with values
+					var input = HTMLParamMenu.CreateSelectionDropdown(inputdef.keyValuePairs, this._nodemodel[inputdef.name], menu);
+					input.inputdef = inputdef;
+					var currentVal = this._nodemodel[inputdef.name];
+					$(input).val(currentVal);
+					$(input).change(function () {
+						var val = $(this).val();
+						_this._nodemodel[this.inputdef.name] = val;
+						console.log("new int value select field for " + this.inputdef.name + " set to : " + parseInt(val));
+						_this.onValueChanged();
+					});
+				}
+				else{
+					// create a open input field
+					var input = HTMLParamMenu.CreateNumberInput(this._nodemodel[inputdef.name], inputdef.name, menu);
+					input.inputdef = inputdef;
+					$(input).focusout(function () {
+						var val = $(this).val();
+						_this._nodemodel[this.inputdef.name] = parseInt(val);
+						console.log("new int value for " + this.inputdef.name + " set to : " + parseInt(val));
+						_this.onValueChanged();
+					});
+				}
 			}
 			else if(inputdef.type == model.BoolParamDef.name)
 			{
@@ -162,20 +179,26 @@ export default class HTMLParamMenu
 		$(label).width(50);
 		parent.appendChild(label);
 		return label;
-
 	}
 
-	static CreateSelectionDropdown(keyValueArray, value, parent)
+	static CreateSelectionDropdown(keyValueDictionary, value, parent)
 	{
 		var selectList = document.createElement("select");
 		//selectList.id = "mySelect";
 		selectList.value = value;
 		parent.appendChild(selectList);
+		console.log("---CreateSelectionDropdown");
+		for (var key in keyValueDictionary)
+		{
+			if (!keyValueDictionary.hasOwnProperty(key)) continue;
+			console.log("---CreateSelectionDropdown key,value: ", key, value);
 
-		for (var i = 0; i < keyValueArray.length; i++) {
-			var pair = keyValueArray[i];
-			option.value = pair.value;
-			option.text = pair.key;
+			var value = keyValueDictionary[key];
+			var option = document.createElement("option");
+			option.value = value;
+			option.text = key;
+			option.innerHTML = key;
+			// inner text is:
 			selectList.appendChild(option);
 		}
 		return selectList;

@@ -55,6 +55,13 @@ export class NodeEditorDefinition
 		this.addInput( new editor.FloatParamDef(name, label, rangemin , rangemax));
 	}
 
+	addInputIntSelectDropdown(name,label, keyValueDictionary)
+	{
+		var paramDef = new editor.IntParamDef(name, label);
+		paramDef.keyValuePairs = keyValueDictionary;
+		this.addInput(paramDef);
+	}
+
 	addInputInt(name,label = null, rangemin = null, rangemax = null)
 	{
 		this.addInput( new editor.IntParamDef(name, label, rangemin , rangemax));

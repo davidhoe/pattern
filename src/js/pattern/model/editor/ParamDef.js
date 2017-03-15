@@ -6,6 +6,26 @@ export class ParamDef
 		this.name = name;
 		this.label = (label == null) ? utils.StringUtils.ConvertToLabel(name) : label;
 		this.type = type;
+		this.keyValuePairs = null; // for populating a dropdown selection field
+	}
+
+	addKeyValuePair(key, value)
+	{
+		if(this.keyValuePairs == null)
+		{
+			this.keyValuePairs = {};
+		}
+		this.keyValuePairs[key] = value;
+	}
+
+	getKeyValuePairs()
+	{
+		return this.keyValuePairs;
+	}
+
+	hasKeyValuePairs()
+	{
+		return this.keyValuePairs != null;
 	}
 
 	getCompatibleTypes()

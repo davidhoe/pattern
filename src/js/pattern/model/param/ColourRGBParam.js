@@ -4,7 +4,7 @@
 import paper from 'paper'
 import {Param} from './Param'
 
-export class ColourParam extends Param{
+export class ColourRGBParam extends Param{
 	constructor()
 	{
 		super();

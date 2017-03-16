@@ -32,13 +32,22 @@ export {ColourParamDef as ColourParamDef} from './editor/ParamDef';
 export {BoolParamDef as BoolParamDef} from './editor/ParamDef';
 export {StringParamDef as StringParamDef} from './editor/ParamDef';
 
-export {ColourParam as ColourParam} from './param/ColourParam';
+export {ColourBlendHSBParam as ColourBlendHSBParam} from './param/ColourBlendHSBParam';
+export {ColourBlendRGBParam as ColourBlendRGBParam} from './param/ColourBlendRGBParam';
+export {ColourHSBParam as ColourHSBParam} from './param/ColourHSBParam';
+export {ColourHSBShiftParam as ColourHSBShiftParam} from './param/ColourHSBShiftParam';
+export {ColourRGBParam as ColourRGBParam} from './param/ColourRGBParam';
+export {ColourRGBShiftParam as ColourRGBShiftParam} from './param/ColourRGBShiftParam';
 export {ColourSelectFromSetParam as ColourSelectFromSetParam} from './param/ColourSelectFromSetParam';
 export {ColourSelectRandomFromSetParam as ColourSelectRandomFromSetParam} from './param/ColourSelectRandomFromSetParam';
 export {ColoursetPresetParam  as ColoursetPresetParam } from './param/ColoursetPresetParam';
+export {ColourToHSBParam  as ColourToHSBParam } from './param/ColourToHSBParam';
+export {ColourToRGBParam  as ColourToRGBParam } from './param/ColourToRGBParam';
+
 export {CompareNumberParam as CompareNumberParam} from './param/CompareNumberParam';
 
 export {FloatParam as FloatParam} from './param/FloatParam';
+export {FloatRandomParam as FloatRandomParam} from './param/FloatRandomParam';
 export {IntParam as IntParam} from './param/IntParam';
 export {IntSelectFromArrayParam as IntSelectFromArrayParam} from './param/IntSelectFromArrayParam';
 export {NumberMultiplyParam as NumberMultiplyParam} from './param/NumberMultiplyParam';

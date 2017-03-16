@@ -2,7 +2,7 @@
 
 import {IntParam} from '../model/param/IntParam'
 import {IntSelectFromArrayParam} from '../model/param/IntSelectFromArrayParam'
-import {ColourParam} from '../model/param/ColourParam'
+import {ColourParam} from '../model/param/ColourRGBParam'
 import {ColourSelectFromSetParam} from '../model/param/ColourSelectFromSetParam'
 import {ColourSelectRandomFromSetParam} from '../model/param/ColourSelectRandomFromSetParam'
 import * as model from '../model/model'

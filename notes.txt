@@ -56,6 +56,9 @@ Todo- nodes:
 TexturePresetNode - set textureIX
 GradientNode - c0,c1, angle, ?
 
+colour array - input is a set of individual points
+colour params
+
 Create more than one childnode output?
 IfThenNode (if bool is true, then process IfNode else process Then)
 CompareFloatParam ( operator ""==", ">=". "<=", "<", ">", "!="  , x0, x1)

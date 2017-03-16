@@ -85,6 +85,7 @@ export {RandomColourFromSetNode as RandomColourFromSetNode} from './RandomColour
 export {RepeatNode as RepeatNode} from './RepeatNode.js';
 export {RectGridNode as RectGridNode} from './RectGridNode.js';
 export {RotatePathIndexNode as RotatePathIndexNode} from './RotatePathIndexNode.js';
+export {TextureDrawNode as TextureDrawNode} from './TextureDrawNode.js';
 export {TransformCenterPathNode as TransformCenterPathNode} from './TransformCenterPathNode.js';
 export {TransformNode as TransformNode} from './TransformNode.js';
 export {TriSliceNode as TriSliceNode} from './TriSliceNode.js';

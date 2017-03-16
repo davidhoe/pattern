@@ -22,10 +22,10 @@ export class ColourHSBShiftParam extends Param{
     getValue(outputName = "")
     {
         super._processParams();
-        var newcol = colour.clone();
-        newcol.hue += hue;
-        newcol.saturation += sat;
-        newcol.brightness += bri;
+        var newcol = this.colour.clone();
+        newcol.hue += this.hue;
+        newcol.saturation += this.sat;
+        newcol.brightness += this.bri;
         return newcol;
     }
 }

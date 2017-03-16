@@ -36,12 +36,16 @@ export {ColourParam as ColourParam} from './param/ColourParam';
 export {ColourSelectFromSetParam as ColourSelectFromSetParam} from './param/ColourSelectFromSetParam';
 export {ColourSelectRandomFromSetParam as ColourSelectRandomFromSetParam} from './param/ColourSelectRandomFromSetParam';
 export {ColoursetPresetParam  as ColoursetPresetParam } from './param/ColoursetPresetParam';
+export {CompareNumberParam as CompareNumberParam} from './param/CompareNumberParam';
+
 export {FloatParam as FloatParam} from './param/FloatParam';
 export {IntParam as IntParam} from './param/IntParam';
 export {IntSelectFromArrayParam as IntSelectFromArrayParam} from './param/IntSelectFromArrayParam';
 export {NumberMultiplyParam as NumberMultiplyParam} from './param/NumberMultiplyParam';
 export {Param as Param} from './param/Param';
 export {Parameterizable as Parameterizable} from './param/Parameterizable';
+export {PointParam as PointParam} from './param/PointParam';
+export {PointToXYParam as PointToXYParam} from './param/PointToXYParam';
 export {RandomIntInRangeParam as RandomIntInRangeParam} from './param/RandomIntInRangeParam';
 
 
@@ -50,6 +54,7 @@ export {CompoundPathNode as CompoundPathNode} from './CompoundPathNode.js';
 export {DecisionNode as DecisionNode} from './DecisionNode.js';
 export {FillNode as FillNode} from './FillNode.js';
 export {GroupNode as GroupNode} from './GroupNode.js';
+export {IfThenNode as IfThenNode} from './IfThenNode.js';
 export {Node as Node} from './Node.js';
 export {ParamSaveNode as ParamSaveNode} from './ParamSaveNode.js';
 export {PathNode as PathNode} from './PathNode.js';

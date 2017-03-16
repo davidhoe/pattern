@@ -191,7 +191,7 @@ export class Parameterizable{
 		{
 			var param = this._params[i];
 			var paramKey = param.key;
-			this[paramKey] = param.object.getValue();
+			this[paramKey] = param.object.getValue(param.outputName);
 			//todo here - add param type
 		}
 	}

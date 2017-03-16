@@ -276,6 +276,10 @@ export class ParamOutputConnectionPoint extends ConnectionPoint {
 		this.validTypes = paramDef.getCompatibleTypes();
 		this.relationship = ParamOutputConnectionPoint.name;
 		this.validRelationships = [ParamInputConnectionPoint.name];
+
+		console.log("**** ParamOutputConnectionPoint paramDef ", paramDef);
+		var textlabel = super._createTextLabel(paramDef.label, new paper.Point(0,-10));
+		textlabel.justification = 'center';
 	}
 
 

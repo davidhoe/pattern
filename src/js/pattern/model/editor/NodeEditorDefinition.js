@@ -45,6 +45,12 @@ export class NodeEditorDefinition
 		return this;
 	}
 
+	setOutputPoint(outputName = "")
+	{
+		this.addOutput( new editor.PointParamDef(outputName));
+		return this;
+	}
+
 	setOutputColourArray(outputName = "")
 	{
 		this.addOutput( new editor.ColourArrayParamDef(outputName));

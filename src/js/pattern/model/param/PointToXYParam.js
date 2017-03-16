@@ -7,23 +7,28 @@ import {Param} from './Param'
 /*
  * operation for a paper.Point object
  */
-export class PointParam extends Param{
-    constructor(x = 0, y = 0)
+export class PointToXYParam extends Param{
+    constructor(p = new paper.Point(0,0))
     {
         super();
-        this.x = x;
-        this.y = y;
+        this.p = p;
     }
 
     getEditorDefinition()
     {
-        return super.getEditorDefinition().setOutputPoint("");
+        var def = super.getEditorDefinition().setOutputFloat("x");
+        def.setOutputFloat("y");
+        return def;
     }
     // process params here like a node
 
     getValue(outputName = "")
     {
         super._processParams();
-        return new paper.Point(this.x, this.y);
+        if(outputName == "x")
+        {
+            return this.p.x;
+        }
+        return this.p.y;
     }
 }

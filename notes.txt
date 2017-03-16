@@ -53,6 +53,13 @@ node.removeFromParent();
 
 Todo- nodes:
 
+TexturePresetNode - set textureIX
+GradientNode - c0,c1, angle, ?
+
+Create more than one childnode output?
+IfThenNode (if bool is true, then process IfNode else process Then)
+CompareFloatParam ( operator ""==", ">=". "<=", "<", ">", "!="  , x0, x1)
+
 basenodeview - 102
 add a param
 

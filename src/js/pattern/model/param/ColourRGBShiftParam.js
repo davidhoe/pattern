@@ -23,9 +23,9 @@ export class ColourHSBShiftParam extends Param{
     {
         super._processParams();
         var newcol= this.colour.clone();
-        newcol.r += this.r;
-        newcol.g += this.g;
-        newcol.b += this.b;
+        newcol.red += this.r;
+        newcol.green += this.g;
+        newcol.blue += this.b;
         return newcol;
     }
 }

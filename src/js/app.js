@@ -11,6 +11,7 @@ import * as renderers from './pattern/renderer/PatternRenderers'
 import * as model from './pattern/model/model'
 
 import {ColourButton} from './pattern/colourui/ColourButton'
+import {Frame18x24Preview} from './pattern/preview/Frame18x24Preview'
 
 
 ///paper.paper.install(window);
@@ -38,14 +39,20 @@ var nodeEditorApp = new nodeui.NodeEditorApp(canvasUI);
 nodeEditorApp.onModelUpdated = function(startnode)
 {
 
-    canvas.activate();
-    renderLayer.activate();
+
+
+    //renderLayer.activate();
+
     // create new seed
     MathUtils.SetSeed(MathUtils.GetRandomIntBetween(0,100000));
-    renderLayer.removeChildren();
+    /*
+     canvas.activate();
+     renderLayer.removeChildren();
     model.PatternState.Instance().reset();
     console.log("startnode" , startnode);
     startnode.process();
+*/
+    frame18x24Preview.setNodeTree(startnode);
 
     readValuesTest();
 
@@ -58,12 +65,13 @@ canvas.activate();
 var renderLayer = new paper.Layer();
 var colourTrayLayer = new paper.Layer();
 
+var frame18x24Preview = new Frame18x24Preview(canvas);
+
 //canvasUI.activate();
 
 console.log("paper.paper", mypaper);
 
 ColourUtils.Instance().loadColoursets(init);
-
 
 
 
@@ -103,49 +111,6 @@ function init()
     //nodeEditorApp.testparse();
     nodeEditorApp.canvas.loadFromFile("assets/nodetree02.json");
 
-
-/*
-    // choose a random colour to start
-    selectedColourset = ColourUtils.GetRandomCombinedColourset();
-    console.log("1 selected " + selectedColourset);
-
-
-    MathUtils.SetSeed(13);
-    console.log("ran0 " + MathUtils.GetSeededRandomFloat(0,1));
-    console.log("ran1 " + MathUtils.GetSeededRandomFloat(0,1));
-
-
-    //colours loaded
-    //new Circles2().init();
-  //  new Lines().init()
-
-    // colour button test
-    colourTrayLayer.activate();
-    for(var i =0; i< 15;++i) {
-        var colourset = ColourUtils.GetRandomCombinedColourset();
-        var a = new ColourButton(colourset);
-        a.group.position = new paper.Point(100, 200 + i*100);
-        a.onClick = function(target)
-        {
-            // remove previous
-            console.log("click handler " + target.colourset);
-            //currentRender =  new renderers.TriGrid1();
-            selectedColourset = target.colourset;
-            //init( target.colourset) ;
-            drawRender();
-            //exportRenderToFile();
-        }
-    }
-
-    //var colourset = ColourUtils.GetRandomCombinedColourset();
-    // = new renderers.TriGrid1() ;
-    //pp.test();
-    //pp.testDestroy();
-    //pp.init(colourset);
-   // pp.globalgroup.position.x  = 100;
-   // pp.destroy();
-    drawRender();  // draw the intial render
-   */
 }
 
 

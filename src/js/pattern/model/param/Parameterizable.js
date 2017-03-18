@@ -59,12 +59,43 @@ export class Parameterizable{
 		var def = this.getEditorDefinition();
 		for(var i =0; i < def.inputs.length;++i) {
 			var param = def.inputs[i];
-			valuesData.push({"name" : param.name, "value": this[param.name] });
+			valuesData.push({"name" : param.name, "value": Parameterizable.ConvertParamToJsonObject(this[param.name]) });
 		}
 		return data;
 	}
 
+	static ConvertParamToJsonObject(obj)
+	{
+		if(	Array.isArray(obj)  )  // is an array, check the first object in array for the type
+		{
+			var jsonobj =[];
+			for(var i =0 ; i< obj.length;++i)
+			{
+				jsonobj.push(Parameterizable.ConvertToJsonObject(obj[i]));
+			}
+			return jsonobj;
+		}
+		else {
+			return Parameterizable.ConvertToJsonObject(obj);
+		}
+	}
 
+	static ConvertToJsonObject(obj)
+	{
+		var vartype = typeof(obj);
+		if (vartype == "object" && obj != null) {
+			var classname = obj.constructor.name;
+			if (classname == paper.Color.name) {
+				return {'classname':paper.Color.name, 'r': obj.red, 'g':obj.green, 'b':obj.blue};
+			}
+			else if (classname == paper.Point.name) {
+				return {'classname':paper.Point.name, 'x': obj.x, 'y':obj.y}
+			}
+		}
+		else{
+			return obj;
+		}
+	}
 
 	fromJsonObject(data, models)
 	{
@@ -82,7 +113,54 @@ export class Parameterizable{
 		for(var i = 0;i <valuesData.length;++i)
 		{
 			var dvalue = valuesData[i];
-			this[dvalue.name] = dvalue.value;
+			//var vartype = typeof(dvalue);
+			//var value;
+
+			this[dvalue.name] = Parameterizable.ConvertParamFromJsonObject( dvalue.value);
+		}
+	}
+
+	static ConvertParamFromJsonObject(obj)
+	{
+		console.log("ConvertParamFromJsonObject", obj);
+		if(	Array.isArray(obj) )  // is an array, check the first object in array for the type
+		{
+			var convertedobj =[];
+			for(var i =0 ; i< obj.length;++i)
+			{
+				convertedobj.push(Parameterizable.ConvertFromJsonObject(obj[i]));
+			}
+			console.log("ConvertParamFromJsonObject converted", convertedobj);
+
+			return convertedobj ;
+		}
+		else {
+			return Parameterizable.ConvertFromJsonObject(obj);
+		}
+	}
+
+	static ConvertFromJsonObject(obj)
+	{
+		var vartype = typeof(obj);
+		if (vartype == "object" && obj != null ) {
+			if( Parameterizable.HasOwnProperty(obj, "classname"))
+			{
+				if (obj["classname"] == paper.Color.name) {
+					console.log(obj);
+					return new paper.Color(obj.r,obj.g,obj.b);
+
+				}
+				else if (obj["classname"] == paper.Point.name) {
+					return new paper.Point(obj.x,obj.y);
+				}
+			}
+			else{
+				console.error("unknown object type, no classname, ignoring ", obj);
+				return null;
+			}
+		}
+		else{
+			return obj;
 		}
 	}
 

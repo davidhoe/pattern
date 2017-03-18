@@ -67,7 +67,7 @@ export class FillNode extends Node
         shape.blendMode = this.blendMode;
         shape.closed = true;
         shape.fillColor = PatternState.Instance().colour;
-        shape.strokeColor = 'grey';
+       // shape.strokeColor = 'grey';
         shape.applyMatrix = true;
         shape.pivot = new paper.Point(0,0);
         shape.matrix = PatternState.Instance().matrix.clone();

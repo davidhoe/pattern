@@ -25,14 +25,14 @@ export class ColourRGBParam extends Param{
         super._processParams();
         if(outputName == "r")
         {
-            return this.colour.r;
+            return this.colour.red;
         }
         else if(outputName == "g")
         {
-            return this.colour.g;
+            return this.colour.green;
         }
         else { // b
-            return this.colour.b;
+            return this.colour.blue;
         }
     }
 }

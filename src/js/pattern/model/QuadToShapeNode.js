@@ -16,12 +16,12 @@ export class QuadToShapeNode extends Node
 	constructor(normalisedSegments = null)
 	{
 		super();
-		this.normalisedSegments = normalisedSegments; // these are the points to transform
+		this._normalisedSegments = normalisedSegments; // these are the points to transform
 	}
 
 	setNormalisedSegments(normalisedSegments)
 	{
-		this.normalisedSegments = normalisedSegments;
+		this._normalisedSegments = normalisedSegments;
 	}
 
 	process()
@@ -33,13 +33,13 @@ export class QuadToShapeNode extends Node
 			console.error("not enough points in state path, length ", path.length);
 			return;
 		}
-		if(this.normalisedSegments == null)
+		if(this._normalisedSegments == null)
 		{
 			console.error("normalisedSegments is null cannot convert");
 			return;
 		}
 		super._saveStatePath();
-		var transformedSegments = PointUtils.TransformToQuadSpace(this.normalisedSegments , path);
+		var transformedSegments = PointUtils.TransformToQuadSpace(this._normalisedSegments , path);
 		PatternState.Instance().path = transformedSegments;
 
 		super.processChildNodes();

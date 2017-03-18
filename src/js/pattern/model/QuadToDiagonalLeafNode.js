@@ -23,7 +23,7 @@ export class QuadToDiagonalLeafNode extends QuadToShapeNode
 	process()
 	{
 		super._processParams();
-		this.normalisedSegments = ( PointUtils.CreateNormalisedDiagonalLeaf(this.r));
+		this._normalisedSegments = ( PointUtils.CreateNormalisedDiagonalLeaf(this.r));
 		super.process();
 	}
 

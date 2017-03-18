@@ -22,7 +22,7 @@ export class QuadToSCurveNode extends QuadToShapeNode
 	process()
 	{
 		super._processParams();
-		this.normalisedSegments =  PointUtils.CreateSCurveShape(this.r);
+		this._normalisedSegments =  PointUtils.CreateSCurveShape(this.r);
 		super.process();
 	}
 }

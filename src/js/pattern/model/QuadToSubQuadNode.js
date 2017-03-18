@@ -16,7 +16,7 @@ export class QuadToSubQuadNode extends Node
 	constructor(normalisedQuadPoints)
 	{
 		super();
-		this.normalisedQuadPoints = normalisedQuadPoints;
+		this._normalisedSegments = normalisedQuadPoints;
 	}
 
 
@@ -29,8 +29,8 @@ export class QuadToSubQuadNode extends Node
 			console.error("state path doesnt have enough points, expecting at least 4, length " , path.length);
 			return;
 		}
-		if(this.normalisedQuadPoints.length < 4) {
-			console.error("normalisedQuadPoints doesnt have enough points, expecting at least 4, length " , normalisedQuadPoints.length)
+		if(this._normalisedSegments.length < 4) {
+			console.error("normalisedQuadPoints doesnt have enough points, expecting at least 4, length " , _normalisedSegments.length)
 			return;
 		}
 
@@ -39,7 +39,7 @@ export class QuadToSubQuadNode extends Node
 		var newpath = [];
 		for(var i =0;i < 4;++i)
 		{
-			newpath[i] = PointUtils.TransformPointToQuadSpace(path, this.normalisedQuadPoints[i]);
+			newpath[i] = PointUtils.TransformPointToQuadSpace(path, this._normalisedSegments[i]);
 		}
 		PatternState.Instance().path = newpath;
 	//	console.log("this.normalisedQuadPoints ", this.normalisedQuadPoints );

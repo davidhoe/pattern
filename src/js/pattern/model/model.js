@@ -41,6 +41,7 @@ export {ColourRGBShiftParam as ColourRGBShiftParam} from './param/ColourRGBShift
 export {ColourSelectFromSetParam as ColourSelectFromSetParam} from './param/ColourSelectFromSetParam';
 export {ColourSelectRandomFromSetParam as ColourSelectRandomFromSetParam} from './param/ColourSelectRandomFromSetParam';
 export {ColoursetPresetParam  as ColoursetPresetParam } from './param/ColoursetPresetParam';
+export {ColoursetCombineParam  as ColoursetCombineParam } from './param/ColoursetCombineParam';
 export {ColourToHSBParam  as ColourToHSBParam } from './param/ColourToHSBParam';
 export {ColourToRGBParam  as ColourToRGBParam } from './param/ColourToRGBParam';
 

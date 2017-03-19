@@ -20,6 +20,7 @@ export class RandomColourFromSetNode extends Node
 
     process()
     {
+        super._processParams();
         PatternState.Instance().colour = ColourUtils.GetRandomColourInSet(this.colourset);
         super.processChildNodes();
     }

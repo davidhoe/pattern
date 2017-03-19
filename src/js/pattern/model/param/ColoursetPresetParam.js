@@ -23,6 +23,6 @@ export class ColoursetPresetParam extends Param{
 	getValue(outputName = "")
 	{
 		super._processParams();
-		return utils.ColourUtils.GetColourset(this.ix);
+		return utils.ColourUtils.GetColourset(Math.round( this.ix));
 	}
 }

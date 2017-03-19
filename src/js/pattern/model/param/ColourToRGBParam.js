@@ -4,7 +4,7 @@
 import paper from 'paper'
 import {Param} from './Param'
 
-export class ColourRGBParam extends Param{
+export class ColourToRGBParam extends Param{
     constructor(colour = new paper.Color())
     {
         super();

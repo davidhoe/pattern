@@ -1,18 +1,21 @@
 
 
-import {IntParam} from './IntParam'
+import {Param} from './Param'
 import * as utils from '../../util/utils'
 
 /**
  * select an int from an array
  */
-export class IntSelectFromArrayParam extends IntParam
+export class FloatSelectFromArrayParam extends Param
 {
-	constructor(array = [0], mode=0)
+	constructor(array = [0])
 	{
 		super();
 		this.array = array;
-		this.mode = mode;
+	}
+
+	getEditorDefinition() {
+		return super.getEditorDefinition().setOutputFloat("");
 	}
 
 	getValue(outputName = "")

@@ -49,6 +49,7 @@ export {CompareNumberParam as CompareNumberParam} from './param/CompareNumberPar
 
 export {FloatParam as FloatParam} from './param/FloatParam';
 export {FloatRandomParam as FloatRandomParam} from './param/FloatRandomParam';
+export {FloatSelectFromArrayParam as FloatSelectFromArrayParam} from './param/FloatSelectFromArrayParam';
 export {IntParam as IntParam} from './param/IntParam';
 export {IntSelectFromArrayParam as IntSelectFromArrayParam} from './param/IntSelectFromArrayParam';
 export {NumberMultiplyParam as NumberMultiplyParam} from './param/NumberMultiplyParam';
@@ -57,6 +58,7 @@ export {Parameterizable as Parameterizable} from './param/Parameterizable';
 export {PointParam as PointParam} from './param/PointParam';
 export {PointToXYParam as PointToXYParam} from './param/PointToXYParam';
 export {RandomIntInRangeParam as RandomIntInRangeParam} from './param/RandomIntInRangeParam';
+export {RandomOrderedNumbersParam as RandomOrderedNumbersParam} from './param/RandomOrderedNumbersParam';
 
 
 export {ColourNode as ColourNode} from './ColourNode.js';
@@ -91,3 +93,5 @@ export {TransformCenterPathNode as TransformCenterPathNode} from './TransformCen
 export {TransformNode as TransformNode} from './TransformNode.js';
 export {TriSliceNode as TriSliceNode} from './TriSliceNode.js';
 export {TriSubdivisionNode as TriSubdivisionNode} from './TriSubdivisionNode.js';
+export {TriToQuarterCurveNode as TriToQuarterCurveNode} from './TriToQuarterCurveNode.js';
+

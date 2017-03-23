@@ -81,6 +81,7 @@ export {QuadToCircleNode as QuadToCircleNode } from './QuadToCircleNode.js';
 export {QuadToQuarterCircleNode as QuadToQuarterCircleNode} from './QuadToQuarterCircleNode.js';
 export {QuadToSCurveNode as QuadToSCurveNode} from './QuadToSCurveNode.js';
 export {QuadToShapeNode as QuadToShapeNode} from './QuadToShapeNode.js';
+export {QuadToSlicesNode as QuadToSlicesNode} from './QuadToSlicesNode.js';
 export {QuadToSubQuadNode as QuadToSubQuadNode} from './QuadToSubQuadNode.js';
 export {QuadToTriNode as QuadToTriNode} from './QuadToTriNode.js';
 export {QuadTranslateGridNode as QuadTranslateGridNode} from './QuadTranslateGridNode.js';
@@ -94,4 +95,5 @@ export {TransformNode as TransformNode} from './TransformNode.js';
 export {TriSliceNode as TriSliceNode} from './TriSliceNode.js';
 export {TriSubdivisionNode as TriSubdivisionNode} from './TriSubdivisionNode.js';
 export {TriToQuarterCurveNode as TriToQuarterCurveNode} from './TriToQuarterCurveNode.js';
+export {TriToSlicesNode as TriToSlicesNode} from './TriToSlicesNode.js';
 

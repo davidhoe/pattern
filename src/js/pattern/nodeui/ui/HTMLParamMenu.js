@@ -119,7 +119,7 @@ export default class HTMLParamMenu
 				$(input).change(function () {
 					var val = $(this).is(':checked');
 					_this._nodemodel[this.inputdef.name] = (val);
-					console.log("new bool value for " + this.inputdef.name + " set to : " + (val));
+					console.log("new bool value for " + this.inputdef.name + " set to : " , (val));
 					_this.onValueChanged();
 				});
 			}

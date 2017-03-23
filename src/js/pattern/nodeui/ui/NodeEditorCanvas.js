@@ -80,10 +80,12 @@ export default class NodeEditorCanvas
 
 	loadFromFile(filepath)
 	{
+		console.log("loadFromFile " + filepath);
 		var _this = this;
 		$.getJSON( filepath, function( data ) {
 			_this.fromJsonObject(data);
-		});
+		})
+		/*.error(function() { console.error("error getJSON load: " + filepath); })*/;
 	}
 
 	saveToFile()
@@ -132,6 +134,7 @@ export default class NodeEditorCanvas
 
 	fromJsonObject(data, doClear = true)
 	{
+		console.log("Canvas fromJsonObject");
 		if(doClear)
 		{
 			this.removeAllNodes(true);
@@ -360,7 +363,7 @@ export default class NodeEditorCanvas
 				this.removeNode(temp[i], false);
 			}
 		}
-		this.nodeViews = [];
+		//this.nodeViews = [];
 		if(fireEvent)
 		{
 			this._emitModelUpdateEvent();

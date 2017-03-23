@@ -30,8 +30,8 @@ export class RandomOrderedNumbersParam extends Param
 	{
 		super._processParams();
 
-		this.minSize = Math.max(0.0001, this.minSize);
-		this.maxSize = Math.max(this.maxSize, this.minSize);
+		this.minGapWeight = Math.max(0.0001, this.minGapWeight);
+		this.maxGapWeight = Math.max(this.maxGapWeight, this.minGapWeight);
 		this.n = Math.max(2, this.n);
 		var sizes = [];
 		var sizeSum = 0;

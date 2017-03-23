@@ -28,7 +28,7 @@ export class QuadSubdivisionNode extends Node
 		// add {label:, name:"ix"};
 		// outputs["ix"] = ...
 		// outputmodel.getValue() in connectionPoint
-		// change to  ouputmode.getValue("outputID")
+		// change to  oupuatmode.getValue("outputID")
 		// each connectionPoint output has an outputID.
 		// outputID comes from the paramDef,
 		// outputs["default"] = ..
@@ -84,6 +84,7 @@ export class QuadSubdivisionNode extends Node
 			var shapes = QuadSubdivisionNode.SubdivideQuad(this.nRows, this.nCols, path);
 			for (var i = 0; i < shapes.length; i++) {
 				//
+				this._ix = i;
 				PatternState.Instance().path = shapes[i];
 			//	console.log("here", PatternState.Instance().path);
 				super.processChildNodes();

@@ -56,6 +56,29 @@ export default class BaseNodeView extends paper.Group
 
 	}
 
+	getOutputConnectorByName(outputName)
+	{
+		for(var i =0; i < this.outputConnectors.length;++i)
+		{
+			if(this.outputConnectors[i].paramDef.name == outputName)
+			{
+				return this.outputConnectors[i];
+			}
+		}
+		return null;
+	}
+
+	getAnyOutputConnector()
+	{
+		if(this.outputConnectors.length > 0) return this.outputConnectors[0];
+		return null;
+	}
+
+	resetModel()
+	{
+		nodemodel.reset();
+	}
+
 	_createOutputConnectors(startp)
 	{
 

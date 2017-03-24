@@ -10,9 +10,10 @@ import * as editor from './editor/editor'
 
 export class QuadMirrorNode extends Node
 {
-	constructor()
+	constructor(mirrorX = true)
 	{
 		super();
+		this.mirrorX = mirrorX;
 	}
 
 	process()
@@ -26,7 +27,12 @@ export class QuadMirrorNode extends Node
 
 	static CreateMirroredQuadPoints(quadPoints)
 	{
-		return [quadPoints[1],quadPoints[0],quadPoints[3],quadPoints[2]];
+		if(mirrorX) {
+			return [quadPoints[1], quadPoints[0], quadPoints[3], quadPoints[2]];
+		}
+		else{
+			return [quadPoints[3], quadPoints[2], quadPoints[1], quadPoints[0]];
+		}
 	}
 
 }

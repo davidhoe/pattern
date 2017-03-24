@@ -18,6 +18,11 @@ export class Parameterizable{
 		console.log("id", this._id);
 	}
 
+	reset()
+	{
+
+	}
+
 	getValue(outputName = "")
 	{
 		return 0;// super.getValue(outputName);

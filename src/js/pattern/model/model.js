@@ -59,7 +59,7 @@ export {PointParam as PointParam} from './param/PointParam';
 export {PointToXYParam as PointToXYParam} from './param/PointToXYParam';
 export {RandomIntInRangeParam as RandomIntInRangeParam} from './param/RandomIntInRangeParam';
 export {RandomOrderedNumbersParam as RandomOrderedNumbersParam} from './param/RandomOrderedNumbersParam';
-
+export {SavedColoursetParam as SavedColoursetParam} from './param/SavedColoursetParam';
 
 export {ColourNode as ColourNode} from './ColourNode.js';
 export {CompoundPathNode as CompoundPathNode} from './CompoundPathNode.js';

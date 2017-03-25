@@ -9,35 +9,35 @@ import {MathUtils} from '../util/MathUtils'
 import paper from 'paper'
 
 /**
+ * update: try saving param getValue to a map. Then using getSavedParam to retrieve it
+ *
  * save a param for later use  - useful for save parameters that have used random numbers
  */
 export class ParamSaveNode extends Node
 {
-	constructor(param = null)
+	// test for colourset
+	constructor(valueName = "val1", valueToSave = [paper.Color()])
 	{
 		super();
 		// public
-		this.param = param;
-		this.savedParamValue = null;
+		this.valueToSave = valueToSave; // open object type?
+		//this.savedParamValue = null;
+		this.valueKey = valueName;
 	}
 
-	getSavedParam()
+	getEditorDefinition()
 	{
-		return this;
+		// standard infer type
+		var def = super.getEditorDefinition();
+		return def;
 	}
 
 	process()
 	{
-		console.log(" ParamSaveNode " );
-
 		super._processParams();
-		this.savedParamValue = this.param.getValue();
+		// save value to global map
+		PatternState.Instance().setSavedValue(this.valueKey, this.valueToSave);
 		super.processChildNodes();
-	}
-
-	getValue()
-	{
-		return this.savedParamValue;
 	}
 
 }

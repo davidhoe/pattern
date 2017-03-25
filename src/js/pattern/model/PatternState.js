@@ -21,6 +21,18 @@ export class PatternState
         this.group = null;
         this.headNode = null;// temp node reference to make it easier to create node trees
     //    this._startNode = null;
+
+        this.savedValueMap = {};
+    }
+
+    setSavedValue(key, val)
+    {
+        this.savedValueMap[key] = val;
+    }
+
+    getSavedValue(key)
+    {
+        return this.savedValueMap[key];
     }
 
 /*

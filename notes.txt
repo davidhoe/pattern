@@ -1,7 +1,10 @@
 notes
 
+frame 240,157,500 w,675 h
+
 nice colour sets
-192,567
+368,476
+
 
 phase 1:
 
@@ -55,6 +58,16 @@ node = new Node() -> auto adds to the head
 node.removeFromParent();
 
 Todo- nodes:
+
+
+gradient
+lock node - for random values?
+process once?
+circle points
+line node - this is a rect from line points
+
+
+
 
 Param save - save to map?
 ParamSaveNode - id string, input colourset.  Output-  nothing

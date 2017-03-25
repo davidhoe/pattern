@@ -197,6 +197,24 @@ export class PointUtils
 		return [p0,s0,s1];
 	}
 
+
+	static GetControlPointsFromSegments(segments)
+	{
+		var temp = [];
+		for(var i = 0; i< segments.length; ++i)
+		{
+			var s = segments[i];
+			if(s.constructor.name == paper.Point.name)
+			{
+				temp.push(s);
+			}
+			else if(s.constructor.name = paper.Segment.name){
+				temp.push(s.point);
+			}
+		}
+		return temp;
+	}
+
 	static GetBoundForSegments(segments)
 	{
 		var temp = [];

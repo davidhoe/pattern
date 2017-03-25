@@ -74,10 +74,11 @@ export default class BaseNodeView extends paper.Group
 		return null;
 	}
 
+	/*
 	resetModel()
 	{
 		nodemodel.reset();
-	}
+	}*/
 
 	_createOutputConnectors(startp)
 	{

@@ -1,4 +1,4 @@
-import {Node} from './Node'
+import {IterableNode} from './IterableNode'
 import {PatternState} from './PatternState'
 import {PointUtils} from '../util/PointUtils'
 import * as editor from './editor/editor'
@@ -8,7 +8,7 @@ import paper from 'paper'
 /**
  * subdivide a quad into a set of slices
  */
-export class QuadToSlicesNode extends Node
+export class QuadToSlicesNode extends IterableNode
 {
 	/**
 	 * sudivide into a number of rows
@@ -21,19 +21,6 @@ export class QuadToSlicesNode extends Node
 		this._ix = 0;
 	}
 
-	getEditorDefinition()
-	{
-		return super.getEditorDefinition().setOutputFloat("ix");
-	}
-
-	getValue(outputName = "")
-	{
-		if(outputName == "ix")
-		{
-			return this._ix;
-		}
-		return 0;
-	}
 
 	process()
 	{

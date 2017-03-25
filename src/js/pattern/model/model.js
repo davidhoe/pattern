@@ -31,6 +31,10 @@ export {IntParamDef as IntParamDef} from './editor/ParamDef';
 export {ColourParamDef as ColourParamDef} from './editor/ParamDef';
 export {BoolParamDef as BoolParamDef} from './editor/ParamDef';
 export {StringParamDef as StringParamDef} from './editor/ParamDef';
+export {PointParamDef as PointParamDef} from './editor/ParamDef';
+export {PointArrayParamDef as PointArrayParamDef} from './editor/ParamDef';
+export {IntArrayParamDef as IntArrayParamDef} from './editor/ParamDef';
+export {FloatArrayParamDef as FloatArrayParamDef} from './editor/ParamDef';
 
 export {ColourBlendHSBParam as ColourBlendHSBParam} from './param/ColourBlendHSBParam';
 export {ColourBlendRGBParam as ColourBlendRGBParam} from './param/ColourBlendRGBParam';
@@ -55,7 +59,9 @@ export {IntSelectFromArrayParam as IntSelectFromArrayParam} from './param/IntSel
 export {NumberMultiplyParam as NumberMultiplyParam} from './param/NumberMultiplyParam';
 export {Param as Param} from './param/Param';
 export {Parameterizable as Parameterizable} from './param/Parameterizable';
+export {PointFromArrayParam as PointFromArrayParam} from './param/PointFromArrayParam';
 export {PointParam as PointParam} from './param/PointParam';
+export {PointsToBoundPointsParam as PointsToBoundPointsParam} from './param/PointsToBoundPointsParam';
 export {PointToXYParam as PointToXYParam} from './param/PointToXYParam';
 export {RandomIntInRangeParam as RandomIntInRangeParam} from './param/RandomIntInRangeParam';
 export {RandomOrderedNumbersParam as RandomOrderedNumbersParam} from './param/RandomOrderedNumbersParam';
@@ -64,7 +70,9 @@ export {SavedColoursetParam as SavedColoursetParam} from './param/SavedColourset
 export {ColourNode as ColourNode} from './ColourNode.js';
 export {CompoundPathNode as CompoundPathNode} from './CompoundPathNode.js';
 export {DecisionNode as DecisionNode} from './DecisionNode.js';
+export {FillGradientNode as FillGradientNode} from './FillGradientNode.js';
 export {FillNode as FillNode} from './FillNode.js';
+export {GetPointsFromStateNode as GetPointsFromStateNode} from './GetPointsFromStateNode.js';
 export {GroupNode as GroupNode} from './GroupNode.js';
 export {IfThenNode as IfThenNode} from './IfThenNode.js';
 export {Node as Node} from './Node.js';

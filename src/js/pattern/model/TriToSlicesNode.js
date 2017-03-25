@@ -1,4 +1,4 @@
-import {Node} from './Node'
+import {IterableNode} from './IterableNode'
 import {PatternState} from './PatternState'
 import {PointUtils} from '../util/PointUtils'
 import * as editor from './editor/editor'
@@ -8,7 +8,7 @@ import paper from 'paper'
 /**
  * subdivide a tri into a set of slices
  */
-export class TriToSlicesNode extends Node
+export class TriToSlicesNode extends IterableNode
 {
 	/**
 	 * sudivide into a number of rows
@@ -22,19 +22,6 @@ export class TriToSlicesNode extends Node
 		this._ix = 0;
 	}
 
-	getEditorDefinition()
-	{
-		return super.getEditorDefinition().setOutputFloat("ix");
-	}
-
-	getValue(outputName = "")
-	{
-		if(outputName == "ix")
-		{
-			return this._ix;
-		}
-		return 0;
-	}
 
 	process()
 	{

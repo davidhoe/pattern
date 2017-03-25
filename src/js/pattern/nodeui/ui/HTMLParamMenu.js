@@ -165,6 +165,33 @@ export default class HTMLParamMenu
 
 				});
 			}
+			else if(inputdef.type == model.PointParamDef.name)
+			{
+				//just  display it for now
+				var point = this._nodemodel[inputdef.name];
+
+				var inputx = HTMLParamMenu.CreateNumberInput(this._nodemodel[inputdef.name].x, "x", menu);
+				inputx.inputdef = inputdef;
+				$(inputx).focusout(function () {
+					var val = $(this).val();
+					var p = _this._nodemodel[this.inputdef.name];
+					p.x = parseFloat(val);
+					console.log("new float value x for " + this.inputdef.name + " set to : " + parseFloat(val));
+					_this.onValueChanged();
+				});
+				inputx.width = 50;
+
+				var inputy= HTMLParamMenu.CreateNumberInput(this._nodemodel[inputdef.name].y, "y", menu);
+				inputy.inputdef = inputdef;
+				$(inputy).focusout(function () {
+					var val = $(this).val();
+					var p = _this._nodemodel[this.inputdef.name];
+					p.y = parseFloat(val);
+					console.log("new float value x for " + this.inputdef.name + " set to : " + parseFloat(val));
+					_this.onValueChanged();
+				});
+
+			}
 
 			$(menu).append('<br />');
 

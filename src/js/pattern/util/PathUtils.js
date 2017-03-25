@@ -2,6 +2,8 @@ import paper from 'paper'
 
 export class PathUtils
 {
+
+
     static rightAngleTriangle(rect, cornerix )
     {
         if(cornerix == undefined ) cornerix = 0;

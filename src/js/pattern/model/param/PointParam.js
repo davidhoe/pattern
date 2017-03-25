@@ -24,6 +24,7 @@ export class PointParam extends Param{
     getValue(outputName = "")
     {
         super._processParams();
+        console.log("pointparam - getvalue ", this.x, this.y);
         return new paper.Point(this.x, this.y);
     }
 }

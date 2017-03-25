@@ -10,14 +10,14 @@ export class Param extends Parameterizable
 	constructor()
 	{
 		super();
-		this._nTimesProcessed = 0;
-		this.processOnce = false;
+		//this._nTimesProcessed = 0;
+		//this.processOnce = false;
 	}
 
 	reset()
 	{
 		super.reset();
-		this._nTimesProcessed = 0;
+		//this._nTimesProcessed = 0;
 	}
 
 	getEditorDefinition()

@@ -57,23 +57,17 @@ node.setHead()
 node = new Node() -> auto adds to the head
 node.removeFromParent();
 gradient
-
-Todo- nodes:
-
-
-lock node - for random values?
-process once?
 create radial points
-line node - this is a rect from line points
-
-
-
 Param save - save to map?
 ParamSaveNode - id string, input colourset.  Output-  nothing
 GetSavedParam - id string, output
 
 
-Point field in the menu?
+Todo- nodes:
+
+
+
+line node - this is a rect from line points
 
 TextureClipGroupNode? - node that includes a group and clips the texture with the current states path?
 TexturePresetNode - set textureIX

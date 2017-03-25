@@ -67,8 +67,12 @@ export {PointsToBoundPointsParam as PointsToBoundPointsParam} from './param/Poin
 export {PointToXYParam as PointToXYParam} from './param/PointToXYParam';
 export {RandomIntInRangeParam as RandomIntInRangeParam} from './param/RandomIntInRangeParam';
 export {RandomOrderedNumbersParam as RandomOrderedNumbersParam} from './param/RandomOrderedNumbersParam';
+export {SavedColourParam as SavedColourParam} from './param/SavedColourParam';
 export {SavedColoursetParam as SavedColoursetParam} from './param/SavedColoursetParam';
+export {SavedFloatParam as SavedFloatParam} from './param/SavedFloatParam';
+export {SavedIntParam as SavedIntParam} from './param/SavedIntParam';
 export {SavedPointArrayParam as SavedPointArrayParam} from './param/SavedPointArrayParam';
+export {SavedPointParam as SavedPointParam} from './param/SavedPointParam';
 
 export {ColourNode as ColourNode} from './ColourNode.js';
 export {CompoundPathNode as CompoundPathNode} from './CompoundPathNode.js';
@@ -88,6 +92,7 @@ export {QuadMirrorNode as QuadMirrorNode} from './QuadMirrorNode.js';
 export {QuadScaleNode as QuadScaleNode} from './QuadScaleNode.js';
 export {QuadSubdivisionNode as QuadSubdivisionNode} from './QuadSubdivisionNode.js';
 export {QuadToDiagonalLeafNode as QuadToDiagonalLeafNode} from './QuadToDiagonalLeafNode.js';
+export {QuadToLineShapeNode as QuadToLineShapeNode } from './QuadToLineShapeNode.js';
 export {QuadToCircleNode as QuadToCircleNode } from './QuadToCircleNode.js';
 export {QuadToQuarterCircleNode as QuadToQuarterCircleNode} from './QuadToQuarterCircleNode.js';
 export {QuadToSCurveNode as QuadToSCurveNode} from './QuadToSCurveNode.js';
@@ -100,8 +105,12 @@ export {RandomColourFromSetNode as RandomColourFromSetNode} from './RandomColour
 export {RepeatNode as RepeatNode} from './RepeatNode.js';
 export {RectGridNode as RectGridNode} from './RectGridNode.js';
 export {RotatePathIndexNode as RotatePathIndexNode} from './RotatePathIndexNode.js';
+export {SaveColourNode as SaveColourNode} from './SaveColourNode.js';
 export {SaveColourSetNode as SaveColourSetNode} from './SaveColourSetNode.js';
+export {SaveIntNode as SaveIntNode} from './SaveIntNode.js';
+export {SaveFloatNode as SaveFloatNode} from './SaveFloatNode.js';
 export {SavePointArrayNode as SavePointArrayNode} from './SavePointArrayNode.js';
+export {SavePointNode as SavePointNode} from './SavePointNode.js';
 export {TextureDrawNode as TextureDrawNode} from './TextureDrawNode.js';
 export {TransformCenterPathNode as TransformCenterPathNode} from './TransformCenterPathNode.js';
 export {TransformNode as TransformNode} from './TransformNode.js';

@@ -23,7 +23,7 @@ export class CompareNumberParam extends Param{
 
     getEditorDefinition()
     {
-        var def =  super.getEditorDefinition().setOutputFloat("");
+        var def =  super.getEditorDefinition().setOutputBool("");
         // todo , get the input definition by name and  key value pair.
         def.addInputIntSelectDropdown("operator", null, OperatorType);
         return def;

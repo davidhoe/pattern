@@ -23,13 +23,20 @@ export class FillGradientNode extends FillNode
 		this.col1 = col1;
 		this.p0 = new paper.Point(0,0);
 		this.p1 = new paper.Point(500,500);
+		this.scale = 1.0;
 		this._shapeAtts = {};
 	}
 
 	process()
 	{
 		this._processParams();
-		this._shapeAtts['fillColor'] =  utils.FillUtils.createLineGradient(this.p0,this.p1,this.col0, this.col1);
+
+		/// center scale points
+		var midp = utils.PointUtils.LerpPoint(this.p0,this.p1, 0.5);
+		var scaled_p0 = new paper.Point( this.scale*(this.p0.x - midp.x) + midp.x, this.scale*(this.p0.y - midp.y) + midp.y );
+		var scaled_p1 = new paper.Point( this.scale*(this.p1.x - midp.x) + midp.x, this.scale*(this.p1.y - midp.y) + midp.y );
+
+		this._shapeAtts['fillColor'] =  utils.FillUtils.createLineGradient(scaled_p0,scaled_p1,this.col0, this.col1);
 		super.process();
 	}
 

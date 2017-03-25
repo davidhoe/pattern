@@ -109,7 +109,7 @@ function init()
 
     //nodeEditorApp.maketestNodes();
     //nodeEditorApp.testparse();
-    nodeEditorApp.canvas.loadFromFile("assets/nodetree04.json");
+    nodeEditorApp.canvas.loadFromFile("assets/nodetree06.json");
 
 }
 

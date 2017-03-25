@@ -13,7 +13,7 @@ import paper from 'paper'
  */
 export class IfThenNode extends Node
 {
-    constructor(n)
+    constructor()
     {
         super();
         // public
@@ -26,15 +26,15 @@ export class IfThenNode extends Node
         super._processParams();
         if(this.bool)
         {
-            if(this.childNodes.length > 0)
+            if(this._childNodes.length > 0)
             {
-                this.childNodes[0].process();
+                this._childNodes[0].process();
             }
         }
         else{
-            if(this.childNodes.length > 1)
+            if(this._childNodes.length > 1)
             {
-                this.childNodes[1].process();
+                this._childNodes[1].process();
             }
         }
     }

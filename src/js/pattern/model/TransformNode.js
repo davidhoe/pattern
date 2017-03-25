@@ -17,9 +17,9 @@ export class TransformNode  extends Node
 	{
 		super();
 		//this.shearRatio = ( shearRatio == null) ? 0.25 : shearRatio;
-		this.translation = null; // point
-		this.rotation = null; // angle in degrees
-		this.scale = null;  // point
+		this.translation = new paper.Point(0,0); // point
+		this.rotation = 0; // angle in degrees
+		this.scale = new paper.Point(1,1);  // point
 	}
 
 	setRotation(angleInDegrees)

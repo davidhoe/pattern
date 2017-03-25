@@ -11,19 +11,27 @@ import paper from 'paper'
 /**
  * save a param for later use  - useful for save parameters that have used random numbers
  */
-export class SaveColourSetNode extends Node
+export class SavePointArrayNode extends Node
 {
 	constructor()
 	{
 		super();
 		// public
-		this.value = [new paper.Color()];
-		this.valueKey = "cset0";
+		this.value = [new paper.Point()];
+		this.valueKey = "pset0";
 	}
 
 	getEditorDefinition()
 	{
-		return super.getEditorDefinition().setOutputColourArray("value");
+		return super.getEditorDefinition().setOutputPointArray("value");
+	}
+
+	process()
+	{
+		super._processParams();
+		// save value to global map
+		PatternState.Instance().setSavedValue(this.valueKey, this.value);
+		super.processChildNodes();
 	}
 
 	getValue(outputName = "")
@@ -35,17 +43,5 @@ export class SaveColourSetNode extends Node
 		return 0;
 	}
 
-	process()
-	{
-		super._processParams();
-		// save value to global map
-		PatternState.Instance().setSavedValue(this.valueKey, this.value);
-		super.processChildNodes();
-	}
-
-	getValue()
-	{
-		return this.value;
-	}
 
 }

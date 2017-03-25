@@ -56,16 +56,15 @@ CompoundPath - http://paperjs.org/reference/compoundpath/#compoundpath-object
 node.setHead()
 node = new Node() -> auto adds to the head
 node.removeFromParent();
+gradient
 
 Todo- nodes:
 
 
-gradient
 lock node - for random values?
 process once?
-circle points
+create radial points
 line node - this is a rect from line points
-
 
 
 

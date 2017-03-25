@@ -7,7 +7,7 @@ import {PatternState} from '../PatternState'
 
 // returns a previously saved colour set
 export class SavedColoursetParam extends Param{
-    constructor(valueKey = "val1")
+    constructor(valueKey = "cset0")
     {
         super();
         this.valueKey = valueKey;

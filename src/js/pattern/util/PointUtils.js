@@ -3,9 +3,16 @@
  */
 
 import paper from 'paper'
+import {MathUtils} from './MathUtils'
 
 export class PointUtils
 {
+	static PointFromAngleAndRadius(angleInDegrees, radius = 1)
+	{
+		var a = MathUtils.DegreeToRadian(angleInDegrees);
+		return new paper.Point(Math.sin(a)*radius, Math.cos(a)*radius );
+	}
+
     static LerpPoint(p0,p1, r)
     {
         return new paper.Point(p0.x*(1-r) + p1.x*r, p0.y*(1-r) + p1.y*r );

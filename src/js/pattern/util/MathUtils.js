@@ -1,6 +1,16 @@
 
 export class MathUtils {
 
+    static DegreeToRadian(x)
+    {
+        return x/180*Math.PI;
+    }
+
+    static RadianToDegree(x)
+    {
+        return x/Math.PI*180;
+    }
+
     static Lerp(x0,x1,r)
     {
         return x0 + (x1-x0)*r;

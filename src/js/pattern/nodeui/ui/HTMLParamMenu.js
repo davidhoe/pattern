@@ -72,7 +72,7 @@ export default class HTMLParamMenu
 		{
 			var inputdef = nodedef.inputs[i];
 			HTMLParamMenu.CreateTextLabel(inputdef.label , menu);
-			console.log("init menu", inputdef);
+			console.log("init menu", inputdef, this._nodemodel[inputdef.name]);
 			if(inputdef.type == model.FloatParamDef.name)
 			{
 				var input = HTMLParamMenu.CreateNumberInput(this._nodemodel[inputdef.name], inputdef.name, menu);
@@ -192,6 +192,7 @@ export default class HTMLParamMenu
 				});
 
 			}
+
 
 			$(menu).append('<br />');
 

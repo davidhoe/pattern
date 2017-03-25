@@ -8,6 +8,7 @@ export default class HTMLNodeList
 	{
 		this.onPatternNodeSelectedCallback = null;
 		this.onParamNodeSelectedCallback = null;
+		this._buttons = [];
 	}
 
 	init(divID)
@@ -27,11 +28,58 @@ export default class HTMLNodeList
 			top: 50, left: 0
 		});
 
+		//create filter box
+		var input = HTMLNodeList.CreateStringInput("", "filterinput", menu);
+		input.placeholder = "filter";
+		var _this = this;
+		$(input).on("change keyup paste", function () {
+			var val = $(this).val();
+			_this.filterButtons(val);
+		});
+		$(menu).append('<br />');
+
 		// add buttons for nodes
 		this.addPatternNodeButtons(menu);
 		$(menu).append('<br />');
 		this.addParamNodeButtons(menu);
+
+
 		return menu;
+	}
+
+	filterButtons(filterString)
+	{
+		filterString = filterString.toLowerCase();
+		if(filterString != "" || filterString != null) {
+			for (var i = 0; i < this._buttons.length; ++i) {
+				var b = this._buttons[i];
+				if (b.className.toLowerCase().includes(filterString)) {
+					this.showButton(b);
+				}
+				else {
+					this.hideButton(b);
+				}
+			}
+		}
+		else{
+			// show all
+			for (var i = 0; i < this._buttons.length; ++i) {
+				var b = this._buttons[i];
+				this.showButton(b);
+			}
+		}
+	}
+
+	showButton(b)
+	{
+		$(b.br).show();
+		$(b).show();
+	}
+
+	hideButton(b)
+	{
+		$(b.br).hide();
+		$(b).hide();
 	}
 
 	addPatternNodeButtons(parent)
@@ -42,8 +90,10 @@ export default class HTMLNodeList
 		{
 			var classname = classNames[i] + "";
 			var button = HTMLNodeList.CreateButton(classname, parent);
+			this._buttons.push(button);
 			button.className = classname;
 			$(button).click(function () {
+
 				if(_this.onPatternNodeSelectedCallback)
 				{
 					_this.onPatternNodeSelectedCallback(this.className);
@@ -51,10 +101,13 @@ export default class HTMLNodeList
 				//console.log("button click", this.nodeClassName);
 			});
 			//}
-			$(parent).append('<br />');
+			var br = document.createElement("br");
+			parent.appendChild(br);
+			button.br = br;
+
+			//$(parent).append('<br />');
 
 		}
-
 	}
 
 	addParamNodeButtons(parent)
@@ -66,6 +119,7 @@ export default class HTMLNodeList
 			var classname = classNames[i] + "";
 			var button = HTMLNodeList.CreateButton(classname, parent);
 			button.className = classname;
+			this._buttons.push(button);
 			$(button).click(function () {
 				if(_this.onParamNodeSelectedCallback)
 				{
@@ -74,7 +128,9 @@ export default class HTMLNodeList
 				//console.log("button click", this.nodeClassName);
 			});
 			//}
-			$(parent).append('<br />');
+			var br = document.createElement("br");
+			parent.appendChild(br);
+			button.br = br;
 
 		}
 
@@ -123,5 +179,15 @@ export default class HTMLNodeList
 		parent.appendChild(button);
 		return button;
 
+	}
+
+	static CreateStringInput(value, id, parent)
+	{
+		var element = document.createElement("input");
+		element.setAttribute("type", "string");
+		element.setAttribute("value", value);
+		element.setAttribute("name", id);
+		parent.appendChild(element);
+		return element;
 	}
 }

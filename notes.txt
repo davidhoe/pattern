@@ -61,19 +61,19 @@ create radial points
 Param save - save to map?
 ParamSaveNode - id string, input colourset.  Output-  nothing
 GetSavedParam - id string, output
+line node - this is a rect from line points
+GradientNode - c0,c1,
+NodelistUI - adda filter search textfield to the top. use jquery hide/show
 
 
 Todo- nodes:
 
 
 
-line node - this is a rect from line points
-
 TextureClipGroupNode? - node that includes a group and clips the texture with the current states path?
 TexturePresetNode - set textureIX
-GradientNode - c0,c1, angle, ?
 
-colour array - input is a set of individual points
+colour array - input is a set of individual points?
 colour params
 
 Create more than one childnode output?

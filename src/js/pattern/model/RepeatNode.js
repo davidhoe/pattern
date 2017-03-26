@@ -13,7 +13,7 @@ import paper from 'paper'
  */
 export class RepeatNode extends IterableNode
 {
-    constructor(n)
+    constructor(n = 5)
     {
         super();
         // public

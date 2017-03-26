@@ -52,6 +52,11 @@ export class FillNode extends Node
 		return this;
 	}
 
+	// override this for the stroke node
+	setShapeParams(shape)
+	{
+		shape.fillColor = PatternState.Instance().colour;
+	}
 
     process()
     {
@@ -65,9 +70,11 @@ export class FillNode extends Node
         shape.clipMask = this.clipMask;
         shape.opacity = this.opacity;
         shape.blendMode = this.blendMode;
-        shape.closed = true;
-        shape.fillColor = PatternState.Instance().colour;
-       // shape.strokeColor = 'grey';
+	    if(PatternState.Instance().path.length > 2) {
+		    shape.closed = true;
+	    }
+	    this.setShapeParams(shape);
+
         shape.applyMatrix = true;
         shape.pivot = new paper.Point(0,0);
         shape.matrix = PatternState.Instance().matrix.clone();

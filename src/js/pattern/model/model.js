@@ -6,6 +6,19 @@
  * var node = new model.FillNode();...
  */
 
+//http://paperjs.org/tutorials/paths/using-color-and-style/
+export var STROKE_CAP = {
+	'round':'round',
+	'square':'square',
+	'butt':'butt'
+}
+
+//http://paperjs.org/tutorials/paths/using-color-and-style/
+export var STROKE_JOIN = {
+	'round':'round',
+	'miter':'miter',
+	'bevel':'bevel'
+}
 
 // todo add in the rest
 // 'normal', 'multiply', 'screen', 'overlay', 'soft-light', 'hard- light',
@@ -74,6 +87,7 @@ export {SavedIntParam as SavedIntParam} from './param/SavedIntParam';
 export {SavedPointArrayParam as SavedPointArrayParam} from './param/SavedPointArrayParam';
 export {SavedPointParam as SavedPointParam} from './param/SavedPointParam';
 
+export {CircleNode as CircleNode} from './CircleNode.js';
 export {ColourNode as ColourNode} from './ColourNode.js';
 export {CompoundPathNode as CompoundPathNode} from './CompoundPathNode.js';
 export {DecisionNode as DecisionNode} from './DecisionNode.js';
@@ -82,6 +96,8 @@ export {FillNode as FillNode} from './FillNode.js';
 export {GetPointsFromStateNode as GetPointsFromStateNode} from './GetPointsFromStateNode.js';
 export {GroupNode as GroupNode} from './GroupNode.js';
 export {IfThenNode as IfThenNode} from './IfThenNode.js';
+export {LineFromPointsNode as LineFromPointsNode} from './LineFromPointsNode.js';
+export {LineNode as LineNode} from './LineNode.js';
 export {Node as Node} from './Node.js';
 export {ParamSaveNode as ParamSaveNode} from './ParamSaveNode.js';
 export {PathNode as PathNode} from './PathNode.js';
@@ -111,9 +127,11 @@ export {SaveIntNode as SaveIntNode} from './SaveIntNode.js';
 export {SaveFloatNode as SaveFloatNode} from './SaveFloatNode.js';
 export {SavePointArrayNode as SavePointArrayNode} from './SavePointArrayNode.js';
 export {SavePointNode as SavePointNode} from './SavePointNode.js';
+export {StrokeNode as StrokeNode} from './StrokeNode.js';
 export {TextureDrawNode as TextureDrawNode} from './TextureDrawNode.js';
 export {TransformCenterPathNode as TransformCenterPathNode} from './TransformCenterPathNode.js';
 export {TransformNode as TransformNode} from './TransformNode.js';
+export {TriangleNode as TriangleNode} from './TriangleNode.js';
 export {TriSliceNode as TriSliceNode} from './TriSliceNode.js';
 export {TriSubdivisionNode as TriSubdivisionNode} from './TriSubdivisionNode.js';
 export {TriToQuarterCurveNode as TriToQuarterCurveNode} from './TriToQuarterCurveNode.js';

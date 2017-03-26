@@ -64,11 +64,19 @@ GetSavedParam - id string, output
 line node - this is a rect from line points
 GradientNode - c0,c1,
 NodelistUI - adda filter search textfield to the top. use jquery hide/show
-
+stroke node
+LineFromPointsNode - p0,p1, thickness
+LineNode , length, thickness, angle, anchrpoint
+TriNode, w,h,anchorpoint ,agnle?
+CircleNode , w,h (centered)
 
 Todo- nodes:
 
 
+QuadToTranslation, np = new paper.Point(0.5,0.5)
+TriangleFromCircle, a0,a1,a2, r
+LineFromCricle, a0,a1, r
+copy and paste?
 
 TextureClipGroupNode? - node that includes a group and clips the texture with the current states path?
 TexturePresetNode - set textureIX

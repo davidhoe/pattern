@@ -18,7 +18,6 @@ export class QuadToLineShapeNode extends Node
 		super();
 		this.scale = 1;
 		this.scaleOriginRatio = 0.5;
-		this.lineThickness = 3;
 		this.np0 = new paper.Point(0.5,0);
 		this.np1 = new paper.Point(0.5,1);
 		//this._normalisedSegments = [];
@@ -49,24 +48,8 @@ export class QuadToLineShapeNode extends Node
 		var scalePoint = PointUtils.LerpPoint(basep0,basep1, this.scaleOriginRatio);
 		var p0 = PointUtils.LerpPoint(scalePoint,basep0, this.scale);
 		var p1 = PointUtils.LerpPoint(scalePoint,basep1, this.scale);
-		//console.log("!!! basep0 ", basep0);
-		//console.log("!!! basep1 ", basep1);
-		//console.log("!!! scalePoint ", scalePoint);
-		//console.log("!!! p0 ", p0);
-		//console.log("!!! p1 ", p1);
 
-		var grad = p1.subtract(p0);
-		grad = grad.normalize();
-		var tangent = new paper.Point(grad.y,-grad.x);
-		//console.log("!!! tangent ", tangent);
-
-		var f = this.lineThickness;
-		var q0 = new paper.Point(p0.x + tangent.x*f, p0.y + tangent.y*f);
-		var q1 = new paper.Point(p0.x - tangent.x*f, p0.y - tangent.y*f);
-		var q2 = new paper.Point(p1.x + tangent.x*f, p1.y + tangent.y*f);
-		var q3 = new paper.Point(p1.x - tangent.x*f, p1.y - tangent.y*f);
-
-		var newpath = [q0,q1,q3,q2];
+		var newpath = [p0,p1];
 		//console.log("!!! QuadToLineShapeNode ", newpath);
 
 		PatternState.Instance().path = newpath;

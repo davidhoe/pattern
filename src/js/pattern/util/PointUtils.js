@@ -178,7 +178,7 @@ export class PointUtils
         return [s1,s2, p3];
     }
 
-    static CreateNormalisedCircle(r = 0.55228)
+    static CreateNormalisedCircle(r = 0.55228 /2)
     {
         var p0 = new paper.Point(0.5,0);
         var p1 = new paper.Point(1,0.5);

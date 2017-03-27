@@ -70,12 +70,21 @@ LineNode , length, thickness, angle, anchrpoint
 TriNode, w,h,anchorpoint ,agnle?
 CircleNode , w,h (centered)
 
+TriangleFromCircle, a0,a1,a2, r
+LineFromCircle, a0,a1, r
+QuadToTranslation, np = new paper.Point(0.5,0.5)
+
+
 Todo- nodes:
 
+save/load
+add a select field
+--json file array of the nodes []
+read in and populate a select field?
+on change - load in the correct file
+default one is the first one
+Savename field, save button
 
-QuadToTranslation, np = new paper.Point(0.5,0.5)
-TriangleFromCircle, a0,a1,a2, r
-LineFromCricle, a0,a1, r
 copy and paste?
 
 TextureClipGroupNode? - node that includes a group and clips the texture with the current states path?

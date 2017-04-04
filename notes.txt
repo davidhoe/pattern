@@ -77,6 +77,11 @@ QuadToTranslation, np = new paper.Point(0.5,0.5)
 
 Todo- nodes:
 
+test the effect of a transform scale on the stroke width
+test exporting a high res output png
+test exporting a svg
+
+
 save/load
 add a select field
 --json file array of the nodes []

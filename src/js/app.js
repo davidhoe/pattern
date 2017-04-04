@@ -32,6 +32,12 @@ var currentRender = null;
 var selectedColourset = null;
 
 
+var offscreenCanvas = document.createElement("canvas");
+offscreenCanvas.id = "offscreenCanvas";
+offscreenCanvas.width = 500;
+offscreenCanvas.height=800;
+var offscreenProject = new paper.Project(offscreenCanvas);
+
 var canvas = new paper.Project('canvas');
 var canvasUI = new paper.Project('canvasUI');
 
@@ -59,6 +65,28 @@ nodeEditorApp.onModelUpdated = function(startnode)
     $(paramsContainer).hide();
 
 }
+
+
+$( "#svgbutton" ).click(function() {
+
+    offscreenProject.addLayer(frame18x24Preview.nodeLayer);
+
+
+    console.log("svg save");
+    var svg = offscreenProject.exportSVG({asString: true});
+    var blob = new Blob([svg], {type: "image/svg+xml;charset=utf-8"});
+    saveAs(blob, 'image.svg');
+
+
+
+  //  alert( "Handler for .click() called." );
+});
+
+$( "#imagebutton" ).click(function() {
+    console.log("image save");
+    //  alert( "Handler for .click() called." );
+});
+
 
 //colourUIproject.activate();
 canvas.activate();
@@ -109,7 +137,7 @@ function init()
 
     //nodeEditorApp.maketestNodes();
     //nodeEditorApp.testparse();
-    nodeEditorApp.canvas.loadFromFile("assets/crossgrid.json");
+    nodeEditorApp.canvas.loadFromFile("assets/webcircle.json");
 
 }
 

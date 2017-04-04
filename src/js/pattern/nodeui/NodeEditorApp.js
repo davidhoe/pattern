@@ -17,7 +17,6 @@ export default class NodeEditorApp
 		this.onModelUpdated = null;
 		this.canvas = new NodeEditorCanvas(project);
 
-
 		// make a start node
 		var  startnode = new PatternNodeView(new model.QuadNode(0,0,500,500).removeAllParents(), true);
 		this.canvas.addNodeView(startnode);
@@ -55,6 +54,7 @@ export default class NodeEditorApp
 
 		//console.log("variable.constructor ", variable.constructor.name == Array.name);
 	}
+
 
 	// call this from init after colours have loaded
 	testparse()

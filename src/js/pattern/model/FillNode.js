@@ -77,8 +77,8 @@ export class FillNode extends Node
 
         shape.applyMatrix = true;
         shape.pivot = new paper.Point(0,0);
-        shape.matrix = PatternState.Instance().matrix.clone();
 
+        shape.matrix = PatternState.Instance().matrix.clone();
 
         if(this._shapeAtts != null)
         {
@@ -88,7 +88,6 @@ export class FillNode extends Node
                     shape[key] = this._shapeAtts[key];
                 }
             }
-
         }
     //    PatternState.Instance().colour = this.colour;
         super.processChildNodes();

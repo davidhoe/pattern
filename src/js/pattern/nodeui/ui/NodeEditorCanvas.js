@@ -22,6 +22,7 @@ export default class NodeEditorCanvas
 	constructor(project)
 	{
 		var _this = this;
+		this.canvasSize = new paper.Size(300,400); // render canvas size, not the canvas size for the edtiro
 		this.startnode = null;
 		this.onModelUpdatedCallback = null;
 		this.project = project;
@@ -80,6 +81,7 @@ export default class NodeEditorCanvas
 
 	loadFromFile(filepath)
 	{
+		// todo add parse of canvas size
 		console.log("loadFromFile " + filepath);
 		var _this = this;
 		$.getJSON( filepath, function( data ) {
@@ -107,6 +109,10 @@ export default class NodeEditorCanvas
 	toJsonObject()
 	{
 		var data = {};
+
+		// encode of the canvas size
+		//var size = model.PatternState.Instance().canvasSize;
+		data['canvas'] = {'w': this.canvasSize.width, 'h': this.canvasSize.height};
 
 		data["startnode"] = this.startnode.getID();
 
@@ -138,6 +144,17 @@ export default class NodeEditorCanvas
 		if(doClear)
 		{
 			this.removeAllNodes(true);
+		}
+
+		// decode the canvas size
+
+		var canvasdata = data["canvas"];
+		if(canvasdata) {
+			var w = canvasdata['w'];
+			var h = canvasdata['h'];
+			//console.log("@@@@@@ fromJson canvas",w,h);
+			if(w) this.canvasSize.width = w; //model.PatternState.Instance().canvasSize.width = w;
+			if(h) this.canvasSize.height = h; //model.PatternState.Instance().canvasSize.height = h;
 		}
 
 		var models = [];

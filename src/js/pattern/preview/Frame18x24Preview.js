@@ -19,8 +19,8 @@ export class Frame18x24Preview extends Preview
 		raster.position.y = 500;
 
 		this.bgLayer.activate();
-		this.bg = new paper.Raster('assets/frame_bg.png');
 
+		this.bg = new paper.Raster('assets/frame_bg.png');
 
 		this.bg.onLoad =function() {
 			this.width = 2000;
@@ -29,15 +29,24 @@ export class Frame18x24Preview extends Preview
 			this.position.y = 1000;
 			console.log("--this " , this);
 		}
-
 	}
 
-	setNodeTree(node)
+	// todo add canvasSize
+	setNodeTree(node, canvasSize)
 	{
+		console.log("!!!!! setNodeTree canvasSize ", canvasSize);
 		this.canvas.activate();
 		this.nodeLayer.activate();
 		this.nodeLayer.removeChildren();
 		model.PatternState.Instance().reset();
+
+		// transform the canvas dimension to fit the preview frame bound
+		// scale to fit?
+		var frameRect = new paper.Rectangle(130+110,43+110, 500,680);
+		var topleft = new paper.Point(frameRect.x,frameRect.y);
+		//var scale = new paper.Point(frameRect.width/  ,1);
+		var scale = new paper.Point(frameRect.width/canvasSize.width,frameRect.height/canvasSize.height);
+		model.PatternState.Instance().setInitialTransform(topleft, scale);
 		//console.log("startnode" , startnode);
 		node.process();
 		//readValuesTest();

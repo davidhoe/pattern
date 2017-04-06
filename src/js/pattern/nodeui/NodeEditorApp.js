@@ -172,7 +172,7 @@ export default class NodeEditorApp
 	{
 		//
 		console.log("refresh", this.canvas.startnode.nodemodel);
-		if(this.onModelUpdated ) this.onModelUpdated(this.canvas.startnode.nodemodel);
+		if(this.onModelUpdated ) this.onModelUpdated(this.canvas.startnode.nodemodel, this.canvas.canvasSize);
 	}
 
 }

@@ -42,7 +42,7 @@ var canvas = new paper.Project('canvas');
 var canvasUI = new paper.Project('canvasUI');
 
 var nodeEditorApp = new nodeui.NodeEditorApp(canvasUI);
-nodeEditorApp.onModelUpdated = function(startnode)
+nodeEditorApp.onModelUpdated = function(startnode, canvasSize)
 {
 
 
@@ -58,7 +58,7 @@ nodeEditorApp.onModelUpdated = function(startnode)
     console.log("startnode" , startnode);
     startnode.process();
 */
-    frame18x24Preview.setNodeTree(startnode);
+    frame18x24Preview.setNodeTree(startnode, canvasSize);
 
     readValuesTest();
 
@@ -67,10 +67,17 @@ nodeEditorApp.onModelUpdated = function(startnode)
 }
 
 
+// todo move this to the editor
+// test save as svg, should be relative to 0,0 with dimension set as to the canvss size
 $( "#svgbutton" ).click(function() {
 
-    offscreenProject.addLayer(frame18x24Preview.nodeLayer);
+    // todo generate a separate node tree
 
+    // use the generated nodes from the preview?
+    offscreenProject.addLayer(frame18x24Preview.nodeLayer);
+    // todo reference the canvas editor size
+    offscreenCanvas.width = model.PatternState.Instance().canvasSize.width;
+    offscreenCanvas.height = model.PatternState.Instance().canvasSize.height;
 
     console.log("svg save");
     var svg = offscreenProject.exportSVG({asString: true});
@@ -137,7 +144,7 @@ function init()
 
     //nodeEditorApp.maketestNodes();
     //nodeEditorApp.testparse();
-    nodeEditorApp.canvas.loadFromFile("assets/webcircle.json");
+    nodeEditorApp.canvas.loadFromFile("assets/nodetree02.json");
 
 }
 

@@ -73,13 +73,24 @@ CircleNode , w,h (centered)
 TriangleFromCircle, a0,a1,a2, r
 LineFromCircle, a0,a1, r
 QuadToTranslation, np = new paper.Point(0.5,0.5)
+add canvas w,h to the json export?
+node tree should be relative to the canvas dimension (0,0),
+test exporting a svg
+test the effect of a transform scale on the stroke width
 
 
 Todo- nodes:
 
-test the effect of a transform scale on the stroke width
-test exporting a high res output png
-test exporting a svg
+// renderSVG
+create offscreen project with canvas (renderw,h) = canvas w,h
+draw node tree to layer
+export - done
+
+add a canvas w,h? make this adjustable via 2 textbxoes in the canvasEditorUI.
+
+ImageParam -  for a raster (input string filename)
+GetColourFromImage - input: raster,position Point   output: colour
+Node to get current position in local space (factor in state matrix), output: position, normalised
 
 
 save/load
@@ -89,6 +100,8 @@ read in and populate a select field?
 on change - load in the correct file
 default one is the first one
 Savename field, save button
+
+test exporting a high res output png
 
 copy and paste?
 

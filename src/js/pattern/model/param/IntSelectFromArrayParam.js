@@ -21,7 +21,7 @@ export class IntSelectFromArrayParam extends IntParam
 		var random = true;
 		if(random)
 		{
-			var ix = utils.MathUtils.GetRandomIndexForArray(this.array);
+			var ix = utils.MathUtils.GetSeededRandomIndexForArray(this.array);
 			return this.array[ix];
 		}
 		return 0;

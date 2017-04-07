@@ -12,7 +12,7 @@ import * as model from './pattern/model/model'
 
 import {ColourButton} from './pattern/colourui/ColourButton'
 import {Frame18x24Preview} from './pattern/preview/Frame18x24Preview'
-
+import {SVGRenderer} from './pattern/preview/SVGRenderer'
 
 ///paper.paper.install(window);
 
@@ -31,12 +31,13 @@ var currentRender = null;
 // model
 var selectedColourset = null;
 
-
 var offscreenCanvas = document.createElement("canvas");
 offscreenCanvas.id = "offscreenCanvas";
 offscreenCanvas.width = 500;
 offscreenCanvas.height=800;
 var offscreenProject = new paper.Project(offscreenCanvas);
+
+var svgRenderer = new SVGRenderer(offscreenProject);
 
 var canvas = new paper.Project('canvas');
 var canvasUI = new paper.Project('canvasUI');
@@ -45,12 +46,12 @@ var nodeEditorApp = new nodeui.NodeEditorApp(canvasUI);
 nodeEditorApp.onModelUpdated = function(startnode, canvasSize)
 {
 
-
-
     //renderLayer.activate();
 
+    // todo dont create seed here.
     // create new seed
-    MathUtils.SetSeed(MathUtils.GetRandomIntBetween(0,100000));
+    //MathUtils.SetSeed(MathUtils.GetRandomIntBetween(0,100000));
+
     /*
      canvas.activate();
      renderLayer.removeChildren();
@@ -73,6 +74,13 @@ $( "#svgbutton" ).click(function() {
 
     // todo generate a separate node tree
 
+    var startnode = nodeEditorApp.canvas.startnode.nodemodel;
+    var canvasSize = nodeEditorApp.canvas.canvasSize;
+
+    // test renderer
+    svgRenderer.createSVG(startnode,canvasSize);
+
+    /*
     // use the generated nodes from the preview?
     offscreenProject.addLayer(frame18x24Preview.nodeLayer);
     // todo reference the canvas editor size
@@ -83,7 +91,7 @@ $( "#svgbutton" ).click(function() {
     var svg = offscreenProject.exportSVG({asString: true});
     var blob = new Blob([svg], {type: "image/svg+xml;charset=utf-8"});
     saveAs(blob, 'image.svg');
-
+*   */
 
 
   //  alert( "Handler for .click() called." );

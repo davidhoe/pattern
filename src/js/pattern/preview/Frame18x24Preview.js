@@ -34,6 +34,7 @@ export class Frame18x24Preview extends Preview
 	// todo add canvasSize
 	setNodeTree(node, canvasSize)
 	{
+		// add random seed here?
 		console.log("!!!!! setNodeTree canvasSize ", canvasSize);
 		this.canvas.activate();
 		this.nodeLayer.activate();

@@ -7,13 +7,13 @@ export class SVGRenderer
 {
     constructor(canvas)
     {
-        super();
+       // super();
         this.canvas = canvas;
         canvas.activate();
         this.nodeLayer  = new paper.Layer();
     }
 
-    // todo add canvasSize
+    // todo freeze the random seed - reset it?
     createSVG(node, canvasSize)
     {
         console.log("!!!!! createSVG canvasSize ", canvasSize);
@@ -34,12 +34,12 @@ export class SVGRenderer
         //readValuesTest();
 
         //--------------------------
-        canvas.width = canvasSize.width;
-        canvas.height = canvasSize.height;
+        this.canvas.width = canvasSize.width;
+        this.canvas.height = canvasSize.height;
 
         // save to file
         console.log("svg save");
-        var svg = canvas.exportSVG({asString: true});
+        var svg = this.canvas.exportSVG({asString: true});
         var blob = new Blob([svg], {type: "image/svg+xml;charset=utf-8"});
         saveAs(blob, 'image.svg');
 

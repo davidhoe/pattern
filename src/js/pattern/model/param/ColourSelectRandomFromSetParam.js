@@ -24,7 +24,7 @@ export class ColourSelectRandomFromSetParam extends Param
 		super._processParams();
 		if(this.colourset.length > 0)
 		{
-			var ix = utils.MathUtils.GetRandomIndexForArray(this.colourset);
+			var ix = utils.MathUtils.GetSeededRandomIndexForArray(this.colourset);
 			return this.colourset[ix];
 		}
 		else{

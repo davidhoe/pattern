@@ -21,6 +21,6 @@ export class FloatRandomParam extends Param{
     getValue(outputName = "")
     {
         super._processParams();
-        return utils.MathUtils.GetRandomFloat(this.minRange, this.maxRange);
+        return utils.MathUtils.GetSeededRandomFloat(this.minRange, this.maxRange);
     }
 }

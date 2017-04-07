@@ -8,11 +8,21 @@ export class PatternState
     constructor(){
         PatternState._instance = this;
         // state variables, initialise with defaults
+        this.setNewRandomSeed();
+
         this.reset();
+    }
+
+    setNewRandomSeed()
+    {
+        this.currentSeed = utils.MathUtils.GetRandomIntBetween(0,100000);
     }
 
     reset()
     {
+        // reset the seed
+        utils.MathUtils.SetSeed(this.currentSeed);
+
         this.autoPushNodeOnCreation = false;
         this.colour = new paper.Color(1);
         this.bound = new paper.Rectangle(0,0,100,100);

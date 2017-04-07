@@ -14,6 +14,8 @@ export default class NodeEditorApp
 {
 	constructor(project)
 	{
+
+		this.currentSeed = util.MathUtils.GetRandomIntBetween(0,100000);
 		this.onModelUpdated = null;
 		this.canvas = new NodeEditorCanvas(project);
 
@@ -170,9 +172,18 @@ export default class NodeEditorApp
 	}
 	refreshPattern()
 	{
-		//
+		// tdo set a random seed here?
+		// create new seed
+
+		model.PatternState.Instance().setNewRandomSeed();
+	//	this.currentSeed = util.MathUtils.GetRandomIntBetween(0,100000);
+	//	util.MathUtils.SetSeed(this.currentSeed);
+
+
 		console.log("refresh", this.canvas.startnode.nodemodel);
 		if(this.onModelUpdated ) this.onModelUpdated(this.canvas.startnode.nodemodel, this.canvas.canvasSize);
 	}
+
+
 
 }

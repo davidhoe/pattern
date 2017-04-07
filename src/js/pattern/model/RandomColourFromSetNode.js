@@ -15,13 +15,13 @@ export class RandomColourFromSetNode extends Node
     constructor(colourset = null)
     {
         super();
-        this.colourset = (colourset == null ) ? ColourUtils.GetRandomColourset() : colourset ;
+        this.colourset = (colourset == null ) ? ColourUtils.GetSeededRandomColourset() : colourset ;
     }
 
     process()
     {
         super._processParams();
-        PatternState.Instance().colour = ColourUtils.GetRandomColourInSet(this.colourset);
+        PatternState.Instance().colour = ColourUtils.GetSeededRandomColourInSet(this.colourset);
         super.processChildNodes();
     }
 }

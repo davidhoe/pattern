@@ -18,7 +18,7 @@ export class RandomIntInRangeParam extends IntParam
 	getValue(outputName = "")
 	{
 		super._processParams();
-		var ix = utils.MathUtils.GetRandomIntBetween(this.startIndex, this.endIndex);
+		var ix = utils.MathUtils.GetSeededRandomIntBetween(this.startIndex, this.endIndex);
 		return ix;
 		//return this.defaultValue;
 	}
